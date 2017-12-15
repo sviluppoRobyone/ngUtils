@@ -12,6 +12,9 @@
         "watch-ts":"tsc -w",
         "start":"tsc"
     },
+    "files": [
+        "dist/"
+    ],
     "author": "",
     "license": "ISC",
     "dependencies": {
