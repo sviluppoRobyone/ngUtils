@@ -2,7 +2,11 @@
     "name": "ng-utils",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/ng-utils.js",
+    "main": "dist/",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sviluppoRobyone/ngUtils.git"
+    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "watch-ts":"tsc -w",
