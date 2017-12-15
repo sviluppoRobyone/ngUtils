@@ -1,164 +1,13 @@
 import * as angular from "angular";
 import * as $ from "jquery";
+import * as ngHelpers from "./ng-helpers/index";
 export module ngUtils {
-    export function moduleExists(m: ng.IModule, name: string) {
-        try {
-            return !!angular.module(name) && m.requires.some(x => x == name);
-        } catch (e) {
-            return false;
-        }
-    }
 
-    export class ngUtilsService {
-        private args: any = null;
-        static serviceName = "$ngUtils";
-        static $inject = ["$injector"];
-        private store :any= {};
-        constructor(...args:any[]) {
-            this.args = args;
-            Object.defineProperty(this, "args", { enumerable: false });
+   export var ng=ngHelpers;
 
-        }
-        protected getFromInject<T>(key: string) {
-
-            if (!this.store[key])
-                this.store[key] = this.$injector.get<T>(key);
-
-            return this.store[key];
-
-        }
-        get $injector(): angular.auto.IInjectorService {
-            return this.args[0];
-        }
-        get $rootScope(): ng.IRootScopeService {
-            return this.getFromInject("$rootScope");
-        }
-        get $http(): ng.IHttpService {
-            return this.getFromInject("$http");
-        }
-        get $location(): ng.ILocationService {
-            return this.getFromInject("$location");
-        }
-        get $routeParams(): ng.route.IRouteParamsService {
-            return this.getFromInject("$routeParams");
-        }
-        get $q(): ng.IQService {
-            return this.getFromInject("$q");
-        }
-        get $filter(): ng.IFilterService {
-            return this.getFromInject("$filter");
-        }
-        get $route(): ng.route.IRouteService {
-            return this.getFromInject("$route");
-        }
-        get $timeout(): ng.ITimeoutService {
-            return this.getFromInject("$timeout");
-        }
-        get $ngView(): JQuery {
-            return $("[ng-view]");
-        }
-        get $cacheFactory(): ng.ICacheFactoryService {
-            return this.getFromInject("$cacheFactory");
-        }
-        get $locale(): ng.ILocaleService {
-            return this.getFromInject("$locale");
-        }
-        get $interval(): ng.IIntervalService {
-            return this.getFromInject("$interval");
-        }
-        get $log(): ng.ILogService {
-            return this.getFromInject("$log");
-        }
-        get $sce(): ng.ISCEService {
-            return this.getFromInject("$sce");
-        }
-        manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function) {
-
-            var qBefore = this.$q.defer();
-            var qAjax = this.$q.defer();
-            var qAfter = this.$q.defer();
-
-            var doBefore = () => {
-                this.$timeout(() => {
-                    before && before();
-                }).then(() => {
-                    qBefore.resolve();
-                });
-            }
-            var doAfter = () => {
-                this.$timeout(() => {
-                    after && after();
-                }).then(() => {
-                    qAfter.resolve();
-                });
-            }
-            qBefore.promise.then(() => {
-                ajax(qAjax.resolve, qAjax.reject);
-            });
-            qAjax.promise.then(() => {
-                doAfter();
-            });
-
-            return this.$q((ok, ko) => {
-                qAfter.promise.then(() => {
-                    ok();
-                });
-                doBefore();
-            });
-        }
-
-        onScopeDispose($scope: ng.IScope) {
-            var q = this.$q.defer();
-            $scope.$on("$destroy", () => {
-                q.resolve();
-            });
-            return q.promise;
-        }
-
-
-    }
-    export module lib {
-        export class BaseCtrl {
-            static $inject: string[] = ["$scope", ngUtilsService.serviceName];
-            args: any[] = [];
-            constructor(...args:any[]) {
-                this.args = args;
-            }
-            get $scope(): ng.IScope {
-                return this.args[BaseCtrl.$inject.indexOf("$scope")];
-            }
-
-            get $ngUtils(): ngUtilsService {
-                return this.args[BaseCtrl.$inject.indexOf(ngUtilsService.serviceName)];
-            }
-
-            get $q() {
-                return this.$ngUtils.$q;
-            }
-        }
-    }
-    export function Init(m: ng.IModule) {
-        m.service(ngUtils.ngUtilsService.serviceName, ngUtils.ngUtilsService);
-        ngUtils.filters.AllFilters(m);
-        ngUtils.faLoading.register(m);
-
-        configureModule(m, "formly", () => {
-
-            ngUtils.formly.Configure(m);
-            ngUtils.formly.directives.NullableFieldDirective.register(m);
-            ngUtils.formly.directives.formBuilder.register(m);
-
-        });
-
-        configureModule(m, "angularPromiseButtons", () => {
-            ngUtils.promiseButton.Configure(m);
-        });
-
-
-        configureModule(m, "ui.bootstrap", () => {
-            ngUtils.HttpErrorToModal.register(m);
-        });
-    }
+    
+   
+   
 
     function configureModule(m: ng.IModule, moduleName: string, fn: Function) {
 
@@ -175,42 +24,7 @@ export module ngUtils {
         }
     }
 
-    export module filters {
-        export function AllFilters(m: ng.IModule) {
-            [html, url, bytes].map(x => x(m));
-        }
-        export function html(m: ng.IModule) {
-            m.filter("html", [
-                "$sce", ($sce:ng.ISCEService) => {
-                    return (htmlCode:string) => {                        
-                        return $sce.trustAsHtml(htmlCode);
-                    }
-                }
-            ]);
-        }
-
-        export function url(m: ng.IModule) {
-            m.filter("url", [
-                "$sce", ($sce:ng.ISCEService) => {
-                    return (url:string) => {
-                        return $sce.trustAsResourceUrl(url);
-                    }
-                }
-            ]);
-        }
-
-        export function bytes(m: ng.IModule) {
-            m.filter("bytes", () => {
-                return (bytes:any, precision:number) => {
-                    if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return "-";
-                    if (typeof precision === "undefined") precision = 1;
-                    var units = ["bytes", "kB", "MB", "GB", "TB", "PB"],
-                        number = Math.floor(Math.log(bytes) / Math.log(1024));
-                    return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + " " + units[number];
-                };
-            });
-        }
-    }
+   
     export module HttpErrorToModal {
         //required module ui.bootstrap
         export function register(m: ng.IModule) {
@@ -869,5 +683,9 @@ export module ngUtils {
     }
 
 
+}
+
+function newFunction() {
+    export { ngHelpers };
 }
 
