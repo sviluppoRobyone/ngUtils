@@ -3,7 +3,7 @@ import * as angular from "angular";
 
 export function Configure(app:ng.IModule){
 
-    moduleExists.configureModuleIfExists(app,"ui.bootstrap",()=>{
+    moduleExists.configureModuleIfExists(app,["ui.bootstrap"],()=>{
         app.run([            "formlyConfig", (formlyConfig: AngularFormly.IFormlyConfig) => {
             var attributes = [
                 "date-disabled",

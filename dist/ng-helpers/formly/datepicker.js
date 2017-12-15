@@ -2,7 +2,7 @@ define(["require", "exports", "../module-exists", "angular"], function (require,
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function Configure(app) {
-        moduleExists.configureModuleIfExists(app, "ui.bootstrap", function () {
+        moduleExists.configureModuleIfExists(app, ["ui.bootstrap"], function () {
             app.run(["formlyConfig", function (formlyConfig) {
                     var attributes = [
                         "date-disabled",

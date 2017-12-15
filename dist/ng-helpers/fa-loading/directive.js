@@ -1,13 +1,14 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./ctrl"], function (require, exports, ctrl_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.directiveName = "faLoading";
     function directive() {
         return {
             transclude: {
                 'content': "content",
                 'loading': "loading"
             },
-            controller: ,
+            controller: ctrl_1.Ctrl,
             restrict: "E",
             controllerAs: "Ctrl",
             //language=html

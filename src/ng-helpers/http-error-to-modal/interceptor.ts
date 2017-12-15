@@ -1,4 +1,5 @@
 import {ModalController} from "./modal-ctrl";
+import * as angular from "angular";
 export class Interceptor implements ng.IHttpInterceptor {
     
                 static $inject: string[] = ["$q", "$injector"];

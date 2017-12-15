@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./directive"], function (require, exports, d) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var baseTheme;
@@ -6,7 +6,7 @@ define(["require", "exports"], function (require, exports) {
         function DirectiveBuilder(loadingTemplate) {
             return function () {
                 console.log(loadingTemplate);
-                var originalDirective = base.Directive();
+                var originalDirective = d.directive();
                 originalDirective.transclude = true;
                 //language=html
                 originalDirective.template = "\n                    <fa-loading is-loading=\"Ctrl.IsLoading\">\n                        <loading>" + loadingTemplate + "</loading>\n                        <content ng-transclude>\n                         \n                        </content>\n                    </fa-loading>\n    ";

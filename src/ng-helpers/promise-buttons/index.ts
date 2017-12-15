@@ -13,3 +13,7 @@ export function Configure(module: ng.IModule) {
         }
     ]);
 }
+
+export var directive={
+    
+}

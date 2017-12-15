@@ -1,4 +1,8 @@
 import * as dpConfig from "./datepicker";
+import * as formBuilder from "./form-builder";
+import * as nfd from "./nullable-field-directive/index";
+
+
 export function Configure(m: ng.IModule) {
   m.run([
     "formlyValidationMessages",
@@ -54,5 +58,9 @@ export function Configure(m: ng.IModule) {
   ]);
 
   dpConfig.Configure(m);
+  formBuilder.register(m);
+  nfd.register(m);
+  
 
 }
+export {NullableDate} from "./nullable-date";
