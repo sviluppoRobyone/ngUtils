@@ -2,6 +2,7 @@ import * as angular from "angular";
 import {ngUtilsService} from "./service";
 import * as filters from "./filters/index";
 import * as moduleExists from "./module-exists";
+import * as faLoading from "./fa-loading";
 
 export function Init(m: ng.IModule) {
     m.service(ngUtilsService.serviceName, ngUtilsService);
