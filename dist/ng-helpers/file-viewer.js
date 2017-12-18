@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./base-ctrl", "./base-injectable"], function (require, exports, base_ctrl_1, base_injectable_1) {
+define(["require", "exports", "./base-injectable"], function (require, exports, base_injectable_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var fileKey = "fileToView";
@@ -71,8 +71,8 @@ define(["require", "exports", "./base-ctrl", "./base-injectable"], function (req
             };
             reader.readAsDataURL(this.file);
         };
-        ModalCtrl.$inject = [].concat(base_ctrl_1.BaseCtrl.$inject, [fileKey]);
+        ModalCtrl.$inject = [].concat(base_injectable_1.BaseInjectable.$inject, [fileKey]);
         return ModalCtrl;
-    }(base_ctrl_1.BaseCtrl));
+    }(base_injectable_1.BaseInjectable));
 });
 //# sourceMappingURL=file-viewer.js.map

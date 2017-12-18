@@ -1,6 +1,4 @@
 import * as angular from "angular";
-import { BaseService } from "./base-service";
-import { BaseCtrl } from "./base-ctrl";
 import { BaseInjectable } from "./base-injectable";
 
 
@@ -44,9 +42,9 @@ import { BaseInjectable } from "./base-injectable";
                 }
             }
 
-            class ModalCtrl extends BaseCtrl {
+            class ModalCtrl extends BaseInjectable {
 
-                static $inject = ([] as string[]).concat(BaseCtrl.$inject, [fileKey]);
+                static $inject = ([] as string[]).concat(BaseInjectable.$inject, [fileKey]);
 
                 get file():File {
                     return this.args[ModalCtrl.$inject.indexOf(fileKey)];
