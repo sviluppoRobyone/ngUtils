@@ -67,7 +67,7 @@ define(["require", "exports", "./service", "./base-injectable"], function (requi
         });
         BaseCtrl.$inject = [].concat(["$scope", service_1.ngUtilsService.serviceName]);
         return BaseCtrl;
-    }(base_injectable_1.baseInjectable));
+    }(base_injectable_1.BaseInjectable));
     exports.BaseCtrl = BaseCtrl;
 });
 //# sourceMappingURL=base-ctrl.js.map

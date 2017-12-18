@@ -1,6 +1,7 @@
 import * as angular from "angular";
 import { BaseService } from "./base-service";
 import { BaseCtrl } from "./base-ctrl";
+import { BaseInjectable } from "./base-injectable";
 
 
 
@@ -14,7 +15,10 @@ import { BaseCtrl } from "./base-ctrl";
 
             }
 
-            export class fileViewerService extends BaseService {
+            export class fileViewerService extends BaseInjectable {
+                get $uibModal(){
+                    return this.getFromInject<angular.ui.bootstrap.IModalService>("$uibModal");
+                }
                 viewFile(file: File) {
 
                     return this.$uibModal.open({

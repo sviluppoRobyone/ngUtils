@@ -39,7 +39,7 @@ define(["require", "exports", "./base-injectable", "./service"], function (requi
         });
         BaseService.$inject = [].concat([service_1.ngUtilsService.serviceName]);
         return BaseService;
-    }(base_injectable_1.baseInjectable));
+    }(base_injectable_1.BaseInjectable));
     exports.BaseService = BaseService;
 });
 //# sourceMappingURL=base-service.js.map

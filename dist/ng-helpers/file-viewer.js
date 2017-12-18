@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./base-service", "./base-ctrl"], function (require, exports, base_service_1, base_ctrl_1) {
+define(["require", "exports", "./base-ctrl", "./base-injectable"], function (require, exports, base_ctrl_1, base_injectable_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var fileKey = "fileToView";
@@ -22,6 +22,13 @@ define(["require", "exports", "./base-service", "./base-ctrl"], function (requir
         function fileViewerService() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+        Object.defineProperty(fileViewerService.prototype, "$uibModal", {
+            get: function () {
+                return this.getFromInject("$uibModal");
+            },
+            enumerable: true,
+            configurable: true
+        });
         fileViewerService.prototype.viewFile = function (file) {
             return this.$uibModal.open({
                 controllerAs: "Ctrl",
@@ -35,7 +42,7 @@ define(["require", "exports", "./base-service", "./base-ctrl"], function (requir
             var _a;
         };
         return fileViewerService;
-    }(base_service_1.BaseService));
+    }(base_injectable_1.BaseInjectable));
     exports.fileViewerService = fileViewerService;
     var ModalCtrl = /** @class */ (function (_super) {
         __extends(ModalCtrl, _super);

@@ -1,7 +1,7 @@
 import * as angular from "angular";
-import {baseInjectable} from "./base-injectable";
+import {BaseInjectable} from "./base-injectable";
 import * as fv from "./file-viewer";
-export class ngUtilsService extends baseInjectable {
+export class ngUtilsService extends BaseInjectable {
        
     static serviceName = "$ngUtils";  
     

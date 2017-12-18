@@ -4,9 +4,9 @@
 /// <reference types="angular-ui-router" />
 /// <reference types="angular-ui-bootstrap" />
 import * as angular from "angular";
-import { baseInjectable } from "./base-injectable";
+import { BaseInjectable } from "./base-injectable";
 import * as fv from "./file-viewer";
-export declare class ngUtilsService extends baseInjectable {
+export declare class ngUtilsService extends BaseInjectable {
     static serviceName: string;
     readonly $rootScope: ng.IRootScopeService;
     readonly $http: ng.IHttpService;

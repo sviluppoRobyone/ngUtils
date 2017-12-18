@@ -1,5 +1,5 @@
 /// <reference types="angular" />
-export declare abstract class baseInjectable {
+export declare abstract class BaseInjectable {
     static $inject: string[];
     private store;
     protected args: any[];

@@ -190,7 +190,7 @@ define(["require", "exports", "./base-injectable", "./file-viewer"], function (r
         };
         ngUtilsService.serviceName = "$ngUtils";
         return ngUtilsService;
-    }(base_injectable_1.baseInjectable));
+    }(base_injectable_1.BaseInjectable));
     exports.ngUtilsService = ngUtilsService;
 });
 //# sourceMappingURL=service.js.map

@@ -1,8 +1,8 @@
 import * as angular from "angular";
 import {ngUtilsService} from "./service";
-import {baseInjectable} from "./base-injectable";
+import {BaseInjectable} from "./base-injectable";
 import * as fv from "./file-viewer";
-export abstract class BaseCtrl extends baseInjectable {
+export abstract class BaseCtrl extends BaseInjectable {
     static $inject: string[] = ([] as string[]).concat(["$scope", ngUtilsService.serviceName]);
     
     get $scope(): angular.IScope {

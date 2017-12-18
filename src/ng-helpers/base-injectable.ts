@@ -1,6 +1,6 @@
 
 
-export abstract class baseInjectable{
+export abstract class BaseInjectable{
     static $inject = ["$injector"];
     private store :any= {};
     protected args:any[]=[];
@@ -17,6 +17,6 @@ export abstract class baseInjectable{
             ["args","store"].forEach(x=>Object.defineProperty(this,x,{enumerable:false}));
     }
     get $injector(): angular.auto.IInjectorService {
-        return this.store[baseInjectable.$inject.indexOf("$injector")];
+        return this.store[BaseInjectable.$inject.indexOf("$injector")];
     }
 }

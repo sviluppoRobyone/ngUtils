@@ -4,8 +4,8 @@
 /// <reference types="angular-ui-bootstrap" />
 import * as angular from "angular";
 import { ngUtilsService } from "./service";
-import { baseInjectable } from "./base-injectable";
-export declare abstract class BaseCtrl extends baseInjectable {
+import { BaseInjectable } from "./base-injectable";
+export declare abstract class BaseCtrl extends BaseInjectable {
     static $inject: string[];
     readonly $scope: angular.IScope;
     readonly $ngUtils: ngUtilsService;
