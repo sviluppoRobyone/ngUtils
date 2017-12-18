@@ -1,12 +1,11 @@
 /// <reference types="angular" />
 /// <reference types="angular-route" />
 import * as angular from "angular";
-export declare class ngUtilsService {
-    private args;
+import { baseInjectable } from "./base-injectable";
+export declare class ngUtilsService extends baseInjectable {
     static serviceName: string;
     static $inject: string[];
     private store;
-    constructor(...args: any[]);
     protected getFromInject<T>(key: string): any;
     readonly $injector: angular.auto.IInjectorService;
     readonly $rootScope: ng.IRootScopeService;

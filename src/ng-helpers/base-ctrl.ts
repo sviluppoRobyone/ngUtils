@@ -1,14 +1,10 @@
 import * as angular from "angular";
 import {ngUtilsService} from "./service";
-
-export class BaseCtrl {
+import {baseInjectable} from "./base-injectable";
+export class BaseCtrl extends baseInjectable {
     static $inject: string[] = ["$scope", ngUtilsService.serviceName];
-    args: any[] = [];
-    constructor(...args:any[]) {
-        this.args = args;
-        Object.defineProperty(this,"args",{enumerable:false});
-    }
-    get $scope(): ng.IScope {
+    
+    get $scope(): angular.IScope {
         return this.args[BaseCtrl.$inject.indexOf("$scope")];
     }
 

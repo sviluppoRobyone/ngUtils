@@ -1,16 +1,12 @@
 import * as angular from "angular";
+import {baseInjectable} from "./base-injectable";
 
-
-export class ngUtilsService {
-    private args: any = null;
+export class ngUtilsService extends baseInjectable {
+       
     static serviceName = "$ngUtils";
     static $inject = ["$injector"];
     private store :any= {};
-    constructor(...args:any[]) {
-        this.args = args;
-        Object.defineProperty(this, "args", { enumerable: false });
-
-    }
+   
     protected getFromInject<T>(key: string) {
 
         if (!this.store[key])

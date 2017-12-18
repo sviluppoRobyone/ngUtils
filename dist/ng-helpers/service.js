@@ -1,16 +1,22 @@
-define(["require", "exports"], function (require, exports) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define(["require", "exports", "./base-injectable"], function (require, exports, base_injectable_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ngUtilsService = /** @class */ (function () {
+    var ngUtilsService = /** @class */ (function (_super) {
+        __extends(ngUtilsService, _super);
         function ngUtilsService() {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            this.args = null;
-            this.store = {};
-            this.args = args;
-            Object.defineProperty(this, "args", { enumerable: false });
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.store = {};
+            return _this;
         }
         ngUtilsService.prototype.getFromInject = function (key) {
             if (!this.store[key])
@@ -164,7 +170,7 @@ define(["require", "exports"], function (require, exports) {
         ngUtilsService.serviceName = "$ngUtils";
         ngUtilsService.$inject = ["$injector"];
         return ngUtilsService;
-    }());
+    }(base_injectable_1.baseInjectable));
     exports.ngUtilsService = ngUtilsService;
 });
 //# sourceMappingURL=service.js.map

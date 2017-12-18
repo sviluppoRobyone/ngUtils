@@ -1,15 +1,20 @@
-define(["require", "exports", "./service"], function (require, exports, service_1) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define(["require", "exports", "./service", "./base-injectable"], function (require, exports, service_1, base_injectable_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var BaseCtrl = /** @class */ (function () {
+    var BaseCtrl = /** @class */ (function (_super) {
+        __extends(BaseCtrl, _super);
         function BaseCtrl() {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            this.args = [];
-            this.args = args;
-            Object.defineProperty(this, "args", { enumerable: false });
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         Object.defineProperty(BaseCtrl.prototype, "$scope", {
             get: function () {
@@ -34,7 +39,7 @@ define(["require", "exports", "./service"], function (require, exports, service_
         });
         BaseCtrl.$inject = ["$scope", service_1.ngUtilsService.serviceName];
         return BaseCtrl;
-    }());
+    }(base_injectable_1.baseInjectable));
     exports.BaseCtrl = BaseCtrl;
 });
 //# sourceMappingURL=base-ctrl.js.map
