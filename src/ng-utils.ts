@@ -1,9 +1,8 @@
 import * as angular from "angular";
 import * as $ from "jquery";
 import * as ngHelpers from "./ng-helpers/index";
-export module ngUtils {
+import * as JsonUtils from "./json-helpers/index";
+export var ng=ngHelpers;
+export var json=JsonUtils;
 
-   export var ng=ngHelpers;
-
-}
 

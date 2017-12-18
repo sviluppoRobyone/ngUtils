@@ -3,7 +3,8 @@ define(["require", "exports", "./interceptor"], function (require, exports, inte
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
         var factoryName = "HttpErrorToModalFactory";
-        m.config(["$httpProvider",
+        m.config([
+            "$httpProvider",
             function ($httpProvider) {
                 $httpProvider.interceptors.push(factoryName);
             }

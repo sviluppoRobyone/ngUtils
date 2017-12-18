@@ -1,9 +1,7 @@
-define(["require", "exports", "./ng-helpers/index"], function (require, exports, ngHelpers) {
+define(["require", "exports", "./ng-helpers/index", "./json-helpers/index"], function (require, exports, ngHelpers, JsonUtils) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ngUtils;
-    (function (ngUtils) {
-        ngUtils.ng = ngHelpers;
-    })(ngUtils = exports.ngUtils || (exports.ngUtils = {}));
+    exports.ng = ngHelpers;
+    exports.json = JsonUtils;
 });
 //# sourceMappingURL=ng-utils.js.map

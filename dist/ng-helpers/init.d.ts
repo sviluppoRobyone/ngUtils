@@ -1,2 +1,2 @@
 /// <reference types="angular" />
-export declare function Init(m: ng.IModule): void;
+export declare function init(m: ng.IModule): void;

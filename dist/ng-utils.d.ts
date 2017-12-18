@@ -1,4 +1,4 @@
 import * as ngHelpers from "./ng-helpers/index";
-export declare module ngUtils {
-    var ng: typeof ngHelpers;
-}
+import * as JsonUtils from "./json-helpers/index";
+export declare var ng: typeof ngHelpers;
+export declare var json: typeof JsonUtils;

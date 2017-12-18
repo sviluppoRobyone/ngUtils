@@ -26,4 +26,3 @@ export function init(m: ng.IModule) {
         HttpErrorToModal.register(m);
     });
 }
-export var formly={NullableDate=formly.NullableDate};

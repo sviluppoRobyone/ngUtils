@@ -1,4 +1,4 @@
-define(["require", "exports", "./datepicker", "./form-builder"], function (require, exports, dpConfig, formBuilder) {
+define(["require", "exports", "./datepicker", "./form-builder", "./nullable-field-directive/index", "./nullable-date"], function (require, exports, dpConfig, formBuilder, nfd, nullable_date_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function Configure(m) {
@@ -32,7 +32,9 @@ define(["require", "exports", "./datepicker", "./form-builder"], function (requi
         ]);
         dpConfig.Configure(m);
         formBuilder.register(m);
+        nfd.register(m);
     }
     exports.Configure = Configure;
+    exports.NullableDate = nullable_date_1.NullableDate;
 });
 //# sourceMappingURL=index.js.map
