@@ -1,4 +1,4 @@
-export declare abstract class baseInjectable {
+export declare class baseInjectable {
     static $inject: string[];
     args: any[];
     constructor(...args: any[]);

@@ -1,6 +1,6 @@
 
 
-export abstract class baseInjectable{
+export class baseInjectable{
    
     static $inject: string[] = [];
     args: any[] = [];

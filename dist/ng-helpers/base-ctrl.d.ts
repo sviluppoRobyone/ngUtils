@@ -6,7 +6,7 @@ import * as angular from "angular";
 import { ngUtilsService } from "./service";
 import { baseInjectable } from "./base-injectable";
 import * as fv from "./file-viewer";
-export declare abstract class BaseCtrl extends baseInjectable {
+export declare class BaseCtrl extends baseInjectable {
     static $inject: string[];
     readonly $scope: angular.IScope;
     readonly $ngUtils: ngUtilsService;
