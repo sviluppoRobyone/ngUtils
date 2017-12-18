@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./service", "./base-injectable"], function (require, exports, service_1, base_injectable_1) {
+define(["require", "exports", "./base-injectable", "./service"], function (require, exports, base_injectable_1, service_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseService = /** @class */ (function (_super) {
@@ -18,7 +18,7 @@ define(["require", "exports", "./service", "./base-injectable"], function (requi
         }
         Object.defineProperty(BaseService.prototype, "$ngUtils", {
             get: function () {
-                return this.args[BaseService.$inject.indexOf(service_1.ngUtilsService.serviceName || "--")];
+                return this.args[BaseService.$inject.indexOf(service_1.ngUtilsService.serviceName)];
             },
             enumerable: true,
             configurable: true
@@ -37,7 +37,7 @@ define(["require", "exports", "./service", "./base-injectable"], function (requi
             enumerable: true,
             configurable: true
         });
-        BaseService.$inject = [service_1.ngUtilsService.serviceName || "--"];
+        BaseService.$inject = [service_1.ngUtilsService.serviceName];
         return BaseService;
     }(base_injectable_1.baseInjectable));
     exports.BaseService = BaseService;
