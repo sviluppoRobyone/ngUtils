@@ -149,6 +149,13 @@ define(["require", "exports", "./base-injectable"], function (require, exports, 
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(ngUtilsService.prototype, "$uibModal", {
+            get: function () {
+                return this.getFromInject("$uibModal");
+            },
+            enumerable: true,
+            configurable: true
+        });
         ngUtilsService.prototype.manageAjaxLoading = function (before, ajax, after) {
             var _this = this;
             var qBefore = this.$q.defer();

@@ -69,6 +69,9 @@ export class ngUtilsService extends baseInjectable {
     get $state(): angular.ui.IStateService {
         return this.getFromInject("$state");
     }
+    get $uibModal():angular.ui.bootstrap.IModalService{
+        return this.getFromInject("$uibModal");
+    }
     manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function) {
 
         var qBefore = this.$q.defer();

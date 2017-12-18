@@ -22,4 +22,7 @@ export abstract class BaseCtrl extends baseInjectable {
     get $upload(){
         return this.$ngUtils.$Upload;
     }
+    get $uibModal(){
+        return this.$ngUtils.$uibModal;
+    }
 }

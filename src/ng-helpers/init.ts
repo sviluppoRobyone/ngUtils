@@ -5,6 +5,7 @@ import * as moduleExists from "./module-exists";
 import * as faLoading from "./fa-loading/index";
 import * as promiseButton from "./promise-buttons/index";
 import * as HttpErrorToModal from "./http-error-to-modal/index";
+import * as debugModal from "./debug-modal";
 import * as formly from "./formly/index";
 
 export function init(m: ng.IModule) {
@@ -24,5 +25,6 @@ export function init(m: ng.IModule) {
 
     moduleExists.configureModuleIfExists(m, ["ui.bootstrap"], () => {
         HttpErrorToModal.register(m);
+        debugModal.register(m);
     });
 }

@@ -2,6 +2,7 @@
 /// <reference types="angular-route" />
 /// <reference types="ng-file-upload" />
 /// <reference types="angular-ui-router" />
+/// <reference types="angular-ui-bootstrap" />
 import * as angular from "angular";
 import { baseInjectable } from "./base-injectable";
 export declare class ngUtilsService extends baseInjectable {
@@ -27,6 +28,7 @@ export declare class ngUtilsService extends baseInjectable {
     readonly $Upload: ng.angularFileUpload.IUploadService;
     readonly $stateParams: angular.ui.IStateParamsService;
     readonly $state: angular.ui.IStateService;
+    readonly $uibModal: angular.ui.bootstrap.IModalService;
     manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function): angular.IPromise<{}>;
     onScopeDispose($scope: ng.IScope): angular.IPromise<{}>;
 }
