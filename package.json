@@ -13,7 +13,8 @@
         "start":"tsc"
     },
     "files": [
-        "dist/"
+        "dist/",
+        "styles/"
     ],
     "author": "",
     "license": "ISC",
