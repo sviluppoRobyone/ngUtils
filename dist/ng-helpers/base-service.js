@@ -37,7 +37,7 @@ define(["require", "exports", "./base-injectable", "./service"], function (requi
             enumerable: true,
             configurable: true
         });
-        BaseService.$inject = [service_1.ngUtilsService.serviceName];
+        BaseService.$inject = [].concat([service_1.ngUtilsService.serviceName]);
         return BaseService;
     }(base_injectable_1.baseInjectable));
     exports.BaseService = BaseService;
