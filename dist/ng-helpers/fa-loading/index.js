@@ -1,4 +1,4 @@
-define(["require", "exports", "./directive", "./themes"], function (require, exports, directive, themes_1) {
+define(["require", "exports", "./directive", "jquery", "./themes"], function (require, exports, directive, $, themes_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {

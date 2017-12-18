@@ -25,7 +25,9 @@ define(["require", "exports", "angular"], function (require, exports, angular) {
             }
         }
         else {
-            console.info("NgUtils: module configuration " + JSON.stringify(moduleNames) + " skipped");
+            console.info("NgUtils: module configuration " +
+                JSON.stringify(moduleNames) +
+                " skipped");
         }
     }
     exports.configureModuleIfExists = configureModuleIfExists;

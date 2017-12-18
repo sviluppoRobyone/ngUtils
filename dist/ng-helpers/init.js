@@ -17,5 +17,4 @@ define(["require", "exports", "./service", "./filters/index", "./module-exists",
     }
     exports.init = init;
 });
-//export var formly={NullableDate=formly.NullableDate}; 
 //# sourceMappingURL=init.js.map

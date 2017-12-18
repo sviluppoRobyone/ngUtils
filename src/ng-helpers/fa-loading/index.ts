@@ -1,4 +1,5 @@
 import * as directive from "./directive";
+import * as $ from "jquery";
 import {baseTheme} from "./themes";
 export function register(m: ng.IModule) {
     m.directive(directive.directiveName, directive.directive);
