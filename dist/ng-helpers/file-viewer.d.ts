@@ -1,7 +1,7 @@
 /// <reference types="angular" />
 /// <reference types="angular-ui-bootstrap" />
-import { BaseService } from "./base-service";
 import * as angular from "angular";
+import { BaseService } from "./base-service";
 export declare const serviceName = "fileViewer";
 export declare function register(m: ng.IModule): void;
 export declare class fileViewerService extends BaseService {

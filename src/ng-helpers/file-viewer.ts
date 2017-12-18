@@ -1,8 +1,9 @@
+import * as angular from "angular";
 import { BaseService } from "./base-service";
 import { BaseCtrl } from "./base-ctrl";
-import * as angular from "angular";
 
 
+alert(typeof BaseService);
     
             const fileKey = "fileToView";
             export const serviceName = "fileViewer";

@@ -11,6 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 define(["require", "exports", "./base-service", "./base-ctrl"], function (require, exports, base_service_1, base_ctrl_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    alert(typeof base_service_1.BaseService);
     var fileKey = "fileToView";
     exports.serviceName = "fileViewer";
     function register(m) {
