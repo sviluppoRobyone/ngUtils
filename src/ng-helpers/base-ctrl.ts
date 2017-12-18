@@ -1,6 +1,7 @@
 import * as angular from "angular";
 import {ngUtilsService} from "./service";
 import {baseInjectable} from "./base-injectable";
+import * as fv from "./file-viewer";
 export abstract class BaseCtrl extends baseInjectable {
     static $inject: string[] = ["$scope", ngUtilsService.serviceName];
     
@@ -24,5 +25,9 @@ export abstract class BaseCtrl extends baseInjectable {
     }
     get $uibModal(){
         return this.$ngUtils.$uibModal;
+    }
+
+    get $fileViewer(){        
+        return this.$ngUtils.$fileViewer;
     }
 }
