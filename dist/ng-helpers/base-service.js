@@ -23,6 +23,20 @@ define(["require", "exports", "./service", "./base-injectable"], function (requi
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(BaseService.prototype, "$uibModal", {
+            get: function () {
+                return this.$ngUtils.$uibModal;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseService.prototype, "$q", {
+            get: function () {
+                return this.$ngUtils.$q;
+            },
+            enumerable: true,
+            configurable: true
+        });
         BaseService.$inject = [service_1.ngUtilsService.serviceName];
         return BaseService;
     }(base_injectable_1.baseInjectable));
