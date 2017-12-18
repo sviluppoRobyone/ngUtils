@@ -1,4 +1,6 @@
 /// <reference types="angular" />
+/// <reference types="angular-ui-router" />
+/// <reference types="ng-file-upload" />
 import * as angular from "angular";
 import { ngUtilsService } from "./service";
 import { baseInjectable } from "./base-injectable";
@@ -7,4 +9,7 @@ export declare class BaseCtrl extends baseInjectable {
     readonly $scope: angular.IScope;
     readonly $ngUtils: ngUtilsService;
     readonly $q: angular.IQService;
+    readonly $state: angular.ui.IStateService;
+    readonly $stateParams: angular.ui.IStateParamsService;
+    readonly $upload: angular.angularFileUpload.IUploadService;
 }

@@ -128,6 +128,27 @@ define(["require", "exports", "./base-injectable"], function (require, exports, 
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(ngUtilsService.prototype, "$Upload", {
+            get: function () {
+                return this.getFromInject("Upload");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ngUtilsService.prototype, "$stateParams", {
+            get: function () {
+                return this.getFromInject("$stateParams");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ngUtilsService.prototype, "$state", {
+            get: function () {
+                return this.getFromInject("$state");
+            },
+            enumerable: true,
+            configurable: true
+        });
         ngUtilsService.prototype.manageAjaxLoading = function (before, ajax, after) {
             var _this = this;
             var qBefore = this.$q.defer();

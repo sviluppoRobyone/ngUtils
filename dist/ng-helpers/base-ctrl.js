@@ -37,6 +37,27 @@ define(["require", "exports", "./service", "./base-injectable"], function (requi
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(BaseCtrl.prototype, "$state", {
+            get: function () {
+                return this.$ngUtils.$state;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseCtrl.prototype, "$stateParams", {
+            get: function () {
+                return this.$ngUtils.$stateParams;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseCtrl.prototype, "$upload", {
+            get: function () {
+                return this.$ngUtils.$Upload;
+            },
+            enumerable: true,
+            configurable: true
+        });
         BaseCtrl.$inject = ["$scope", service_1.ngUtilsService.serviceName];
         return BaseCtrl;
     }(base_injectable_1.baseInjectable));
