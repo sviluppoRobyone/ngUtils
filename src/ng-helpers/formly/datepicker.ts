@@ -1,7 +1,19 @@
 import * as moduleExists from "../module-exists";
 import * as angular from "angular";
 
+function camelize(s)  {
+    s = s.replace(/[\-_\s]+(.)?/g, function (match, chr) {
+        return chr ? chr.toUpperCase() : "";
+    });
+    // Ensure 1st char is always lowercase
+    return s.replace(/^([A-Z])/, function (match, chr) {
+        return chr ? chr.toLowerCase() : "";
+    });
+}
+
 export function Configure(app:ng.IModule){
+
+
 
     moduleExists.configureModuleIfExists(app,["ui.bootstrap"],()=>{
         app.run([            "formlyConfig", (formlyConfig: AngularFormly.IFormlyConfig) => {
@@ -90,15 +102,7 @@ export function Configure(app:ng.IModule){
                 }]
             });
     
-            var camelize = (string) => {
-                string = string.replace(/[\-_\s]+(.)?/g, function (match, chr) {
-                    return chr ? chr.toUpperCase() : "";
-                });
-                // Ensure 1st char is always lowercase
-                return string.replace(/^([A-Z])/, function (match, chr) {
-                    return chr ? chr.toLowerCase() : "";
-                });
-    }
+  
             }]);
        
         

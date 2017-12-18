@@ -1,6 +1,15 @@
 define(["require", "exports", "../module-exists", "angular"], function (require, exports, moduleExists, angular) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    function camelize(s) {
+        s = s.replace(/[\-_\s]+(.)?/g, function (match, chr) {
+            return chr ? chr.toUpperCase() : "";
+        });
+        // Ensure 1st char is always lowercase
+        return s.replace(/^([A-Z])/, function (match, chr) {
+            return chr ? chr.toLowerCase() : "";
+        });
+    }
     function Configure(app) {
         moduleExists.configureModuleIfExists(app, ["ui.bootstrap"], function () {
             app.run(["formlyConfig", function (formlyConfig) {
@@ -62,15 +71,6 @@ define(["require", "exports", "../module-exists", "angular"], function (require,
                                 };
                             }]
                     });
-                    var camelize = function (string) {
-                        string = string.replace(/[\-_\s]+(.)?/g, function (match, chr) {
-                            return chr ? chr.toUpperCase() : "";
-                        });
-                        // Ensure 1st char is always lowercase
-                        return string.replace(/^([A-Z])/, function (match, chr) {
-                            return chr ? chr.toLowerCase() : "";
-                        });
-                    };
                 }]);
         });
     }
