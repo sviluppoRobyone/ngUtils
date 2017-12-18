@@ -1,15 +1,7 @@
 import * as angular from "angular";
 
 export function moduleExists(m: ng.IModule, names: string[]) {
-  var cnt = 0;
-  try {
-    if (!!angular.module(name) && m.requires.some(x => x == name)) {
-      cnt++;
-    }
-  } catch (e) {
-    return false;
-  }
-  return cnt == names.length;
+  return names.every(x=>m.requires.some(y=>y==x));
 }
 export function configureModuleIfExists(
   m: ng.IModule,

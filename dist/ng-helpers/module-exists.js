@@ -1,17 +1,8 @@
-define(["require", "exports", "angular"], function (require, exports, angular) {
+define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function moduleExists(m, names) {
-        var cnt = 0;
-        try {
-            if (!!angular.module(name) && m.requires.some(function (x) { return x == name; })) {
-                cnt++;
-            }
-        }
-        catch (e) {
-            return false;
-        }
-        return cnt == names.length;
+        return names.every(function (x) { return m.requires.some(function (y) { return y == x; }); });
     }
     exports.moduleExists = moduleExists;
     function configureModuleIfExists(m, moduleNames, fn) {
