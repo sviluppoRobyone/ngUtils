@@ -9,6 +9,7 @@ define(["require", "exports", "./service"], function (require, exports, service_
             }
             this.args = [];
             this.args = args;
+            Object.defineProperty(this, "args", { enumerable: false });
         }
         Object.defineProperty(BaseCtrl.prototype, "$scope", {
             get: function () {

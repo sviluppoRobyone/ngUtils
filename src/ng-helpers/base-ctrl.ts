@@ -6,6 +6,7 @@ export class BaseCtrl {
     args: any[] = [];
     constructor(...args:any[]) {
         this.args = args;
+        Object.defineProperty(this,"args",{enumerable:false});
     }
     get $scope(): ng.IScope {
         return this.args[BaseCtrl.$inject.indexOf("$scope")];
