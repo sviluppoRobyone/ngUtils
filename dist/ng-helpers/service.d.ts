@@ -8,10 +8,6 @@ import { baseInjectable } from "./base-injectable";
 import * as fv from "./file-viewer";
 export declare class ngUtilsService extends baseInjectable {
     static serviceName: string;
-    static $inject: string[];
-    private store;
-    protected getFromInject<T>(key: string): any;
-    readonly $injector: angular.auto.IInjectorService;
     readonly $rootScope: ng.IRootScopeService;
     readonly $http: ng.IHttpService;
     readonly $location: ng.ILocationService;

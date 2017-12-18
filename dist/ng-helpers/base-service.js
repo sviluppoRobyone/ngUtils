@@ -18,7 +18,7 @@ define(["require", "exports", "./base-injectable", "./service"], function (requi
         }
         Object.defineProperty(BaseService.prototype, "$ngUtils", {
             get: function () {
-                return this.args[BaseService.$inject.indexOf(service_1.ngUtilsService.serviceName)];
+                return this.getFromInject(service_1.ngUtilsService.serviceName);
             },
             enumerable: true,
             configurable: true

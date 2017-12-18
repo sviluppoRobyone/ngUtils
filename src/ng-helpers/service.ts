@@ -3,21 +3,8 @@ import {baseInjectable} from "./base-injectable";
 import * as fv from "./file-viewer";
 export class ngUtilsService extends baseInjectable {
        
-    static serviceName = "$ngUtils";
-    static $inject = ["$injector"];
-    private store :any= {};
-   
-    protected getFromInject<T>(key: string) {
-
-        if (!this.store[key])
-            this.store[key] = this.$injector.get<T>(key);
-
-        return this.store[key];
-
-    }
-    get $injector(): angular.auto.IInjectorService {
-        return this.args[0];
-    }
+    static serviceName = "$ngUtils";  
+    
     get $rootScope(): ng.IRootScopeService {
         return this.getFromInject("$rootScope");
     }

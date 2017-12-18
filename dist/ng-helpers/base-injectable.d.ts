@@ -1,5 +1,9 @@
+/// <reference types="angular" />
 export declare abstract class baseInjectable {
     static $inject: string[];
-    args: any[];
+    private store;
+    protected args: any[];
+    protected getFromInject<T>(key: string): any;
     constructor(...args: any[]);
+    readonly $injector: angular.auto.IInjectorService;
 }

@@ -14,22 +14,8 @@ define(["require", "exports", "./base-injectable", "./file-viewer"], function (r
     var ngUtilsService = /** @class */ (function (_super) {
         __extends(ngUtilsService, _super);
         function ngUtilsService() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.store = {};
-            return _this;
+            return _super !== null && _super.apply(this, arguments) || this;
         }
-        ngUtilsService.prototype.getFromInject = function (key) {
-            if (!this.store[key])
-                this.store[key] = this.$injector.get(key);
-            return this.store[key];
-        };
-        Object.defineProperty(ngUtilsService.prototype, "$injector", {
-            get: function () {
-                return this.args[0];
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(ngUtilsService.prototype, "$rootScope", {
             get: function () {
                 return this.getFromInject("$rootScope");
@@ -203,7 +189,6 @@ define(["require", "exports", "./base-injectable", "./file-viewer"], function (r
             return q.promise;
         };
         ngUtilsService.serviceName = "$ngUtils";
-        ngUtilsService.$inject = ["$injector"];
         return ngUtilsService;
     }(base_injectable_1.baseInjectable));
     exports.ngUtilsService = ngUtilsService;

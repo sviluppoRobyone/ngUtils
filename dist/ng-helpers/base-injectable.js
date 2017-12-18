@@ -7,11 +7,25 @@ define(["require", "exports"], function (require, exports) {
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];
             }
+            var _this = this;
+            this.store = {};
             this.args = [];
             this.args = args;
-            Object.defineProperty(this, "args", { enumerable: false });
+            ["args", "store"].forEach(function (x) { return Object.defineProperty(_this, x, { enumerable: false }); });
         }
-        baseInjectable.$inject = [];
+        baseInjectable.prototype.getFromInject = function (key) {
+            if (!this.store[key])
+                this.store[key] = this.$injector.get(key);
+            return this.store[key];
+        };
+        Object.defineProperty(baseInjectable.prototype, "$injector", {
+            get: function () {
+                return this.store[baseInjectable.$inject.indexOf("$injector")];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        baseInjectable.$inject = ["$injector"];
         return baseInjectable;
     }());
     exports.baseInjectable = baseInjectable;
