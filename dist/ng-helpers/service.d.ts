@@ -5,7 +5,6 @@
 /// <reference types="angular-ui-bootstrap" />
 import * as angular from "angular";
 import { baseInjectable } from "./base-injectable";
-import * as fv from "./file-viewer";
 export declare class ngUtilsService extends baseInjectable {
     static serviceName: string;
     static $inject: string[];
@@ -30,7 +29,6 @@ export declare class ngUtilsService extends baseInjectable {
     readonly $stateParams: angular.ui.IStateParamsService;
     readonly $state: angular.ui.IStateService;
     readonly $uibModal: angular.ui.bootstrap.IModalService;
-    readonly $fileViewer: fv.fileViewerService;
     manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function): angular.IPromise<{}>;
     onScopeDispose($scope: ng.IScope): angular.IPromise<{}>;
 }

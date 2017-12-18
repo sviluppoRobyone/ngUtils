@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./service", "./base-injectable"], function (require, exports, service_1, base_injectable_1) {
+define(["require", "exports", "./service", "./base-injectable", "./file-viewer"], function (require, exports, service_1, base_injectable_1, fv) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseCtrl = /** @class */ (function (_super) {
@@ -67,12 +67,12 @@ define(["require", "exports", "./service", "./base-injectable"], function (requi
         });
         Object.defineProperty(BaseCtrl.prototype, "$fileViewer", {
             get: function () {
-                return this.$ngUtils.$fileViewer;
+                return this.args[BaseCtrl.$inject.indexOf(fv.serviceName)];
             },
             enumerable: true,
             configurable: true
         });
-        BaseCtrl.$inject = ["$scope", service_1.ngUtilsService.serviceName];
+        BaseCtrl.$inject = ["$scope", service_1.ngUtilsService.serviceName, fv.serviceName];
         return BaseCtrl;
     }(base_injectable_1.baseInjectable));
     exports.BaseCtrl = BaseCtrl;
