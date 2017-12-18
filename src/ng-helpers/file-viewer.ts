@@ -3,7 +3,7 @@ import { BaseService } from "./base-service";
 import { BaseCtrl } from "./base-ctrl";
 
 
-alert(typeof BaseService);
+
     
             const fileKey = "fileToView";
             export const serviceName = "fileViewer";
