@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./base-injectable"], function (require, exports, base_injectable_1) {
+define(["require", "exports", "./base-injectable", "./file-viewer"], function (require, exports, base_injectable_1, fv) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ngUtilsService = /** @class */ (function (_super) {
@@ -152,6 +152,13 @@ define(["require", "exports", "./base-injectable"], function (require, exports, 
         Object.defineProperty(ngUtilsService.prototype, "$uibModal", {
             get: function () {
                 return this.getFromInject("$uibModal");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ngUtilsService.prototype, "$fileViewer", {
+            get: function () {
+                return this.getFromInject(fv.serviceName);
             },
             enumerable: true,
             configurable: true
