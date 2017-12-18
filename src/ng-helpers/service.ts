@@ -1,5 +1,6 @@
 import * as angular from "angular";
 import {baseInjectable} from "./base-injectable";
+import * as fv from "./file-viewer";
 export class ngUtilsService extends baseInjectable {
        
     static serviceName = "$ngUtils";
@@ -71,7 +72,9 @@ export class ngUtilsService extends baseInjectable {
     get $uibModal():angular.ui.bootstrap.IModalService{
         return this.getFromInject("$uibModal");
     }
-   
+    get $fileViewer():fv.fileViewerService{        
+        return this.args[fv.serviceName];
+    }
     manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function) {
 
         var qBefore = this.$q.defer();
