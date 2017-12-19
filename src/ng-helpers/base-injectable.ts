@@ -13,10 +13,10 @@ export abstract class BaseInjectable{
 
     }
     public constructor(...args){
-            this.args= args;
-            ["args","store"].forEach(x=>Object.defineProperty(this,x,{enumerable:false}));
+        this.args= args;
+        ["args","store"].forEach(x=>Object.defineProperty(this,x,{enumerable:false}));
     }
     get $injector(): angular.auto.IInjectorService {
-        return this.store[BaseInjectable.$inject.indexOf("$injector")];
+        return this.args[BaseInjectable.$inject.indexOf("$injector")];
     }
 }
