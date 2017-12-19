@@ -14,20 +14,20 @@ define(["require", "exports"], function (require, exports) {
                     label: label
                 },
                 expressionProperties: {
-                    "templateOptions.disabled": function ($viewValue, $modelValue, scope) {
-                        return !!scope.model["Not" + key];
+                    "templateOptions.disabled": ($viewValue, $modelValue, scope) => {
+                        return !!scope.model[`Not${key}`];
                     },
-                    "templateOptions.required": function ($viewValue, $modelValue, scope) {
-                        return !scope.model["Not" + key];
+                    "templateOptions.required": ($viewValue, $modelValue, scope) => {
+                        return !scope.model[`Not${key}`];
                     }
                 }
             },
             {
-                key: "Not" + key,
+                key: `Not${key}`,
                 type: "awesome-checkbox",
                 templateOptions: {
-                    label: "Senza " + label,
-                    onChange: function ($viewValue, $modelValue, scope) {
+                    label: `Senza ${label}`,
+                    onChange: ($viewValue, $modelValue, scope) => {
                         if ($viewValue || $modelValue)
                             scope.model[key] = null;
                     }

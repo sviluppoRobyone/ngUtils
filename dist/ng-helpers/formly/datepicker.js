@@ -11,8 +11,8 @@ define(["require", "exports", "../module-exists", "angular"], function (require,
         });
     }
     function Configure(app) {
-        moduleExists.configureModuleIfExists(app, ["ui.bootstrap"], function () {
-            app.run(["formlyConfig", function (formlyConfig) {
+        moduleExists.configureModuleIfExists(app, ["ui.bootstrap"], () => {
+            app.run(["formlyConfig", (formlyConfig) => {
                     var attributes = [
                         "date-disabled",
                         "custom-class",
@@ -52,7 +52,24 @@ define(["require", "exports", "../module-exists", "angular"], function (require,
                     formlyConfig.setType({
                         name: "datepicker",
                         //language=html
-                        template: "\n    <p class=\"input-group\">\n    <input  type=\"text\"\n    id=\"{{::id}}\"\n    name=\"{{::id}}\"\n    ng-model=\"model[options.key]\"\n    class=\"form-control\"\n    ng-click=\"datepicker.open($event)\"\n    uib-datepicker-popup=\"{{to.datepickerOptions.format}}\"\n    is-open=\"datepicker.opened\"\n    datepicker-options=\"to.datepickerOptions\" />\n    <span class=\"input-group-btn\">\n    <button type=\"button\" class=\"btn btn-default\" ng-click=\"datepicker.open($event)\" ng-disabled=\"to.disabled\">\n    <i class=\"glyphicon glyphicon-calendar\"></i>\n    </button>\n    </span>\n    </p>\n    ",
+                        template: `
+    <p class="input-group">
+    <input  type="text"
+    id="{{::id}}"
+    name="{{::id}}"
+    ng-model="model[options.key]"
+    class="form-control"
+    ng-click="datepicker.open($event)"
+    uib-datepicker-popup="{{to.datepickerOptions.format}}"
+    is-open="datepicker.opened"
+    datepicker-options="to.datepickerOptions" />
+    <span class="input-group-btn">
+    <button type="button" class="btn btn-default" ng-click="datepicker.open($event)" ng-disabled="to.disabled">
+    <i class="glyphicon glyphicon-calendar"></i>
+    </button>
+    </span>
+    </p>
+    `,
                         wrapper: ["bootstrapLabel", "bootstrapHasError"],
                         defaultOptions: {
                             ngModelAttrs: ngModelAttrs,

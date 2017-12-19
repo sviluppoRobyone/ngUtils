@@ -12,7 +12,10 @@ define(["require", "exports", "./ctrl"], function (require, exports, ctrl_1) {
             restrict: "E",
             controllerAs: "Ctrl",
             //language=html
-            template: "\n            <span ng-if=\"Ctrl.IsLoading\" ng-transclude=\"loading\"></span>\n            <span ng-if=\"!Ctrl.IsLoading\" ng-transclude=\"content\"></span>\n            ",
+            template: `
+            <span ng-if="Ctrl.IsLoading" ng-transclude="loading"></span>
+            <span ng-if="!Ctrl.IsLoading" ng-transclude="content"></span>
+            `,
             scope: {
                 isLoading: "="
             }

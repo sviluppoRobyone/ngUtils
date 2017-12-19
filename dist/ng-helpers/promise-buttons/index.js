@@ -2,7 +2,7 @@ define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function Configure(module) {
-        module.config(["angularPromiseButtonsProvider", function (angularPromiseButtonsProvider) {
+        module.config(["angularPromiseButtonsProvider", (angularPromiseButtonsProvider) => {
                 angularPromiseButtonsProvider.extendConfig({
                     //language=html
                     spinnerTpl: ' <span class="fa fa-spin fa-circle-o-notch fa-loading"></span> ',

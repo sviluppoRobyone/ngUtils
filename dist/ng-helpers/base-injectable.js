@@ -1,33 +1,23 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var BaseInjectable = /** @class */ (function () {
-        function BaseInjectable() {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            var _this = this;
+    class BaseInjectable {
+        constructor(...args) {
             this.store = {};
             this.args = [];
             this.args = args;
-            ["args", "store"].forEach(function (x) { return Object.defineProperty(_this, x, { enumerable: false }); });
+            ["args", "store"].forEach(x => Object.defineProperty(this, x, { enumerable: false }));
         }
-        BaseInjectable.prototype.getFromInject = function (key) {
+        getFromInject(key) {
             if (!this.store[key])
                 this.store[key] = this.$injector.get(key);
             return this.store[key];
-        };
-        Object.defineProperty(BaseInjectable.prototype, "$injector", {
-            get: function () {
-                return this.args[BaseInjectable.$inject.indexOf("$injector")];
-            },
-            enumerable: true,
-            configurable: true
-        });
-        BaseInjectable.$inject = ["$injector"];
-        return BaseInjectable;
-    }());
+        }
+        get $injector() {
+            return this.args[BaseInjectable.$inject.indexOf("$injector")];
+        }
+    }
+    BaseInjectable.$inject = ["$injector"];
     exports.BaseInjectable = BaseInjectable;
 });
 //# sourceMappingURL=base-injectable.js.map

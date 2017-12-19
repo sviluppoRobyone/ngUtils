@@ -10,13 +10,13 @@ define(["require", "exports", "./directive", "jquery", "./themes"], function (re
         $("<i/>")
             .addClass("fa fa-spin")
             .appendTo(baseTmpl);
-        spinners.forEach(function (spinner, spinnerIndex) {
-            sizes.forEach(function (size) {
+        spinners.forEach((spinner, spinnerIndex) => {
+            sizes.forEach(size => {
                 var div = baseTmpl.clone();
                 var i = $(".fa", div);
-                i.addClass("fa-" + spinner);
+                i.addClass(`fa-${spinner}`);
                 if (size)
-                    i.addClass("fa-" + size);
+                    i.addClass(`fa-${size}`);
                 var html = $("<div/>").append(div).html();
                 var dirName = directive.directiveName + (size || "") + "T" + (spinnerIndex + 1);
                 m.directive(dirName, themes_1.baseTheme.DirectiveBuilder(html));

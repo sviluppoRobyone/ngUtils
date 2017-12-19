@@ -4,12 +4,19 @@ define(["require", "exports", "./directive"], function (require, exports, d) {
     var baseTheme;
     (function (baseTheme) {
         function DirectiveBuilder(loadingTemplate) {
-            return function () {
+            return () => {
                 console.log(loadingTemplate);
                 var originalDirective = d.directive();
                 originalDirective.transclude = true;
                 //language=html
-                originalDirective.template = "\n                    <fa-loading is-loading=\"Ctrl.IsLoading\">\n                        <loading>" + loadingTemplate + "</loading>\n                        <content ng-transclude>\n                         \n                        </content>\n                    </fa-loading>\n    ";
+                originalDirective.template = `
+                    <fa-loading is-loading="Ctrl.IsLoading">
+                        <loading>${loadingTemplate}</loading>
+                        <content ng-transclude>
+                         
+                        </content>
+                    </fa-loading>
+    `;
                 return originalDirective;
             };
         }

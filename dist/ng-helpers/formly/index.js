@@ -4,29 +4,45 @@ define(["require", "exports", "./datepicker", "./form-builder", "./nullable-fiel
     function Configure(m) {
         m.run([
             "formlyValidationMessages",
-            function (formlyValidationMessages) {
+            (formlyValidationMessages) => {
                 formlyValidationMessages.addStringMessage("required", "Campo richiesto");
-                formlyValidationMessages.messages["minlength"] = function ($viewValue, $modelValue, $scope) {
+                formlyValidationMessages.messages["minlength"] = ($viewValue, $modelValue, $scope) => {
                     return !!$scope["to"].minlength
-                        ? "Minimo " + $scope["to"].minlength + " caratteri"
+                        ? `Minimo ${$scope["to"].minlength} caratteri`
                         : "";
                 };
             }
         ]);
         m.run([
             "formlyConfig",
-            function (formlyConfig) {
+            (formlyConfig) => {
                 formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = "fc.$dirty";
                 formlyConfig.setType({
                     name: "awesome-checkbox",
                     //language=html
-                    template: "\n            <div class=\"checkbox\">\n                <input type=\"checkbox\" class=\"formly-field-checkbox\" ng-model=\"model[options.key]\" id=\"{{options.id}}\">\n                <label for=\"{{options.id}}\">\n                    {{to.label}}\n                    {{to.required ? '*' : ''}}\n                </label>\n            </div>\n            "
+                    template: `
+            <div class="checkbox">
+                <input type="checkbox" class="formly-field-checkbox" ng-model="model[options.key]" id="{{options.id}}">
+                <label for="{{options.id}}">
+                    {{to.label}}
+                    {{to.required ? '*' : ''}}
+                </label>
+            </div>
+            `
                 });
                 formlyConfig.setWrapper({
                     name: "hasError",
                     types: ["input", "select"],
                     //language=html
-                    template: "\n            <formly-transclude></formly-transclude>\n    \n            <div class=\"text-danger\" ng-messages=\"options.formControl.$error\" ng-if=\"options.validation.errorExistsAndShouldBeVisible\" >\n    <div class=\"error-message\" ng-message=\"{{::name}}\" ng-repeat=\"(name, message) in ::options.validation.messages\">\n    {{message(options.formControl.$viewValue, options.formControl.$modelValue, this)}}\n    </div>\n    </div>\n    "
+                    template: `
+            <formly-transclude></formly-transclude>
+    
+            <div class="text-danger" ng-messages="options.formControl.$error" ng-if="options.validation.errorExistsAndShouldBeVisible" >
+    <div class="error-message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages">
+    {{message(options.formControl.$viewValue, options.formControl.$modelValue, this)}}
+    </div>
+    </div>
+    `
                 });
             }
         ]);

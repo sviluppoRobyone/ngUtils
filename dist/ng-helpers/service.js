@@ -1,196 +1,104 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 define(["require", "exports", "./base-injectable", "./file-viewer"], function (require, exports, base_injectable_1, fv) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ngUtilsService = /** @class */ (function (_super) {
-        __extends(ngUtilsService, _super);
-        function ngUtilsService() {
-            return _super !== null && _super.apply(this, arguments) || this;
+    class ngUtilsService extends base_injectable_1.BaseInjectable {
+        get $rootScope() {
+            return this.getFromInject("$rootScope");
         }
-        Object.defineProperty(ngUtilsService.prototype, "$rootScope", {
-            get: function () {
-                return this.getFromInject("$rootScope");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$http", {
-            get: function () {
-                return this.getFromInject("$http");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$location", {
-            get: function () {
-                return this.getFromInject("$location");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$routeParams", {
-            get: function () {
-                return this.getFromInject("$routeParams");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$q", {
-            get: function () {
-                return this.getFromInject("$q");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$filter", {
-            get: function () {
-                return this.getFromInject("$filter");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$route", {
-            get: function () {
-                return this.getFromInject("$route");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$timeout", {
-            get: function () {
-                return this.getFromInject("$timeout");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$ngView", {
-            get: function () {
-                return $("[ng-view]");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$cacheFactory", {
-            get: function () {
-                return this.getFromInject("$cacheFactory");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$locale", {
-            get: function () {
-                return this.getFromInject("$locale");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$interval", {
-            get: function () {
-                return this.getFromInject("$interval");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$log", {
-            get: function () {
-                return this.getFromInject("$log");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$sce", {
-            get: function () {
-                return this.getFromInject("$sce");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$Upload", {
-            get: function () {
-                return this.getFromInject("Upload");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$stateParams", {
-            get: function () {
-                return this.getFromInject("$stateParams");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$state", {
-            get: function () {
-                return this.getFromInject("$state");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$uibModal", {
-            get: function () {
-                return this.getFromInject("$uibModal");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ngUtilsService.prototype, "$fileViewer", {
-            get: function () {
-                return this.args[fv.serviceName];
-            },
-            enumerable: true,
-            configurable: true
-        });
-        ngUtilsService.prototype.manageAjaxLoading = function (before, ajax, after) {
-            var _this = this;
+        get $http() {
+            return this.getFromInject("$http");
+        }
+        get $location() {
+            return this.getFromInject("$location");
+        }
+        get $routeParams() {
+            return this.getFromInject("$routeParams");
+        }
+        get $q() {
+            return this.getFromInject("$q");
+        }
+        get $filter() {
+            return this.getFromInject("$filter");
+        }
+        get $route() {
+            return this.getFromInject("$route");
+        }
+        get $timeout() {
+            return this.getFromInject("$timeout");
+        }
+        get $ngView() {
+            return $("[ng-view]");
+        }
+        get $cacheFactory() {
+            return this.getFromInject("$cacheFactory");
+        }
+        get $locale() {
+            return this.getFromInject("$locale");
+        }
+        get $interval() {
+            return this.getFromInject("$interval");
+        }
+        get $log() {
+            return this.getFromInject("$log");
+        }
+        get $sce() {
+            return this.getFromInject("$sce");
+        }
+        get $Upload() {
+            return this.getFromInject("Upload");
+        }
+        get $stateParams() {
+            return this.getFromInject("$stateParams");
+        }
+        get $state() {
+            return this.getFromInject("$state");
+        }
+        get $uibModal() {
+            return this.getFromInject("$uibModal");
+        }
+        get $fileViewer() {
+            return this.args[fv.serviceName];
+        }
+        manageAjaxLoading(before, ajax, after) {
             var qBefore = this.$q.defer();
             var qAjax = this.$q.defer();
             var qAfter = this.$q.defer();
-            var doBefore = function () {
-                _this.$timeout(function () {
+            var doBefore = () => {
+                this.$timeout(() => {
                     before && before();
-                }).then(function () {
+                }).then(() => {
                     qBefore.resolve();
                 });
             };
-            var doAfter = function () {
-                _this.$timeout(function () {
+            var doAfter = () => {
+                this.$timeout(() => {
                     after && after();
-                }).then(function () {
+                }).then(() => {
                     qAfter.resolve();
                 });
             };
-            qBefore.promise.then(function () {
+            qBefore.promise.then(() => {
                 ajax(qAjax.resolve, qAjax.reject);
             });
-            qAjax.promise.then(function () {
+            qAjax.promise.then(() => {
                 doAfter();
             });
-            return this.$q(function (ok, ko) {
-                qAfter.promise.then(function () {
+            return this.$q((ok, ko) => {
+                qAfter.promise.then(() => {
                     ok();
                 });
                 doBefore();
             });
-        };
-        ngUtilsService.prototype.onScopeDispose = function ($scope) {
+        }
+        onScopeDispose($scope) {
             var q = this.$q.defer();
-            $scope.$on("$destroy", function () {
+            $scope.$on("$destroy", () => {
                 q.resolve();
             });
             return q.promise;
-        };
-        ngUtilsService.serviceName = "$ngUtils";
-        return ngUtilsService;
-    }(base_injectable_1.BaseInjectable));
+        }
+    }
+    ngUtilsService.serviceName = "$ngUtils";
     exports.ngUtilsService = ngUtilsService;
 });
 //# sourceMappingURL=service.js.map
