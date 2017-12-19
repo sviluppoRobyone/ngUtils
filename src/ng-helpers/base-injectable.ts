@@ -16,7 +16,7 @@ export abstract class BaseInjectable{
         this.args= args;
         ["args","store"].forEach(x=>Object.defineProperty(this,x,{enumerable:false}));
     }
-    get $injector(): angular.auto.IInjectorService {
+    get $injector(): angular.auto.IInjectorService {        
         return this.args[BaseInjectable.$inject.indexOf("$injector")];
     }
 }

@@ -20,7 +20,7 @@ define(["require", "exports"], function (require, exports) {
         };
         Object.defineProperty(BaseInjectable.prototype, "$injector", {
             get: function () {
-                return this.store[BaseInjectable.$inject.indexOf("$injector")];
+                return this.args[BaseInjectable.$inject.indexOf("$injector")];
             },
             enumerable: true,
             configurable: true
