@@ -5,13 +5,13 @@ define(["require", "exports", "./service", "./filters/index", "./module-exists",
         m.service(service_1.ngUtilsService.serviceName, service_1.ngUtilsService);
         filters.AllFilters(m);
         faLoading.register(m);
-        moduleExists.configureModuleIfExists(m, ["formly"], () => {
+        moduleExists.configureModuleIfExists(m, ["formly"], function () {
             formly.Configure(m);
         });
-        moduleExists.configureModuleIfExists(m, ["angularPromiseButtons"], () => {
+        moduleExists.configureModuleIfExists(m, ["angularPromiseButtons"], function () {
             promiseButton.Configure(m);
         });
-        moduleExists.configureModuleIfExists(m, ["ui.bootstrap"], () => {
+        moduleExists.configureModuleIfExists(m, ["ui.bootstrap"], function () {
             HttpErrorToModal.register(m);
             debugModal.register(m);
             fileViewer.register(m);

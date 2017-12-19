@@ -2,7 +2,7 @@ define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function moduleExists(m, names) {
-        return names.every(x => m.requires.some(y => y == x));
+        return names.every(function (x) { return m.requires.some(function (y) { return y == x; }); });
     }
     exports.moduleExists = moduleExists;
     function configureModuleIfExists(m, moduleNames, fn) {

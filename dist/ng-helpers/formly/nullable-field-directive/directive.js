@@ -8,7 +8,7 @@ define(["require", "exports", "./ctrl"], function (require, exports, ctrl_1) {
             controllerAs: "Ctrl",
             restrict: "E",
             //language=html
-            template: `<formly-form model="Ctrl.formModel" fields="Ctrl.fields"></formly-form>`,
+            template: "<formly-form model=\"Ctrl.formModel\" fields=\"Ctrl.fields\"></formly-form>",
             scope: {
                 model: "=",
                 type: "@",

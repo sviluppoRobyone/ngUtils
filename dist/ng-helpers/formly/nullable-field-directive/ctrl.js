@@ -1,8 +1,12 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class Ctrl {
-        constructor(...args) {
+    var Ctrl = /** @class */ (function () {
+        function Ctrl() {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
             this.args = [];
             this.fields = [
                 {
@@ -12,10 +16,10 @@ define(["require", "exports"], function (require, exports) {
                         label: "",
                         type: "" //settato dopo
                     }, expressionProperties: {
-                        "templateOptions.disabled": ($viewValue, $modelValue, scope) => {
+                        "templateOptions.disabled": function ($viewValue, $modelValue, scope) {
                             return !!scope.model["isNull"];
                         },
-                        "templateOptions.required": ($viewValue, $modelValue, scope) => {
+                        "templateOptions.required": function ($viewValue, $modelValue, scope) {
                             return !scope.model["isNull"];
                         }
                     }
@@ -25,7 +29,7 @@ define(["require", "exports"], function (require, exports) {
                     type: "awesome-checkbox",
                     templateOptions: {
                         label: "Non impostato",
-                        onChange: ($viewValue, $modelValue, scope) => {
+                        onChange: function ($viewValue, $modelValue, scope) {
                             if ($viewValue || $modelValue)
                                 scope.model["model"] = null;
                         }
@@ -42,32 +46,49 @@ define(["require", "exports"], function (require, exports) {
             delete this.formModel.model;
             var c = this;
             Object.defineProperty(this.formModel, "model", {
-                get() {
+                get: function () {
                     return c.$model;
                 },
-                set(v) {
+                set: function (v) {
                     c.$model = v;
                 }
             });
             this.formModel.isNull = this.$model == null;
         }
-        get $scope() {
-            return this.args[Ctrl.$inject.indexOf("$scope")];
-        }
-        get $model() {
-            return this.$scope["model"];
-        }
-        set $model(v) {
-            this.$scope["model"] = v;
-        }
-        get $type() {
-            return this.$scope["type"] || "text";
-        }
-        get $label() {
-            return this.$scope["label"] || "";
-        }
-    }
-    Ctrl.$inject = ["$scope"];
+        Object.defineProperty(Ctrl.prototype, "$scope", {
+            get: function () {
+                return this.args[Ctrl.$inject.indexOf("$scope")];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Ctrl.prototype, "$model", {
+            get: function () {
+                return this.$scope["model"];
+            },
+            set: function (v) {
+                this.$scope["model"] = v;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Ctrl.prototype, "$type", {
+            get: function () {
+                return this.$scope["type"] || "text";
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Ctrl.prototype, "$label", {
+            get: function () {
+                return this.$scope["label"] || "";
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Ctrl.$inject = ["$scope"];
+        return Ctrl;
+    }());
     exports.Ctrl = Ctrl;
 });
 //# sourceMappingURL=ctrl.js.map

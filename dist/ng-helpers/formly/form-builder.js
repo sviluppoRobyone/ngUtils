@@ -1,3 +1,13 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 define(["require", "exports", "../base-ctrl"], function (require, exports, base_ctrl_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -8,19 +18,7 @@ define(["require", "exports", "../base-ctrl"], function (require, exports, base_
     function directive() {
         return {
             //language=html
-            template: `
-<div class="form-builder">
-<form name="f" ng-submit="Ctrl.onSave()" promise-btn>
-<fieldset>
-<legend>{{Ctrl.title}}</legend>
-<formly-form fields="Ctrl.fields" model="Ctrl.model"></formly-form>
-<ng-transclude></ng-transclude>
-<hr/>
-<button class="btn btn-primary" ng-disabled="!f.$valid">SALVA</button>
-</fieldset>
-</form>
-</div>
-`,
+            template: "\n<div class=\"form-builder\">\n<form name=\"f\" ng-submit=\"Ctrl.onSave()\" promise-btn>\n<fieldset>\n<legend>{{Ctrl.title}}</legend>\n<formly-form fields=\"Ctrl.fields\" model=\"Ctrl.model\"></formly-form>\n<ng-transclude></ng-transclude>\n<hr/>\n<button class=\"btn btn-primary\" ng-disabled=\"!f.$valid\">SALVA</button>\n</fieldset>\n</form>\n</div>\n",
             controller: Ctrl,
             controllerAs: "Ctrl",
             transclude: true,
@@ -33,25 +31,42 @@ define(["require", "exports", "../base-ctrl"], function (require, exports, base_
             }
         };
     }
-    class Ctrl extends base_ctrl_1.BaseCtrl {
-        get model() {
-            return this.$scope["model"];
+    var Ctrl = /** @class */ (function (_super) {
+        __extends(Ctrl, _super);
+        function Ctrl() {
+            return _super !== null && _super.apply(this, arguments) || this;
         }
-        set model(v) {
-            this.$scope["model"] = v;
-        }
-        get fields() {
-            return this.$scope["fields"];
-        }
-        set fields(v) {
-            this.$scope["fields"] = v;
-        }
-        get title() {
-            return this.$scope["title"] || null;
-        }
-        onSave() {
+        Object.defineProperty(Ctrl.prototype, "model", {
+            get: function () {
+                return this.$scope["model"];
+            },
+            set: function (v) {
+                this.$scope["model"] = v;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Ctrl.prototype, "fields", {
+            get: function () {
+                return this.$scope["fields"];
+            },
+            set: function (v) {
+                this.$scope["fields"] = v;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Ctrl.prototype, "title", {
+            get: function () {
+                return this.$scope["title"] || null;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Ctrl.prototype.onSave = function () {
             return this.$scope["onSave"]();
-        }
-    }
+        };
+        return Ctrl;
+    }(base_ctrl_1.BaseCtrl));
 });
 //# sourceMappingURL=form-builder.js.map

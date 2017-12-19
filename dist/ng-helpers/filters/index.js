@@ -3,8 +3,8 @@ define(["require", "exports"], function (require, exports) {
     Object.defineProperty(exports, "__esModule", { value: true });
     function html(m) {
         m.filter("html", [
-            "$sce", ($sce) => {
-                return (htmlCode) => {
+            "$sce", function ($sce) {
+                return function (htmlCode) {
                     return $sce.trustAsHtml(htmlCode);
                 };
             }
@@ -13,8 +13,8 @@ define(["require", "exports"], function (require, exports) {
     exports.html = html;
     function url(m) {
         m.filter("url", [
-            "$sce", ($sce) => {
-                return (url) => {
+            "$sce", function ($sce) {
+                return function (url) {
                     return $sce.trustAsResourceUrl(url);
                 };
             }
@@ -22,8 +22,8 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.url = url;
     function bytes(m) {
-        m.filter("bytes", () => {
-            return (bytes, precision) => {
+        m.filter("bytes", function () {
+            return function (bytes, precision) {
                 if (isNaN(parseFloat(bytes)) || !isFinite(bytes))
                     return "-";
                 if (typeof precision === "undefined")
@@ -35,7 +35,7 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.bytes = bytes;
     function AllFilters(m) {
-        [html, url, bytes].map(x => x(m));
+        [html, url, bytes].map(function (x) { return x(m); });
     }
     exports.AllFilters = AllFilters;
 });

@@ -5,13 +5,17 @@ define(["require", "exports", "./interceptor"], function (require, exports, inte
         var factoryName = "HttpErrorToModalFactory";
         m.config([
             "$httpProvider",
-            ($httpProvider) => {
+            function ($httpProvider) {
                 $httpProvider.interceptors.push(factoryName);
             }
         ]);
-        const arr = [].concat(interceptor_1.Interceptor.$inject);
-        arr.push((...args) => {
-            return new interceptor_1.Interceptor(...args);
+        var arr = [].concat(interceptor_1.Interceptor.$inject);
+        arr.push(function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            return new (interceptor_1.Interceptor.bind.apply(interceptor_1.Interceptor, [void 0].concat(args)))();
         });
         m.factory(factoryName, arr);
     }
