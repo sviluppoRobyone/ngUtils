@@ -9,7 +9,6 @@ define(["require", "exports", "./service", "./filters/index", "./module-exists",
             formly.Configure(m);
         });
         moduleExists.configureModuleIfExists(m, ["angularPromiseButtons"], function () {
-            alert("promise button");
             promiseButton.Configure(m);
         });
         moduleExists.configureModuleIfExists(m, ["ui.bootstrap"], function () {
