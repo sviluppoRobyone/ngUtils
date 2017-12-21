@@ -8,6 +8,7 @@ import * as HttpErrorToModal from "./http-error-to-modal/index";
 import * as debugModal from "./debug-modal";
 import * as fileViewer from "./file-viewer";
 import * as formly from "./formly/index";
+import "../array-helpers/find";
 
 export function init(m: ng.IModule) {
     m.service(ngUtilsService.serviceName, ngUtilsService);
