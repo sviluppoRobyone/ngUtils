@@ -149,6 +149,13 @@ define(["require", "exports", "./base-injectable", "./file-viewer"], function (r
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(ngUtilsService.prototype, "$attrs", {
+            get: function () {
+                return this.getFromInject("$attrs");
+            },
+            enumerable: true,
+            configurable: true
+        });
         ngUtilsService.prototype.manageAjaxLoading = function (before, ajax, after) {
             var _this = this;
             var qBefore = this.$q.defer();

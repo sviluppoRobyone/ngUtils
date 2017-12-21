@@ -27,6 +27,7 @@ export declare class ngUtilsService extends BaseInjectable {
     readonly $state: angular.ui.IStateService;
     readonly $uibModal: angular.ui.bootstrap.IModalService;
     readonly $fileViewer: fv.fileViewerService;
+    readonly $attrs: ng.IAttributes;
     manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function): angular.IPromise<{}>;
     onScopeDispose($scope: ng.IScope): angular.IPromise<{}>;
 }

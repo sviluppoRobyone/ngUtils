@@ -62,6 +62,9 @@ export class ngUtilsService extends BaseInjectable {
     get $fileViewer():fv.fileViewerService{        
         return this.args[fv.serviceName];
     }
+    get $attrs():ng.IAttributes{
+        return this.getFromInject("$attrs");
+    }
     manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function) {
 
         var qBefore = this.$q.defer();

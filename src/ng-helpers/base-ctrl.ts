@@ -26,6 +26,7 @@ export abstract class BaseCtrl extends BaseInjectable {
     get $uibModal(){
         return this.$ngUtils.$uibModal;
     }
-
-   
+    get $attrs(){
+        return this.$ngUtils.$attrs;
+    }   
 }
