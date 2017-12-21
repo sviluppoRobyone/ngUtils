@@ -5,7 +5,6 @@ export abstract class BaseInjectable{
     private store :any= {};
     protected args:any[]=[];
     protected getFromInject<T>(key: string) {
-
         if (!this.store[key])
             this.store[key] = this.$injector.get<T>(key);
 
@@ -18,5 +17,8 @@ export abstract class BaseInjectable{
     }
     get $injector(): angular.auto.IInjectorService {        
         return this.args[BaseInjectable.$inject.indexOf("$injector")];
+    }
+    get $injectedArgs(){
+        return this.args;
     }
 }

@@ -14,5 +14,4 @@ export declare abstract class BaseCtrl extends BaseInjectable {
     readonly $stateParams: angular.ui.IStateParamsService;
     readonly $upload: angular.angularFileUpload.IUploadService;
     readonly $uibModal: angular.ui.bootstrap.IModalService;
-    readonly $attrs: angular.IAttributes;
 }

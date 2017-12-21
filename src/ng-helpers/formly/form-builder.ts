@@ -1,4 +1,5 @@
 import { BaseCtrl } from "../base-ctrl";
+import { BaseCtrlForDirective } from "../base-ctrl-for-directive";
 export function register(m: ng.IModule) {
   m.directive("formBuilder", directive);
 }
@@ -30,7 +31,7 @@ function directive(): ng.IDirective {
   };
 }
 
-class Ctrl extends BaseCtrl {
+class Ctrl extends BaseCtrlForDirective {
   get model() {
     return this.$scope["model"];
   }

@@ -25,6 +25,13 @@ define(["require", "exports"], function (require, exports) {
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(BaseInjectable.prototype, "$injectedArgs", {
+            get: function () {
+                return this.args;
+            },
+            enumerable: true,
+            configurable: true
+        });
         BaseInjectable.$inject = ["$injector"];
         return BaseInjectable;
     }());

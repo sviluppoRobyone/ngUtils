@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "../base-ctrl"], function (require, exports, base_ctrl_1) {
+define(["require", "exports", "../base-ctrl-for-directive"], function (require, exports, base_ctrl_for_directive_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
@@ -66,6 +66,6 @@ define(["require", "exports", "../base-ctrl"], function (require, exports, base_
             return this.$scope["onSave"]();
         };
         return Ctrl;
-    }(base_ctrl_1.BaseCtrl));
+    }(base_ctrl_for_directive_1.BaseCtrlForDirective));
 });
 //# sourceMappingURL=form-builder.js.map

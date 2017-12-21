@@ -6,4 +6,5 @@ export declare abstract class BaseInjectable {
     protected getFromInject<T>(key: string): any;
     constructor(...args: any[]);
     readonly $injector: angular.auto.IInjectorService;
+    readonly $injectedArgs: any[];
 }

@@ -65,13 +65,6 @@ define(["require", "exports", "./service", "./base-injectable"], function (requi
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(BaseCtrl.prototype, "$attrs", {
-            get: function () {
-                return this.$ngUtils.$attrs;
-            },
-            enumerable: true,
-            configurable: true
-        });
         BaseCtrl.$inject = [].concat(["$scope", service_1.ngUtilsService.serviceName]);
         return BaseCtrl;
     }(base_injectable_1.BaseInjectable));
