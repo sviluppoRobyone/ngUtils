@@ -4,7 +4,6 @@ define(["require", "exports"], function (require, exports) {
     function Configure(module) {
         module.config(["angularPromiseButtonsProvider", function (angularPromiseButtonsProvider) {
                 angularPromiseButtonsProvider.extendConfig({
-                    //language=html
                     spinnerTpl: ' <span class="fa fa-spin fa-circle-o-notch fa-loading"></span> ',
                     disableBtn: true,
                     btnLoadingClass: "is-loading",
@@ -16,6 +15,5 @@ define(["require", "exports"], function (require, exports) {
         ]);
     }
     exports.Configure = Configure;
-    exports.directive = {};
 });
 //# sourceMappingURL=index.js.map
