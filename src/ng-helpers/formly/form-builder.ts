@@ -25,8 +25,7 @@ function directive(): ng.IDirective {
     scope: {
       model: "=",
       fields: "=",
-      onSave: "&",
-      title: "=*"
+      onSave: "&"
     }
   };
 }
@@ -48,7 +47,7 @@ class Ctrl extends BaseCtrl {
   }
 
   get title() {
-    return this.$scope["title"] || null;
+    return this.$attrs["title"] || null;
   }
   onSave() {
     return this.$scope["onSave"]();
