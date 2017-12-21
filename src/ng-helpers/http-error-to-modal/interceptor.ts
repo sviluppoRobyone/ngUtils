@@ -3,7 +3,7 @@ import * as angular from "angular";
 import { BaseInjectable } from "../base-injectable";
 export class Interceptor  extends BaseInjectable implements ng.IHttpInterceptor {
     
-                static $inject: string[] = BaseInjectable.$inject.concat(["$q", "$injector"]);
+                static $inject: string[] = BaseInjectable.$inject.concat(["$q"]);
                 
                 private errorList: any[] = [];
              

@@ -58,7 +58,7 @@ define(["require", "exports", "./modal-ctrl", "../base-injectable"], function (r
             enumerable: true,
             configurable: true
         });
-        Interceptor.$inject = base_injectable_1.BaseInjectable.$inject.concat(["$q", "$injector"]);
+        Interceptor.$inject = base_injectable_1.BaseInjectable.$inject.concat(["$q"]);
         return Interceptor;
     }(base_injectable_1.BaseInjectable));
     exports.Interceptor = Interceptor;
