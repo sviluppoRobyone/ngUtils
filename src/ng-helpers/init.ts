@@ -20,6 +20,7 @@ export function init(m: ng.IModule) {
     });
 
     moduleExists.configureModuleIfExists(m, ["angularPromiseButtons"], () => {
+      alert("promise button");
       promiseButton.Configure(m);
       
     });
