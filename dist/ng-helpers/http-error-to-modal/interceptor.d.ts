@@ -1,13 +1,11 @@
 /// <reference types="angular" />
 import * as angular from "angular";
-export declare class Interceptor implements ng.IHttpInterceptor {
+import { BaseInjectable } from "../base-injectable";
+export declare class Interceptor extends BaseInjectable implements ng.IHttpInterceptor {
     static $inject: string[];
-    private readonly args;
     private errorList;
-    readonly $injector: ng.auto.IInjectorService;
     private readonly $q;
     private readonly $uibModal;
-    constructor(...args: any[]);
     private $modal;
     responseError: (rejection: any) => angular.IPromise<never>;
 }

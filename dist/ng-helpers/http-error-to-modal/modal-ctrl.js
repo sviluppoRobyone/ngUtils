@@ -14,11 +14,7 @@ define(["require", "exports", "../base-ctrl"], function (require, exports, base_
     var ModalController = /** @class */ (function (_super) {
         __extends(ModalController, _super);
         function ModalController() {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            return _super.apply(this, args) || this;
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         Object.defineProperty(ModalController.prototype, "Errors", {
             get: function () {
@@ -27,7 +23,7 @@ define(["require", "exports", "../base-ctrl"], function (require, exports, base_
             enumerable: true,
             configurable: true
         });
-        ModalController.$inject = [].concat([], base_ctrl_1.BaseCtrl.$inject, ["errors", "$injector"]);
+        ModalController.$inject = base_ctrl_1.BaseCtrl.$inject.concat(["errors", "$injector"]);
         return ModalController;
     }(base_ctrl_1.BaseCtrl));
     exports.ModalController = ModalController;

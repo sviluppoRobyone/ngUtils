@@ -1,13 +1,12 @@
 import {ModalController} from "./modal-ctrl";
 import * as angular from "angular";
-export class Interceptor implements ng.IHttpInterceptor {
+import { BaseInjectable } from "../base-injectable";
+export class Interceptor  extends BaseInjectable implements ng.IHttpInterceptor {
     
-                static $inject: string[] = ["$q", "$injector"];
-                private readonly args: any[] = [];
+                static $inject: string[] = BaseInjectable.$inject.concat(["$q", "$injector"]);
+                
                 private errorList: any[] = [];
-                get $injector(): ng.auto.IInjectorService {
-                    return this.args[Interceptor.$inject.indexOf("$injector")];
-                }
+             
                 private get $q(): ng.IQService {
                     return this.args[Interceptor.$inject.indexOf("$q")];
                 }
@@ -15,9 +14,6 @@ export class Interceptor implements ng.IHttpInterceptor {
                     return this.$injector.get<angular.ui.bootstrap.IModalService>("$uibModal");
                 }
     
-                constructor(...args) {
-                    this.args = args;
-                }
     
                 private $modal: angular.ui.bootstrap.IModalServiceInstance = null;
     
@@ -47,9 +43,11 @@ export class Interceptor implements ng.IHttpInterceptor {
                                 }
                             },
                             controller: ModalController,
-    
-                            //language=html
-                            template: `
+      
+                    
+                            template:
+                         
+                            `
                         <div class="modal-header">
                             <h4 class="modal-title" >
                                 Si è verificato un errore
@@ -67,6 +65,11 @@ export class Interceptor implements ng.IHttpInterceptor {
                                 </p>
                                 <div ng-if="e.json">
                                     <p class="lead" ng-if="e.json.Message">Messaggio: <em>{{e.json.Message}}</em></p>
+                                    <span ng-if="e.json.Source=='EntityFramework' && e.json.InnerException"> 
+                                        <ul ng-repeat="e in e.json.InnerException.Errors">
+                                            <li>{{e.message}}</li>
+                                        </ul>
+                                    </span>
                                     <div ng-if="e.json.ModelState">
                                         <dl ng-repeat="(key,errs) in e.json.ModelState">
                                             <dt>{{key}}</dt>
