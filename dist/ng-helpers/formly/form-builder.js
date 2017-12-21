@@ -26,8 +26,7 @@ define(["require", "exports", "../base-ctrl"], function (require, exports, base_
             scope: {
                 model: "=",
                 fields: "=",
-                onSave: "&",
-                title: "=*"
+                onSave: "&"
             }
         };
     }
@@ -58,7 +57,7 @@ define(["require", "exports", "../base-ctrl"], function (require, exports, base_
         });
         Object.defineProperty(Ctrl.prototype, "title", {
             get: function () {
-                return this.$scope["title"] || null;
+                return this.$attrs["title"] || null;
             },
             enumerable: true,
             configurable: true
