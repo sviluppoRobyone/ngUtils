@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "../base-ctrl-for-directive", "./test.html"], function (require, exports, base_ctrl_for_directive_1) {
+define(["require", "exports", "../base-ctrl-for-directive", "../../../templates/formBuilder.html"], function (require, exports, base_ctrl_for_directive_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
@@ -18,7 +18,7 @@ define(["require", "exports", "../base-ctrl-for-directive", "./test.html"], func
     function directive() {
         return {
             //language=
-            template: require("test.html"),
+            template: require("formBuilder.html"),
             controller: Ctrl,
             controllerAs: "Ctrl",
             transclude: true,

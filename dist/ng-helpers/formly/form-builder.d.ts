@@ -1,3 +1,3 @@
 /// <reference types="angular" />
-import "./test.html";
+import "../../../templates/formBuilder.html";
 export declare function register(m: ng.IModule): void;
