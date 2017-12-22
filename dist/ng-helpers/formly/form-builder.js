@@ -17,8 +17,7 @@ define(["require", "exports", "../base-ctrl-for-directive", "../../../templates/
     exports.register = register;
     function directive() {
         return {
-            //language=
-            template: require("formBuilder.html"),
+            template: require("../../../templates/formBuilder.html"),
             controller: Ctrl,
             controllerAs: "Ctrl",
             transclude: true,

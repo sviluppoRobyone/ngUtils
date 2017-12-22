@@ -8,8 +8,8 @@ export function register(m: ng.IModule) {
 
 function directive(): ng.IDirective {
   return {
-    //language=
-    template:require("formBuilder.html"),
+ 
+    template:require("../../../templates/formBuilder.html"),
     controller: Ctrl,
     controllerAs: "Ctrl",
     transclude: true,
