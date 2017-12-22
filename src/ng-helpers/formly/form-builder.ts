@@ -1,6 +1,6 @@
 import { BaseCtrl } from "../base-ctrl";
 import { BaseCtrlForDirective } from "../base-ctrl-for-directive";
-import "./test.html";
+import "../../../templates/formBuilder.html";
 
 export function register(m: ng.IModule) {
   m.directive("formBuilder", directive);
@@ -9,7 +9,7 @@ export function register(m: ng.IModule) {
 function directive(): ng.IDirective {
   return {
     //language=
-    template:require("test.html"),
+    template:require("formBuilder.html"),
     controller: Ctrl,
     controllerAs: "Ctrl",
     transclude: true,
