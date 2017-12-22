@@ -1,6 +1,6 @@
 {
   "name": "@robyone/ng-utils",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/",
   "repository": {
     "type": "git",
@@ -9,9 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-ts": "tsc -w",
-    "commit":"git add -A && git commit -m \"qualcosa\"",
-    "commit-publish":"npm run start && npm run commit && npm version patch && npm run commit && npm publish && git push origin",
-
+    "commit": "git add -A && git commit -m \"qualcosa\"",
+    "commit-publish": "npm run start && npm run commit && npm version patch && npm run commit && npm publish && git push origin",
     "start": "tsc"
   },
   "files": [
