@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "../base-ctrl-for-directive"], function (require, exports, base_ctrl_for_directive_1) {
+define(["require", "exports", "../base-ctrl-for-directive", "./test.html"], function (require, exports, base_ctrl_for_directive_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
@@ -18,7 +18,7 @@ define(["require", "exports", "../base-ctrl-for-directive"], function (require, 
     function directive() {
         return {
             //language=
-            template: "\n<div class=\"form-builder\">\n<form name=\"f\" ng-submit=\"Ctrl.onSave()\" promise-btn>\n<fieldset>\n<legend>{{Ctrl.title}}</legend>\n<formly-form fields=\"Ctrl.fields\" model=\"Ctrl.model\"></formly-form>\n<ng-transclude></ng-transclude>\n<hr/>\n<button class=\"btn btn-primary\" ng-disabled=\"!f.$valid\">SALVA</button>\n</fieldset>\n</form>\n</div>\n",
+            template: require("test.html"),
             controller: Ctrl,
             controllerAs: "Ctrl",
             transclude: true,

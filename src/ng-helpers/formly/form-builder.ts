@@ -1,24 +1,15 @@
 import { BaseCtrl } from "../base-ctrl";
 import { BaseCtrlForDirective } from "../base-ctrl-for-directive";
+import "./test.html";
+
 export function register(m: ng.IModule) {
   m.directive("formBuilder", directive);
 }
+
 function directive(): ng.IDirective {
   return {
     //language=
-    template: `
-<div class="form-builder">
-<form name="f" ng-submit="Ctrl.onSave()" promise-btn>
-<fieldset>
-<legend>{{Ctrl.title}}</legend>
-<formly-form fields="Ctrl.fields" model="Ctrl.model"></formly-form>
-<ng-transclude></ng-transclude>
-<hr/>
-<button class="btn btn-primary" ng-disabled="!f.$valid">SALVA</button>
-</fieldset>
-</form>
-</div>
-`,
+    template:require("test.html"),
     controller: Ctrl,
     controllerAs: "Ctrl",
     transclude: true,
