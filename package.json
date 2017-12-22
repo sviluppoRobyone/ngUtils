@@ -1,6 +1,6 @@
 {
   "name": "@robyone/ng-utils",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "dist/",
   "repository": {
     "type": "git",
@@ -12,7 +12,6 @@
     "commit": "git add -A && git commit -m \"qualcosa\"",
     "commit-publish": "npm run start && npm run commit && npm version patch && npm publish && git push origin",
     "start": "tsc"
-    
   },
   "files": [
     "dist/",
