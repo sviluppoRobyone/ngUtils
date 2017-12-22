@@ -14,7 +14,8 @@
     },
     "files": [
         "dist/",
-        "styles/"
+        "styles/",
+        "templates/"
     ],
     "author": "",
     "license": "ISC",
