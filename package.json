@@ -1,32 +1,37 @@
 {
-    "name": "ng-utils",
-    "version": "1.0.0",
-    "description": "",
-    "main": "dist/",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/sviluppoRobyone/ngUtils.git"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "watch-ts": "tsc -w",
-        "start": "tsc"
-    },
-    "files": [
-        "dist/",
-        "styles/"
-    ],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "@types/angular": "^1.6.39",
-        "@types/angular-formly": "^7.2.33",
-        "@types/angular-route": "^1.3.4",
-        "@types/angular-ui-bootstrap": "^0.13.46",
-        "@types/angular-ui-router": "^1.1.36",
-        "@types/jquery": "2.0.48",
-        "@types/ng-file-upload": "^12.2.2",
-        "@types/requirejs": "^2.1.31",
-        "bootstrap": "^3.3.7"
-    }
+  "name": "@robyone/ng-utils",
+  "version": "1.0.0",
+  "main": "dist/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sviluppoRobyone/ngUtils.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch-ts": "tsc -w",
+    "start": "tsc"
+  },
+  "files": [
+    "dist/",
+    "styles/"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/angular": "^1.6.39",
+    "@types/angular-formly": "^7.2.33",
+    "@types/angular-route": "^1.3.4",
+    "@types/angular-ui-bootstrap": "^0.13.46",
+    "@types/angular-ui-router": "^1.1.36",
+    "@types/jquery": "2.0.48",
+    "@types/ng-file-upload": "^12.2.2",
+    "@types/requirejs": "^2.1.31",
+    "bootstrap": "^3.3.7"
+  },
+  "bugs": {
+    "url": "https://github.com/sviluppoRobyone/ngUtils/issues"
+  },
+  "homepage": "https://github.com/sviluppoRobyone/ngUtils#readme",
+  "devDependencies": {},
+  "description": ""
 }
