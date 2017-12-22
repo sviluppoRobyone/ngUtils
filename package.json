@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-ts": "tsc -w",
-    "commit": "git add -A && git commit -m \"qualcosa\"",
+    "commit": "git add -A && git commit -m \"auto commit\"",
     "commit-publish": "npm run start && npm run commit && npm version patch && npm publish && git push origin",
     "start": "tsc"
   },
