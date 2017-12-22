@@ -3,7 +3,7 @@ import {BaseInjectable} from "./base-injectable";
 import {ngUtilsService} from "./service";
 
 export abstract class BaseService extends BaseInjectable {
-    public static $inject: string[] = ([] as string[]).concat([ngUtilsService.serviceName]);
+    public static $inject: string[] = BaseInjectable.$inject.concat([ngUtilsService.serviceName]);
     get $ngUtils(): ngUtilsService {
         return this.getFromInject(ngUtilsService.serviceName);
     }

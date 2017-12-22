@@ -5,7 +5,7 @@ export function register(m: ng.IModule) {
 }
 function directive(): ng.IDirective {
   return {
-    //language=html
+    //language=
     template: `
 <div class="form-builder">
 <form name="f" ng-submit="Ctrl.onSave()" promise-btn>

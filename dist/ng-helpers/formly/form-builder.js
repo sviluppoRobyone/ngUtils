@@ -17,7 +17,7 @@ define(["require", "exports", "../base-ctrl-for-directive"], function (require, 
     exports.register = register;
     function directive() {
         return {
-            //language=html
+            //language=
             template: "\n<div class=\"form-builder\">\n<form name=\"f\" ng-submit=\"Ctrl.onSave()\" promise-btn>\n<fieldset>\n<legend>{{Ctrl.title}}</legend>\n<formly-form fields=\"Ctrl.fields\" model=\"Ctrl.model\"></formly-form>\n<ng-transclude></ng-transclude>\n<hr/>\n<button class=\"btn btn-primary\" ng-disabled=\"!f.$valid\">SALVA</button>\n</fieldset>\n</form>\n</div>\n",
             controller: Ctrl,
             controllerAs: "Ctrl",

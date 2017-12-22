@@ -1,4 +1,6 @@
 export function Configure(module: ng.IModule) {
+
+    
     module.config([        "angularPromiseButtonsProvider", (angularPromiseButtonsProvider) => {
             angularPromiseButtonsProvider.extendConfig({
               
