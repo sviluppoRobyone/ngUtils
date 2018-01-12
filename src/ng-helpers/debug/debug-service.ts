@@ -30,13 +30,13 @@ export module Detectors{
 
 }
 export class Service extends bi.BaseInjectable{
-    get $timeout(): ng.ITimeoutService {
+    private get $timeout(): ng.ITimeoutService {
         return this.getFromInject("$timeout");
     }
-    get $rootScope(): ng.IRootScopeService {
+    private get $rootScope(): ng.IRootScopeService {
         return this.getFromInject("$rootScope");
     }
-    get $q(): ng.IQService {
+    private get $q(): ng.IQService {
         return this.getFromInject("$q");
     }
     DebugStatus:boolean=false;

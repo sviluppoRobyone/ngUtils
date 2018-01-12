@@ -13,9 +13,9 @@ export declare module Detectors {
     function GetWindowDebugValue(): any;
 }
 export declare class Service extends bi.BaseInjectable {
-    readonly $timeout: ng.ITimeoutService;
-    readonly $rootScope: ng.IRootScopeService;
-    readonly $q: ng.IQService;
+    private readonly $timeout;
+    private readonly $rootScope;
+    private readonly $q;
     DebugStatus: boolean;
     private Updater;
     constructor(...args: any[]);
