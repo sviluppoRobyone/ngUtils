@@ -58,7 +58,7 @@ define(["require", "exports", "./utils/base-injectable"], function (require, exp
         }
         Object.defineProperty(ModalCtrl.prototype, "file", {
             get: function () {
-                return this.args[ModalCtrl.$inject.indexOf(fileKey)];
+                return this.$injectedArgs[ModalCtrl.$inject.indexOf(fileKey)];
             },
             enumerable: true,
             configurable: true

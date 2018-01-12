@@ -8,7 +8,7 @@ export class Interceptor  extends BaseInjectable implements ng.IHttpInterceptor 
                 private errorList: any[] = [];
              
                 private get $q(): ng.IQService {
-                    return this.args[Interceptor.$inject.indexOf("$q")];
+                    return this.$injectedArgs[Interceptor.$inject.indexOf("$q")];
                 }
                 private get $uibModal(): angular.ui.bootstrap.IModalService {
                     return this.$injector.get<angular.ui.bootstrap.IModalService>("$uibModal");

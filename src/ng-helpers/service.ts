@@ -12,7 +12,7 @@ export class Service extends bi.BaseInjectable {
     public static $inject=bi.BaseInjectable.$inject.concat([debugService.serviceName]);
 
     get $debugService():debugService.Service{
-        return this.args[Service.$inject.indexOf(debugService.serviceName)];
+        return this.$injectedArgs[Service.$inject.indexOf(debugService.serviceName)];
     }
     get $rootScope(): ng.IRootScopeService {
         return this.getFromInject("$rootScope");
@@ -63,7 +63,7 @@ export class Service extends bi.BaseInjectable {
         return this.getFromInject("$uibModal");
     }
     get $fileViewer():fv.fileViewerService{        
-        return this.args[fv.serviceName];
+        return this.$injectedArgs[fv.serviceName];
     }
     manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function) {
 

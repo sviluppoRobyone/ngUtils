@@ -6,10 +6,10 @@ export abstract class BaseCtrl extends BaseInjectable {
     static $inject: string[] = ([] as string[]).concat(["$scope", ngUtilsService.serviceName]);
     
     get $scope(): angular.IScope {
-        return this.args[BaseCtrl.$inject.indexOf("$scope")];
+        return this.$injectedArgs[BaseCtrl.$inject.indexOf("$scope")];
     }
     get $ngUtils(): ngUtilsService.Service {
-        return this.args[BaseCtrl.$inject.indexOf(ngUtilsService.serviceName)];
+        return this.$injectedArgs[BaseCtrl.$inject.indexOf(ngUtilsService.serviceName)];
     }
     get $q() {
         return this.$ngUtils.$q;

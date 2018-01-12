@@ -23,7 +23,7 @@ define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./uti
         }
         Object.defineProperty(Service.prototype, "$debugService", {
             get: function () {
-                return this.args[Service.$inject.indexOf(debugService.serviceName)];
+                return this.$injectedArgs[Service.$inject.indexOf(debugService.serviceName)];
             },
             enumerable: true,
             configurable: true
@@ -142,7 +142,7 @@ define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./uti
         });
         Object.defineProperty(Service.prototype, "$fileViewer", {
             get: function () {
-                return this.args[fv.serviceName];
+                return this.$injectedArgs[fv.serviceName];
             },
             enumerable: true,
             configurable: true

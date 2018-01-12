@@ -35,7 +35,7 @@ class debugModalCtrl extends BaseCtrl {
     }
     get showDebugButton() {
         
-        return !!window["DEBUG"];
+        return this.$ngUtils.$debugService.DebugStatus;
     }
 
     open() {
@@ -65,7 +65,7 @@ class ModalCtrl extends BaseCtrl {
     static $inject = ([] as string[]).concat(BaseCtrl.$inject, [dataKey]);
 
     get data() {
-        return this.args[ModalCtrl.$inject.indexOf(dataKey)];
+        return this.$injectedArgs[ModalCtrl.$inject.indexOf(dataKey)];
     }
 
 }

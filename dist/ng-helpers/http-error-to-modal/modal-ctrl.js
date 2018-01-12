@@ -18,12 +18,12 @@ define(["require", "exports", "../utils/base-ctrl"], function (require, exports,
         }
         Object.defineProperty(ModalController.prototype, "Errors", {
             get: function () {
-                return this.args[ModalController.$inject.indexOf("errors")];
+                return this.$injectedArgs[ModalController.$inject.indexOf("errors")];
             },
             enumerable: true,
             configurable: true
         });
-        ModalController.$inject = base_ctrl_1.BaseCtrl.$inject.concat(["errors", "$injector"]);
+        ModalController.$inject = base_ctrl_1.BaseCtrl.$inject.concat(["errors"]);
         return ModalController;
     }(base_ctrl_1.BaseCtrl));
     exports.ModalController = ModalController;

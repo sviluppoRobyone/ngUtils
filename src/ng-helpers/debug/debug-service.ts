@@ -10,9 +10,9 @@ export interface IDebugDetectorFunction{
     ():ng.IPromise<boolean>
 }
 export module Detectors{
-    export const DebugName="DEBUG";
+    export const DebugName = "DEBUG";
     export function IsLocalhost(){
-        return window.location.hostname =="localhost" || window.location.hostname == "127.0.0.1";
+        return window.location.hostname == "localhost" || window.location.hostname == "127.0.0.1";
     }
     export function IsLocalDomain(){
         return window.location.hostname.endsWith(".local");

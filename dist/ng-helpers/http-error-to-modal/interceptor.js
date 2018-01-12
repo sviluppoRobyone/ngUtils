@@ -46,7 +46,7 @@ define(["require", "exports", "./modal-ctrl", "../utils/base-injectable"], funct
         }
         Object.defineProperty(Interceptor.prototype, "$q", {
             get: function () {
-                return this.args[Interceptor.$inject.indexOf("$q")];
+                return this.$injectedArgs[Interceptor.$inject.indexOf("$q")];
             },
             enumerable: true,
             configurable: true

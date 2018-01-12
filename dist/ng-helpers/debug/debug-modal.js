@@ -42,7 +42,7 @@ define(["require", "exports", "../utils/base-ctrl", "../utils/name-generator"], 
         });
         Object.defineProperty(debugModalCtrl.prototype, "showDebugButton", {
             get: function () {
-                return !!window["DEBUG"];
+                return this.$ngUtils.$debugService.DebugStatus;
             },
             enumerable: true,
             configurable: true
@@ -69,7 +69,7 @@ define(["require", "exports", "../utils/base-ctrl", "../utils/name-generator"], 
         }
         Object.defineProperty(ModalCtrl.prototype, "data", {
             get: function () {
-                return this.args[ModalCtrl.$inject.indexOf(dataKey)];
+                return this.$injectedArgs[ModalCtrl.$inject.indexOf(dataKey)];
             },
             enumerable: true,
             configurable: true

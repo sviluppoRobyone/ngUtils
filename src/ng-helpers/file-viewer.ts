@@ -47,7 +47,7 @@ import { BaseInjectable } from "./utils/base-injectable";
                 static $inject = ([] as string[]).concat(BaseInjectable.$inject, [fileKey]);
 
                 get file():File {
-                    return this.args[ModalCtrl.$inject.indexOf(fileKey)];
+                    return this.$injectedArgs[ModalCtrl.$inject.indexOf(fileKey)];
                 }
                 dataUri: string=null;
                 constructor(...args) {

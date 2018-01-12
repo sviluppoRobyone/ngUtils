@@ -4,7 +4,7 @@ export abstract class BaseInjectable{
     static $inject = ["$injector"];
 
     private store : any= {};
-    protected args : any[]=[];
+    private args : any[]=[];
 
     protected getFromInject<T>(key: string) {
         if (!this.store[key])
