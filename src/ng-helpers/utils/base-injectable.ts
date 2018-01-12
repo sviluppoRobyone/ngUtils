@@ -1,7 +1,7 @@
 
 
 export abstract class BaseInjectable{
-    static $inject = ["$injector"];
+    public static $inject = ["$injector"];
 
     private store : any= {};
     private args : any[]=[];
@@ -13,6 +13,7 @@ export abstract class BaseInjectable{
         return this.store[key];
 
     }
+
     public constructor(...args){
         this.args = args;
         ["args","store"].forEach(x=>Object.defineProperty(this,x,{enumerable:false}));

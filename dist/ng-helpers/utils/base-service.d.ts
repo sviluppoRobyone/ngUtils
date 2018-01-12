@@ -5,7 +5,7 @@ import { BaseInjectable } from "./base-injectable";
 import * as ngUtilsService from "../service";
 export declare abstract class BaseService extends BaseInjectable {
     static $inject: string[];
-    readonly $ngUtils: ngUtilsService.Service;
-    readonly $uibModal: angular.ui.bootstrap.IModalService;
-    readonly $q: angular.IQService;
+    protected readonly $ngUtils: ngUtilsService.Service;
+    protected readonly $uibModal: angular.ui.bootstrap.IModalService;
+    protected readonly $q: angular.IQService;
 }
