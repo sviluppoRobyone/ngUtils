@@ -90,6 +90,7 @@ define(["require", "exports", "../utils/base-injectable", "../utils/name-generat
                 return _this.$q.resolve(_this.updateDebugV1);
             };
             this.SetDebugUpdater(fn);
+            this.UpdateStatus();
         };
         Service.prototype.SetDebugUpdater = function (f) {
             this.Updater = f;
