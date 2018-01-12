@@ -1,6 +1,6 @@
 {
   "name": "@robyone/ng-utils",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "dist/",
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
     "git:commit": "git add -A && git commit -m \"auto commit\"",
     "git:push": "git push origin --follow-tags",
     "publish-npm": "npm publish",
-    "change-version":"npm version patch",
+    "change-version": "npm version patch",
     "publish-npm-github": "npm run git:commit && npm run change-version && npm publish-npm && npm run git:push",
     "recompile:commit:publish:push": "npm run recompile && npm run publish-npm-github",
     "start": "npm run watch-ts"
