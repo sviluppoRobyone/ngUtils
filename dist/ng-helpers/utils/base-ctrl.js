@@ -65,7 +65,7 @@ define(["require", "exports", "../service", "./base-injectable"], function (requ
             enumerable: true,
             configurable: true
         });
-        BaseCtrl.$inject = [].concat(["$scope", ngUtilsService.serviceName]);
+        BaseCtrl.$inject = base_injectable_1.BaseInjectable.$inject.concat(["$scope", ngUtilsService.serviceName]);
         return BaseCtrl;
     }(base_injectable_1.BaseInjectable));
     exports.BaseCtrl = BaseCtrl;
