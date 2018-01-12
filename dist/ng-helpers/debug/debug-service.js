@@ -74,9 +74,13 @@ define(["require", "exports", "../utils/base-injectable", "../utils/name-generat
         });
         Service.prototype.UpdateStatus = function () {
             var _this = this;
-            this.Updater().then(function (x) {
-                _this.$timeout(function () {
-                    _this.DebugStatus = x;
+            return this.$q(function (ok) {
+                _this.Updater().then(function (x) {
+                    _this.$timeout(function () {
+                        _this.DebugStatus = x;
+                    }).then(function () { return ok(); });
+                }).catch(function () {
+                    ok();
                 });
             });
         };
@@ -87,6 +91,7 @@ define(["require", "exports", "../utils/base-injectable", "../utils/name-generat
             };
             this.SetDebugUpdater(fn);
             this.$rootScope.$watch(function () {
+                _this.UpdateStatus();
             });
         };
         Service.prototype.SetDebugUpdater = function (f) {

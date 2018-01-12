@@ -48,13 +48,17 @@ export class Service extends bi.BaseInjectable{
         this.init();
     }
     private UpdateStatus(){
+      return this.$q(ok=>{
         this.Updater().then(x=>{
 
             this.$timeout(()=>{
                 this.DebugStatus=x;
-            });
+            }).then(()=>ok());
             
-        })
+        }).catch(()=>{
+            ok();
+        });
+      });
     }
     private init(){
         var fn:IDebugDetectorFunction=()=>{
@@ -62,7 +66,7 @@ export class Service extends bi.BaseInjectable{
         }
         this.SetDebugUpdater(fn);
         this.$rootScope.$watch(()=>{
-            
+            this.UpdateStatus();
         });
     }
     SetDebugUpdater(f:IDebugDetectorFunction){
@@ -71,7 +75,7 @@ export class Service extends bi.BaseInjectable{
 
     get updateDebugV1(){
         
-        return     Detectors.IsWindowDebugDefined()?Detectors.GetWindowDebugValue():(Detectors.IsLocalhost() || Detectors.IsLocalDomain())
+        return Detectors.IsWindowDebugDefined()?Detectors.GetWindowDebugValue():(Detectors.IsLocalhost() || Detectors.IsLocalDomain());
 
         
     }
