@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./utils/name-generator"], function (require, exports, base_injectable_1, fv, nameGenerator) {
+define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./utils/name-generator", "./debug/debug-service"], function (require, exports, bi, fv, nameGenerator, debugService) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("$ngUtils");
@@ -21,6 +21,13 @@ define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./uti
         function Service() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+        Object.defineProperty(Service.prototype, "$debugService", {
+            get: function () {
+                return this.args[Service.$inject.indexOf(debugService.serviceName)];
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(Service.prototype, "$rootScope", {
             get: function () {
                 return this.getFromInject("$rootScope");
@@ -179,8 +186,9 @@ define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./uti
             });
             return q.promise;
         };
+        Service.$inject = bi.BaseInjectable.$inject.concat([debugService.serviceName]);
         return Service;
-    }(base_injectable_1.BaseInjectable));
+    }(bi.BaseInjectable));
     exports.Service = Service;
 });
 //# sourceMappingURL=service.js.map

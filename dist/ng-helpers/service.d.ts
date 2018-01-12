@@ -3,11 +3,14 @@
 /// <reference types="angular-ui-router" />
 /// <reference types="angular-ui-bootstrap" />
 import * as angular from "angular";
-import { BaseInjectable } from "./utils/base-injectable";
+import * as bi from "./utils/base-injectable";
 import * as fv from "./file-viewer";
+import * as debugService from "./debug/debug-service";
 export declare var serviceName: string;
 export declare function register(m: ng.IModule): void;
-export declare class Service extends BaseInjectable {
+export declare class Service extends bi.BaseInjectable {
+    static $inject: string[];
+    readonly $debugService: debugService.Service;
     readonly $rootScope: ng.IRootScopeService;
     readonly $http: ng.IHttpService;
     readonly $location: ng.ILocationService;

@@ -1,14 +1,19 @@
 import * as angular from "angular";
-import {BaseInjectable} from "./utils/base-injectable";
+import * as bi from "./utils/base-injectable";
 import * as fv from "./file-viewer";
 import * as nameGenerator from "./utils/name-generator";
+import * as debugService from "./debug/debug-service";
+export var serviceName=nameGenerator.GetServiceName("$ngUtils");
 
-export var serviceName=nameGenerator.GetServiceName("$ngUtils")
 export function register(m:ng.IModule){
     m.service(serviceName,Service);
 }
-export class Service extends BaseInjectable {
-    
+export class Service extends bi.BaseInjectable {
+    public static $inject=bi.BaseInjectable.$inject.concat([debugService.serviceName]);
+
+    get $debugService():debugService.Service{
+        return this.args[Service.$inject.indexOf(debugService.serviceName)];
+    }
     get $rootScope(): ng.IRootScopeService {
         return this.getFromInject("$rootScope");
     }
