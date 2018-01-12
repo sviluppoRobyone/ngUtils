@@ -1,6 +1,6 @@
 {
   "name": "@robyone/ng-utils",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "dist/",
   "repository": {
     "type": "git",
@@ -10,9 +10,9 @@
     "clean:dist": "del-cli ./dist/",
     "watch-ts": "tsc -w",
     "compile": "tsc",
-    "recompile":"npm run clean:dist && npm run compile",
+    "recompile": "npm run clean:dist && npm run compile",
     "git:commit": "git add -A && git commit -m \"auto commit\"",
-    "git:push":"git push origin",
+    "git:push": "git push origin",
     "publish": "npm version patch && npm publish && npm run git:commit && npm run git:push",
     "recompile:commit:publish:push": "npm run recompile && npm run git:commit && npm run publish",
     "start": "npm run watch-ts"
