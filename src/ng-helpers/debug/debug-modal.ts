@@ -1,7 +1,7 @@
 import { BaseCtrl } from "../utils/base-ctrl";
 import * as nameGenerator from "../utils/name-generator";
 
-const directiveName = nameGenerator.GetServiceName("debugModal");
+const directiveName = nameGenerator.GetDirectiveName("debugModal");
 const dataKey = directiveName+"debugData";
 export function register(m: ng.IModule) {
 

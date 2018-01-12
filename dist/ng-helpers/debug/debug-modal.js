@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 define(["require", "exports", "../utils/base-ctrl", "../utils/name-generator"], function (require, exports, base_ctrl_1, nameGenerator) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var directiveName = nameGenerator.GetServiceName("debugModal");
+    var directiveName = nameGenerator.GetDirectiveName("debugModal");
     var dataKey = directiveName + "debugData";
     function register(m) {
         m.directive(directiveName, directive);
