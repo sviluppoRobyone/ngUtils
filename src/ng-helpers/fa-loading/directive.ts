@@ -1,7 +1,8 @@
 import {baseTheme} from "./themes";
 import * as angular from "angular";
 import {Ctrl } from "./ctrl";
-export var directiveName = "faLoading";
+import * as nameGenerator from "../utils/name-generator";
+export var directiveName = nameGenerator.GetDirectiveName("faLoading");
 
 export function directive() {
     return {

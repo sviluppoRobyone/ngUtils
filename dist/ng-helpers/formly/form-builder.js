@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "../base-ctrl-for-directive"], function (require, exports, base_ctrl_for_directive_1) {
+define(["require", "exports", "../utils/base-ctrl-for-directive"], function (require, exports, base_ctrl_for_directive_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {

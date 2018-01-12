@@ -1,5 +1,5 @@
 import * as angular from "angular";
-import { BaseInjectable } from "./base-injectable";
+import { BaseInjectable } from "./utils/base-injectable";
 
 
 

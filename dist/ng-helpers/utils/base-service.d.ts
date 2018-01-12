@@ -2,10 +2,10 @@
 /// <reference types="angular" />
 import * as angular from "angular";
 import { BaseInjectable } from "./base-injectable";
-import { ngUtilsService } from "./service";
+import * as ngUtilsService from "../service";
 export declare abstract class BaseService extends BaseInjectable {
     static $inject: string[];
-    readonly $ngUtils: ngUtilsService;
+    readonly $ngUtils: ngUtilsService.Service;
     readonly $uibModal: angular.ui.bootstrap.IModalService;
     readonly $q: angular.IQService;
 }

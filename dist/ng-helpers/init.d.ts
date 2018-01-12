@@ -1,3 +1,3 @@
 /// <reference types="angular" />
-import "../array-helpers/find";
+import "../prototype/all";
 export declare function init(m: ng.IModule): void;

@@ -1,4 +1,4 @@
-import * as moduleExists from "../module-exists";
+import * as moduleExists from "../utils/module-exists";
 import * as angular from "angular";
 
 function camelize(s)  {

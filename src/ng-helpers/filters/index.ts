@@ -30,6 +30,6 @@ export function bytes(m: ng.IModule) {
         };
     });
 }
-export function AllFilters(m: ng.IModule) {
+export function RegisterAllFilters(m: ng.IModule) {
     [html, url, bytes].map(x => x(m));
 }

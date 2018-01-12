@@ -1,6 +1,6 @@
 import {ModalController} from "./modal-ctrl";
 import * as angular from "angular";
-import { BaseInjectable } from "../base-injectable";
+import { BaseInjectable } from "../utils/base-injectable";
 export class Interceptor  extends BaseInjectable implements ng.IHttpInterceptor {
     
                 static $inject: string[] = BaseInjectable.$inject.concat(["$q"]);

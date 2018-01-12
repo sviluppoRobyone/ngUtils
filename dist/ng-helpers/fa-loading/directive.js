@@ -1,7 +1,7 @@
-define(["require", "exports", "./ctrl"], function (require, exports, ctrl_1) {
+define(["require", "exports", "./ctrl", "../utils/name-generator"], function (require, exports, ctrl_1, nameGenerator) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.directiveName = "faLoading";
+    exports.directiveName = nameGenerator.GetDirectiveName("faLoading");
     function directive() {
         return {
             transclude: {

@@ -1,4 +1,4 @@
-define(["require", "exports", "../module-exists", "angular"], function (require, exports, moduleExists, angular) {
+define(["require", "exports", "../utils/module-exists", "angular"], function (require, exports, moduleExists, angular) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function camelize(s) {

@@ -1,9 +1,13 @@
 import * as angular from "angular";
-import {BaseInjectable} from "./base-injectable";
+import {BaseInjectable} from "./utils/base-injectable";
 import * as fv from "./file-viewer";
-export class ngUtilsService extends BaseInjectable {
-       
-    static serviceName = "$ngUtils";  
+import * as nameGenerator from "./utils/name-generator";
+
+export var serviceName=nameGenerator.GetServiceName("$ngUtils")
+export function register(m:ng.IModule){
+    m.service(serviceName,Service);
+}
+export class Service extends BaseInjectable {
     
     get $rootScope(): ng.IRootScopeService {
         return this.getFromInject("$rootScope");

@@ -1,18 +1,22 @@
 import * as angular from "angular";
-import {ngUtilsService} from "./service";
+import * as ngUtils from "./service";
 import * as filters from "./filters/index";
-import * as moduleExists from "./module-exists";
+import * as moduleExists from "./utils/module-exists";
 import * as faLoading from "./fa-loading/index";
 import * as promiseButton from "./promise-buttons/index";
 import * as HttpErrorToModal from "./http-error-to-modal/index";
-import * as debugModal from "./debug-modal";
+import * as debugService from "./debug/debug-service";
+import * as debugModal from "./debug/debug-modal";
 import * as fileViewer from "./file-viewer";
 import * as formly from "./formly/index";
-import "../array-helpers/find";
+import "../prototype/all";
 
 export function init(m: ng.IModule) {
-    m.service(ngUtilsService.serviceName, ngUtilsService);
-    filters.AllFilters(m);
+    debugService.register(m);
+    ngUtils.register(m);
+    
+    
+    filters.RegisterAllFilters(m);
     faLoading.register(m);
 
     moduleExists.configureModuleIfExists(m, ["formly"], () => {

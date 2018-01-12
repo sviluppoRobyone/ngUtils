@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./modal-ctrl", "../base-injectable"], function (require, exports, modal_ctrl_1, base_injectable_1) {
+define(["require", "exports", "./modal-ctrl", "../utils/base-injectable"], function (require, exports, modal_ctrl_1, base_injectable_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Interceptor = /** @class */ (function (_super) {

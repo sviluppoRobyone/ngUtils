@@ -1,5 +1,5 @@
 /// <reference types="angular" />
-import { BaseInjectable } from "./base-injectable";
+import { BaseInjectable } from "./utils/base-injectable";
 export declare const serviceName = "fileViewer";
 export declare function register(m: ng.IModule): void;
 export declare class fileViewerService extends BaseInjectable {

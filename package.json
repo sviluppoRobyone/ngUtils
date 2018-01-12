@@ -7,10 +7,11 @@
     "url": "git+https://github.com/sviluppoRobyone/ngUtils.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean:dist":"del-cli ./dist/",    
     "watch-ts": "tsc -w",
     "commit": "git add -A && git commit -m \"auto commit\"",
     "commit-publish": "npm run start && npm run commit && npm version patch && npm publish && git push origin",
+    "full-recompile-and-commit":"npm run clean:dist && tsc && npm run commit",
     "start": "tsc"
   },
   "files": [
@@ -34,6 +35,8 @@
     "url": "https://github.com/sviluppoRobyone/ngUtils/issues"
   },
   "homepage": "https://github.com/sviluppoRobyone/ngUtils#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "del-cli": "^1.1.0"
+  },
   "description": ""
 }

@@ -1,5 +1,5 @@
-import { BaseCtrl } from "../base-ctrl";
-import { BaseCtrlForDirective } from "../base-ctrl-for-directive";
+import { BaseCtrl } from "../utils/base-ctrl";
+import { BaseCtrlForDirective } from "../utils/base-ctrl-for-directive";
 export function register(m: ng.IModule) {
   m.directive("formBuilder", directive);
 }

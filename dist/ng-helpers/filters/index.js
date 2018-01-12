@@ -34,9 +34,9 @@ define(["require", "exports"], function (require, exports) {
         });
     }
     exports.bytes = bytes;
-    function AllFilters(m) {
+    function RegisterAllFilters(m) {
         [html, url, bytes].map(function (x) { return x(m); });
     }
-    exports.AllFilters = AllFilters;
+    exports.RegisterAllFilters = RegisterAllFilters;
 });
 //# sourceMappingURL=index.js.map

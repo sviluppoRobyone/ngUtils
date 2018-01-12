@@ -8,11 +8,11 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./base-ctrl"], function (require, exports, base_ctrl_1) {
+define(["require", "exports", "../utils/base-ctrl", "../utils/name-generator"], function (require, exports, base_ctrl_1, nameGenerator) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var dataKey = "debugData";
-    var directiveName = "debugModal";
+    var directiveName = nameGenerator.GetServiceName("debugModal");
+    var dataKey = directiveName + "debugData";
     function register(m) {
         m.directive(directiveName, directive);
     }
