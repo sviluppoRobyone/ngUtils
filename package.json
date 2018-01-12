@@ -9,11 +9,13 @@
   "scripts": {
     "clean:dist": "del-cli ./dist/",
     "watch-ts": "tsc -w",
-    "tsc": "tsc",
-    "commit": "git add -A && git commit -m \"auto commit\"",
-    "commit-publish": "npm run start && npm run commit && npm version patch && npm publish && git push origin",
-    "full-recompile-and-commit": "npm run clean:dist && npm run tsc && npm run commit",
-    "start": "tsc"
+    "compile": "tsc",
+    "recompile":"npm run clean:dist && npm run compile",
+    "git:commit": "git add -A && git commit -m \"auto commit\"",
+    "git:push":"git push origin",
+    "publish": "npm version patch && npm publish && npm run git:commit && npm run git:push",
+    "recompile:commit:publish:push": "npm run recompile && npm run git:commit && npm run publish",
+    "start": "npm run watch-ts"
   },
   "files": [
     "dist/",
