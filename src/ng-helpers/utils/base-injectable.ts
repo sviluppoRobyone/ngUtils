@@ -2,8 +2,10 @@
 
 export abstract class BaseInjectable{
     static $inject = ["$injector"];
-    private store :any= {};
-    protected args:any[]=[];
+
+    private store : any= {};
+    protected args : any[]=[];
+
     protected getFromInject<T>(key: string) {
         if (!this.store[key])
             this.store[key] = this.$injector.get<T>(key);
@@ -12,12 +14,14 @@ export abstract class BaseInjectable{
 
     }
     public constructor(...args){
-        this.args= args;
+        this.args = args;
         ["args","store"].forEach(x=>Object.defineProperty(this,x,{enumerable:false}));
     }
+
     protected get $injector(): angular.auto.IInjectorService {        
         return this.args[BaseInjectable.$inject.indexOf("$injector")];
     }
+
     protected get $injectedArgs(){
         return this.args;
     }
