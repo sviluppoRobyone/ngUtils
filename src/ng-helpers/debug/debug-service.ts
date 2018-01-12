@@ -65,9 +65,7 @@ export class Service extends bi.BaseInjectable{
             return this.$q.resolve<boolean>(this.updateDebugV1);
         }
         this.SetDebugUpdater(fn);
-        this.$rootScope.$watch(()=>{
-            this.UpdateStatus();
-        });
+      
     }
     SetDebugUpdater(f:IDebugDetectorFunction){
         this.Updater=f;
