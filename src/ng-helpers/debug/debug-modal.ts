@@ -21,7 +21,7 @@ function directive() {
         template:
 
         `
-    <button class="btn btn-xs" ng-click="Ctrl.open()" ng-if="Ctrl.showDebugButton">
+    <button class="btn btn-xs" ng-click="Ctrl.open()" ng-if="Ctrl.showDebugButton" type="button">
 <i class="fa fa-code"></i>
 </button>
 `
@@ -30,10 +30,11 @@ function directive() {
 
 class debugModalCtrl extends BaseCtrl {
 
-    get data() {
+    private get data() {
         return this.$scope["object"];
     }
-    get showDebugButton() {
+
+    private get showDebugButton() {
         
         return this.$ngUtils.$debugService.DebugStatus;
     }
@@ -62,9 +63,9 @@ class debugModalCtrl extends BaseCtrl {
 
 class ModalCtrl extends BaseCtrl {
 
-    static $inject = ([] as string[]).concat(BaseCtrl.$inject, [dataKey]);
+    static $inject = BaseCtrl.$inject.concat([dataKey]);
 
-    get data() {
+    private get data() {
         return this.$injectedArgs[ModalCtrl.$inject.indexOf(dataKey)];
     }
 

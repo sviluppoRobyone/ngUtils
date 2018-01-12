@@ -25,7 +25,7 @@ define(["require", "exports", "../utils/base-ctrl", "../utils/name-generator"], 
             controller: debugModalCtrl,
             controllerAs: "Ctrl",
             restrict: "E",
-            template: "\n    <button class=\"btn btn-xs\" ng-click=\"Ctrl.open()\" ng-if=\"Ctrl.showDebugButton\">\n<i class=\"fa fa-code\"></i>\n</button>\n"
+            template: "\n    <button class=\"btn btn-xs\" ng-click=\"Ctrl.open()\" ng-if=\"Ctrl.showDebugButton\" type=\"button\">\n<i class=\"fa fa-code\"></i>\n</button>\n"
         };
     }
     var debugModalCtrl = /** @class */ (function (_super) {
@@ -74,7 +74,7 @@ define(["require", "exports", "../utils/base-ctrl", "../utils/name-generator"], 
             enumerable: true,
             configurable: true
         });
-        ModalCtrl.$inject = [].concat(base_ctrl_1.BaseCtrl.$inject, [dataKey]);
+        ModalCtrl.$inject = base_ctrl_1.BaseCtrl.$inject.concat([dataKey]);
         return ModalCtrl;
     }(base_ctrl_1.BaseCtrl));
 });
