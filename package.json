@@ -12,9 +12,11 @@
     "compile": "tsc",
     "recompile": "npm run clean:dist && npm run compile",
     "git:commit": "git add -A && git commit -m \"auto commit\"",
-    "git:push": "git push origin",
-    "publish-npm-github": "npm version patch && npm publish && npm run git:commit && npm run git:push",
-    "recompile:commit:publish:push": "npm run recompile && npm run git:commit && npm run publish-npm-github",
+    "git:push": "git push origin --follow-tags",
+    "publish-npm": "npm publish",
+    "change-version":"npm version patch",
+    "publish-npm-github": "npm run git:commit && npm run change-version && npm publish-npm && npm run git:push",
+    "recompile:commit:publish:push": "npm run recompile && npm run publish-npm-github",
     "start": "npm run watch-ts"
   },
   "files": [
