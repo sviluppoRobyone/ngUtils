@@ -1,5 +1,4 @@
 /// <reference types="angular" />
-/// <reference types="angular-route" />
 /// <reference types="ng-file-upload" />
 /// <reference types="angular-ui-router" />
 /// <reference types="angular-ui-bootstrap" />
@@ -12,10 +11,8 @@ export declare class Service extends BaseInjectable {
     readonly $rootScope: ng.IRootScopeService;
     readonly $http: ng.IHttpService;
     readonly $location: ng.ILocationService;
-    readonly $routeParams: ng.route.IRouteParamsService;
     readonly $q: ng.IQService;
     readonly $filter: ng.IFilterService;
-    readonly $route: ng.route.IRouteService;
     readonly $timeout: ng.ITimeoutService;
     readonly $ngView: JQuery;
     readonly $cacheFactory: ng.ICacheFactoryService;

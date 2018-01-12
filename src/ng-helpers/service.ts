@@ -18,17 +18,11 @@ export class Service extends BaseInjectable {
     get $location(): ng.ILocationService {
         return this.getFromInject("$location");
     }
-    get $routeParams(): ng.route.IRouteParamsService {
-        return this.getFromInject("$routeParams");
-    }
     get $q(): ng.IQService {
         return this.getFromInject("$q");
     }
     get $filter(): ng.IFilterService {
         return this.getFromInject("$filter");
-    }
-    get $route(): ng.route.IRouteService {
-        return this.getFromInject("$route");
     }
     get $timeout(): ng.ITimeoutService {
         return this.getFromInject("$timeout");

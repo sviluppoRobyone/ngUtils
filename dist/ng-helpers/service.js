@@ -42,13 +42,6 @@ define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./uti
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Service.prototype, "$routeParams", {
-            get: function () {
-                return this.getFromInject("$routeParams");
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(Service.prototype, "$q", {
             get: function () {
                 return this.getFromInject("$q");
@@ -59,13 +52,6 @@ define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./uti
         Object.defineProperty(Service.prototype, "$filter", {
             get: function () {
                 return this.getFromInject("$filter");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$route", {
-            get: function () {
-                return this.getFromInject("$route");
             },
             enumerable: true,
             configurable: true
