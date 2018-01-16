@@ -5,7 +5,7 @@ import * as nameGenerator from "./utils/name-generator";
 import * as debugService from "./debug/debug-service";
 export var serviceName=nameGenerator.GetServiceName("$ngUtils");
 import * as AsyncLoader from "./async-loader";
-import { deprecated } from "../utility/decorators";
+import deprecated from "../../node_modules/deprecated-decorator/bld/index";
 
 export function register(m:ng.IModule){
     m.service(serviceName,Service);
@@ -68,7 +68,7 @@ export class Service extends bi.BaseInjectable {
         return this.$injectedArgs[AsyncLoader.serviceName];
     }
 
-    @deprecated("Utilizza il servizio $asyncLoader anziché {name}")
+    @deprecated("$asyncLoader")
     manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function) {
 
         var qBefore = this.$q.defer();

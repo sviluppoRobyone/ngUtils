@@ -34,7 +34,8 @@
     "@types/jquery": "2.0.48",
     "@types/ng-file-upload": "^12.2.2",
     "@types/requirejs": "^2.1.31",
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "deprecated-decorator": "^0.1.6"
   },
   "bugs": {
     "url": "https://github.com/sviluppoRobyone/ngUtils/issues"
