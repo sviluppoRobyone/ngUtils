@@ -39,7 +39,7 @@
         blobToBase64(blob,base64String=>{
     
             var element = document.createElement('a');
-            element.setAttribute('href', 'data:'+blob.type+';charset=utf-8,' + encodeURIComponent(base64String));
+            element.setAttribute('href', 'data:'+blob.type+';base64,' + encodeURIComponent(base64String));
             
             element.setAttribute('download', fileName);
         
