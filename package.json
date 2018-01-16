@@ -1,7 +1,7 @@
 {
   "name": "@robyone/ng-utils",
   "version": "1.1.26",
-  "main": "dist/",
+  "main": "dist/ngUtils.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sviluppoRobyone/ngUtils.git"
