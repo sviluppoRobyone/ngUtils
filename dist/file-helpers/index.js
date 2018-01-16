@@ -21,10 +21,10 @@ define(["require", "exports"], function (require, exports) {
     exports.base64ToBlob = base64ToBlob;
     function blobToBase64(blob, cb) {
         var reader = new FileReader();
-        reader.readAsDataURL(blob);
         reader.onloadend = function () {
             cb(reader.result.plit(',')[1]);
         };
+        reader.readAsDataURL(blob);
     }
     exports.blobToBase64 = blobToBase64;
     function download(fileName, blob) {

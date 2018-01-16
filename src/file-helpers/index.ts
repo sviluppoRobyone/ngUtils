@@ -26,11 +26,12 @@
 
     export function blobToBase64(blob:Blob,cb:{(base64String:string):void}){
         var reader = new FileReader();
-        reader.readAsDataURL(blob); 
+        
         reader.onloadend = ()=>{
             cb(reader.result.plit(',')[1]);                
           
         }
+        reader.readAsDataURL(blob); 
     }
 
    export function download(fileName:string, blob:Blob) {
