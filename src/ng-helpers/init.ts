@@ -11,9 +11,10 @@ import * as fileViewer from "./file-viewer";
 import * as formly from "./formly/index";
 import * as asyncLoader from "./async-loader";
 
-import "../prototype/all";
+import * as  proto from  "../prototype/all";
 
 export function init(m: ng.IModule) {
+    proto.run();
     debugService.register(m);
     asyncLoader.register(m);
     ngUtils.register(m);

@@ -1454,41 +1454,61 @@ define("ng-helpers/formly/index", ["require", "exports", "ng-helpers/formly/date
     exports.Configure = Configure;
 });
 //https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
-if (!String.prototype.endsWith) {
-    String.prototype.endsWith = function (search, this_len) {
-        if (this_len === void 0) { this_len = undefined; }
-        if (this_len === undefined || this_len > this.length) {
-            this_len = this.length;
-        }
-        return this.substring(this_len - search.length, this_len) === search;
-    };
-}
-if (!Array.prototype.find) {
-    Array.prototype.find = function (predicate) {
-        if (typeof predicate !== "function") {
-            throw new TypeError("predicate must be a function");
-        }
-        var list = Object(this);
-        var length = list.length >>> 0;
-        var thisArg = arguments[1];
-        var value;
-        for (var i = 0; i < length; i++) {
-            value = list[i];
-            if (predicate.call(thisArg, value, i, list)) {
-                return value;
-            }
-        }
-        return undefined;
-    };
-}
-define("prototype/all", ["require", "exports", "./string-prototype", "./array-prototype"], function (require, exports) {
+define("prototype/string-prototype", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    function run() {
+        if (!String.prototype.endsWith) {
+            String.prototype.endsWith = function (search, this_len) {
+                if (this_len === void 0) { this_len = undefined; }
+                if (this_len === undefined || this_len > this.length) {
+                    this_len = this.length;
+                }
+                return this.substring(this_len - search.length, this_len) === search;
+            };
+        }
+    }
+    exports.run = run;
 });
-define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug-service", "ng-helpers/debug/debug-modal", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "prototype/all"], function (require, exports, ngUtils, filters, moduleExists, faLoading, promiseButton, HttpErrorToModal, debugService, debugModal, fileViewer, formly, asyncLoader) {
+define("prototype/array-prototype", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function run() {
+        if (!Array.prototype.find) {
+            Array.prototype.find = function (predicate) {
+                if (typeof predicate !== "function") {
+                    throw new TypeError("predicate must be a function");
+                }
+                var list = Object(this);
+                var length = list.length >>> 0;
+                var thisArg = arguments[1];
+                var value;
+                for (var i = 0; i < length; i++) {
+                    value = list[i];
+                    if (predicate.call(thisArg, value, i, list)) {
+                        return value;
+                    }
+                }
+                return undefined;
+            };
+        }
+    }
+    exports.run = run;
+});
+define("prototype/all", ["require", "exports", "prototype/string-prototype", "prototype/array-prototype"], function (require, exports, stringFn, arrayFn) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function run() {
+        stringFn.run();
+        arrayFn.run();
+    }
+    exports.run = run;
+});
+define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug-service", "ng-helpers/debug/debug-modal", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "prototype/all"], function (require, exports, ngUtils, filters, moduleExists, faLoading, promiseButton, HttpErrorToModal, debugService, debugModal, fileViewer, formly, asyncLoader, proto) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function init(m) {
+        proto.run();
         debugService.register(m);
         asyncLoader.register(m);
         ngUtils.register(m);

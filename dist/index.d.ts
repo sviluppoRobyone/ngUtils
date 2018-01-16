@@ -257,18 +257,26 @@ declare module "ng-helpers/formly/nullable-field-directive/index" {
 declare module "ng-helpers/formly/index" {
     export function Configure(m: ng.IModule): void;
 }
-interface String {
-    endsWith(search: string, len?: number): boolean;
+declare module "prototype/string-prototype" {
+    export function run(): void;
+    global  {
+        interface String {
+            endsWith(search: string, len?: number): boolean;
+        }
+    }
 }
-interface Array<T> {
-    find(predicate: (search: T) => boolean): T;
+declare module "prototype/array-prototype" {
+    export function run(): void;
+    global  {
+        interface Array<T> {
+            find(predicate: (search: T) => boolean): T;
+        }
+    }
 }
 declare module "prototype/all" {
-    import "./string-prototype";
-    import "./array-prototype";
+    export function run(): void;
 }
 declare module "ng-helpers/init" {
-    import "prototype/all";
     export function init(m: ng.IModule): void;
 }
 declare module "ng-helpers/formly/nullable-date" {
