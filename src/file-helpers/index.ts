@@ -28,7 +28,7 @@
         var reader = new FileReader();
         
         reader.onloadend = ()=>{
-            cb(reader.result.plit(',')[1]);                
+            cb((reader.result as string).split(',')[1]);                
           
         }
         reader.readAsDataURL(blob); 

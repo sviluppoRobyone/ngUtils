@@ -22,7 +22,7 @@ define(["require", "exports"], function (require, exports) {
     function blobToBase64(blob, cb) {
         var reader = new FileReader();
         reader.onloadend = function () {
-            cb(reader.result.plit(',')[1]);
+            cb(reader.result.split(',')[1]);
         };
         reader.readAsDataURL(blob);
     }
