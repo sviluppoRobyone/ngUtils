@@ -7,6 +7,7 @@ import * as bi from "./utils/base-injectable";
 import * as fv from "./file-viewer";
 import * as debugService from "./debug/debug-service";
 export declare var serviceName: string;
+import * as AsyncLoader from "./async-loader";
 export declare function register(m: ng.IModule): void;
 export declare class Service extends bi.BaseInjectable {
     static $inject: string[];
@@ -28,6 +29,7 @@ export declare class Service extends bi.BaseInjectable {
     readonly $state: angular.ui.IStateService;
     readonly $uibModal: angular.ui.bootstrap.IModalService;
     readonly $fileViewer: fv.fileViewerService;
+    readonly $asyncLoader: AsyncLoader.Service;
     manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function): angular.IPromise<{}>;
     onScopeDispose($scope: ng.IScope): angular.IPromise<{}>;
 }

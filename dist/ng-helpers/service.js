@@ -8,7 +8,16 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./utils/name-generator", "./debug/debug-service"], function (require, exports, bi, fv, nameGenerator, debugService) {
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./utils/name-generator", "./debug/debug-service", "./async-loader", "../utility/decorators"], function (require, exports, bi, fv, nameGenerator, debugService, AsyncLoader, decorators_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("$ngUtils");
@@ -147,6 +156,13 @@ define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./uti
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(Service.prototype, "$asyncLoader", {
+            get: function () {
+                return this.$injectedArgs[AsyncLoader.serviceName];
+            },
+            enumerable: true,
+            configurable: true
+        });
         Service.prototype.manageAjaxLoading = function (before, ajax, after) {
             var _this = this;
             var qBefore = this.$q.defer();
@@ -186,7 +202,13 @@ define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./uti
             });
             return q.promise;
         };
-        Service.$inject = bi.BaseInjectable.$inject.concat([debugService.serviceName]);
+        Service.$inject = bi.BaseInjectable.$inject.concat([debugService.serviceName, AsyncLoader.serviceName]);
+        __decorate([
+            decorators_1.deprecated("Utilizza il servizio $asyncLoader anziché {name}"),
+            __metadata("design:type", Function),
+            __metadata("design:paramtypes", [Function, Function, Function]),
+            __metadata("design:returntype", void 0)
+        ], Service.prototype, "manageAjaxLoading", null);
         return Service;
     }(bi.BaseInjectable));
     exports.Service = Service;

@@ -8,7 +8,16 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "../service", "./base-injectable"], function (require, exports, ngUtils, base_injectable_1) {
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define(["require", "exports", "angular", "../service", "./base-injectable", "../../utility/decorators"], function (require, exports, angular, ngUtils, base_injectable_1, decorators_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseCtrl = /** @class */ (function (_super) {
@@ -66,6 +75,41 @@ define(["require", "exports", "../service", "./base-injectable"], function (requ
             configurable: true
         });
         BaseCtrl.$inject = base_injectable_1.BaseInjectable.$inject.concat(["$scope", ngUtils.serviceName]);
+        __decorate([
+            decorators_1.enumerable(false),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [])
+        ], BaseCtrl.prototype, "$scope", null);
+        __decorate([
+            decorators_1.enumerable(false),
+            __metadata("design:type", ngUtils.Service),
+            __metadata("design:paramtypes", [])
+        ], BaseCtrl.prototype, "$ngUtils", null);
+        __decorate([
+            decorators_1.enumerable(false),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [])
+        ], BaseCtrl.prototype, "$q", null);
+        __decorate([
+            decorators_1.enumerable(false),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [])
+        ], BaseCtrl.prototype, "$state", null);
+        __decorate([
+            decorators_1.enumerable(false),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [])
+        ], BaseCtrl.prototype, "$stateParams", null);
+        __decorate([
+            decorators_1.enumerable(false),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [])
+        ], BaseCtrl.prototype, "$upload", null);
+        __decorate([
+            decorators_1.enumerable(false),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [])
+        ], BaseCtrl.prototype, "$uibModal", null);
         return BaseCtrl;
     }(base_injectable_1.BaseInjectable));
     exports.BaseCtrl = BaseCtrl;

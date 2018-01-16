@@ -1,4 +1,4 @@
-import {ModalController} from "./modal-ctrl";
+import * as ModalController from "./modal-ctrl";
 import * as angular from "angular";
 import { BaseInjectable } from "../utils/base-injectable";
 export class Interceptor  extends BaseInjectable implements ng.IHttpInterceptor {
@@ -38,11 +38,11 @@ export class Interceptor  extends BaseInjectable implements ng.IHttpInterceptor 
                         this.$modal = this.$uibModal.open({
                             controllerAs: "Ctrl",
                             resolve: {
-                                errors: () => {
+                                [ModalController.ErrorKey]: () => {
                                     return this.errorList;
                                 }
                             },
-                            controller: ModalController,
+                            controller: ModalController.Ctrl,
       
                     
                             template:

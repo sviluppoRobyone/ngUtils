@@ -1,29 +1,33 @@
+import { enumerable } from "../../utility/decorators";
+
 
 
 export abstract class BaseInjectable{
     public static $inject = ["$injector"];
 
-    private store : any= {};
-    private args : any[]=[];
+    private _store : any= {};
+    private _args : any[]=[];
 
+    @enumerable(false)
     protected getFromInject<T>(key: string) {
-        if (!this.store[key])
-            this.store[key] = this.$injector.get<T>(key);
+        if (!this._store[key])
+            this._store[key] = this.$injector.get<T>(key);
 
-        return this.store[key];
+        return this._store[key];
 
     }
 
     public constructor(...args){
-        this.args = args;
-        ["args","store"].forEach(x=>Object.defineProperty(this,x,{enumerable:false}));
+        this._args = args;
     }
 
+    @enumerable(false)
     protected get $injector(): angular.auto.IInjectorService {        
-        return this.args[BaseInjectable.$inject.indexOf("$injector")];
+        return this.$injectedArgs[BaseInjectable.$inject.indexOf("$injector")];
     }
-
+    
+    @enumerable(false)
     protected get $injectedArgs(){
-        return this.args;
+        return this._args;
     }
 }

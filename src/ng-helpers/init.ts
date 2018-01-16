@@ -9,10 +9,13 @@ import * as debugService from "./debug/debug-service";
 import * as debugModal from "./debug/debug-modal";
 import * as fileViewer from "./file-viewer";
 import * as formly from "./formly/index";
+import * as asyncLoader from "./async-loader";
+
 import "../prototype/all";
 
 export function init(m: ng.IModule) {
     debugService.register(m);
+    asyncLoader.register(m);
     ngUtils.register(m);
     
     

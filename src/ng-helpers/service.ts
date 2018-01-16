@@ -4,12 +4,14 @@ import * as fv from "./file-viewer";
 import * as nameGenerator from "./utils/name-generator";
 import * as debugService from "./debug/debug-service";
 export var serviceName=nameGenerator.GetServiceName("$ngUtils");
+import * as AsyncLoader from "./async-loader";
+import { deprecated } from "../utility/decorators";
 
 export function register(m:ng.IModule){
     m.service(serviceName,Service);
 }
 export class Service extends bi.BaseInjectable {
-    public static $inject=bi.BaseInjectable.$inject.concat([debugService.serviceName]);
+    public static $inject=bi.BaseInjectable.$inject.concat([debugService.serviceName,AsyncLoader.serviceName]);
 
     public get $debugService():debugService.Service{
         return this.$injectedArgs[Service.$inject.indexOf(debugService.serviceName)];
@@ -65,6 +67,11 @@ export class Service extends bi.BaseInjectable {
     public get $fileViewer():fv.fileViewerService{        
         return this.$injectedArgs[fv.serviceName];
     }
+    public get $asyncLoader():AsyncLoader.Service{
+        return this.$injectedArgs[AsyncLoader.serviceName];
+    }
+
+    @deprecated("Utilizza il servizio $asyncLoader anziché {name}")
     manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function) {
 
         var qBefore = this.$q.defer();

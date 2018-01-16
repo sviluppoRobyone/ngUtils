@@ -5,13 +5,13 @@
 import * as angular from "angular";
 import * as ngUtils from "../service";
 import { BaseInjectable } from "./base-injectable";
-export declare abstract class BaseCtrl extends BaseInjectable {
+export declare abstract class BaseCtrl extends BaseInjectable implements ng.IController {
     static $inject: string[];
-    readonly $scope: angular.IScope;
-    readonly $ngUtils: ngUtils.Service;
-    readonly $q: angular.IQService;
-    readonly $state: angular.ui.IStateService;
-    readonly $stateParams: angular.ui.IStateParamsService;
-    readonly $upload: angular.angularFileUpload.IUploadService;
-    readonly $uibModal: angular.ui.bootstrap.IModalService;
+    protected readonly $scope: angular.IScope;
+    protected readonly $ngUtils: ngUtils.Service;
+    protected readonly $q: angular.IQService;
+    protected readonly $state: angular.ui.IStateService;
+    protected readonly $stateParams: angular.ui.IStateParamsService;
+    protected readonly $upload: angular.angularFileUpload.IUploadService;
+    protected readonly $uibModal: angular.ui.bootstrap.IModalService;
 }

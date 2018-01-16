@@ -1,5 +1,6 @@
 import { BaseCtrl } from "../utils/base-ctrl";
-export declare class ModalController extends BaseCtrl {
+export declare var ErrorKey: string;
+export declare class Ctrl extends BaseCtrl {
     static $inject: string[];
     readonly Errors: any;
 }

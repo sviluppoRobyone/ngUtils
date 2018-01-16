@@ -8,24 +8,39 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "../utils/base-ctrl"], function (require, exports, base_ctrl_1) {
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define(["require", "exports", "../utils/base-ctrl", "../../utility/decorators"], function (require, exports, base_ctrl_1, decorators_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ModalController = /** @class */ (function (_super) {
-        __extends(ModalController, _super);
-        function ModalController() {
+    exports.ErrorKey = "ModalErrorData";
+    var Ctrl = /** @class */ (function (_super) {
+        __extends(Ctrl, _super);
+        function Ctrl() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Object.defineProperty(ModalController.prototype, "Errors", {
+        Object.defineProperty(Ctrl.prototype, "Errors", {
             get: function () {
-                return this.$injectedArgs[ModalController.$inject.indexOf("errors")];
+                return this.$injectedArgs[Ctrl.$inject.indexOf(exports.ErrorKey)];
             },
             enumerable: true,
             configurable: true
         });
-        ModalController.$inject = base_ctrl_1.BaseCtrl.$inject.concat(["errors"]);
-        return ModalController;
+        Ctrl.$inject = base_ctrl_1.BaseCtrl.$inject.concat([exports.ErrorKey]);
+        __decorate([
+            decorators_1.enumerable(true),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [])
+        ], Ctrl.prototype, "Errors", null);
+        return Ctrl;
     }(base_ctrl_1.BaseCtrl));
-    exports.ModalController = ModalController;
+    exports.Ctrl = Ctrl;
 });
 //# sourceMappingURL=modal-ctrl.js.map
