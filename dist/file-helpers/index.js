@@ -31,7 +31,6 @@ define(["require", "exports"], function (require, exports) {
         blobToBase64(blob, function (base64String) {
             var element = document.createElement('a');
             element.setAttribute('href', 'data:' + blob.type + ';charset=utf-8,' + encodeURIComponent(base64String));
-            console.log("downloading uri: ", element.getAttribute("href"));
             element.setAttribute('download', fileName);
             element.style.display = 'none';
             document.body.appendChild(element);
