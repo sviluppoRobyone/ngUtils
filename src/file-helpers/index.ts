@@ -1,6 +1,6 @@
-export module fileUtils {
+
     //http://wiki.lenux.org/base64-string-to-blob-object/
-    export function base64StringToBlob(base64encodedString: string): Blob {
+    export function base64ToBlob(base64encodedString: string,myme:string): Blob {
 
         // decode base64 string, remove space for IE compatibility
         var binary = atob(base64encodedString.replace(/\s/g, ''));
@@ -20,7 +20,32 @@ export module fileUtils {
         }
 
         // create the blob object with content-type "application/pdf"               
-        return new Blob([view]);
+        return new Blob([view],{type:myme});
 
     }
-}
+
+    export function blobToBase64(blob:Blob,cb:{(base64String:string):void}){
+        var reader = new FileReader();
+        reader.readAsDataURL(blob); 
+        reader.onloadend = ()=>{
+            cb(reader.result.plit(',')[1]);                
+          
+        }
+    }
+
+   export function download(fileName:string, blob:Blob) {
+
+        blobToBase64(blob,base64String=>{
+    
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:'+blob.type+';charset=utf-8,' + encodeURIComponent(base64String));
+            element.setAttribute('download', fileName);
+        
+            element.style.display = 'none';
+            document.body.appendChild(element);
+        
+            element.click();
+        
+            document.body.removeChild(element);
+        });
+    }
