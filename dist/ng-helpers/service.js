@@ -79,13 +79,6 @@ define(["require", "exports", "./utils/base-injectable", "./file-viewer", "./uti
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Service.prototype, "$ngView", {
-            get: function () {
-                return $("[ng-view]");
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(Service.prototype, "$cacheFactory", {
             get: function () {
                 return this.getFromInject("$cacheFactory");

@@ -13,7 +13,7 @@ export abstract class BaseInjectable{
         if (!this._store[key])
             this._store[key] = this.$injector.get<T>(key);
 
-        return this._store[key];
+        return this._store[key] as T;
 
     }
 
@@ -22,7 +22,7 @@ export abstract class BaseInjectable{
     }
 
     @enumerable(false)
-    protected get $injector(): angular.auto.IInjectorService {        
+    protected get $injector(): ng.auto.IInjectorService {        
         return this.$injectedArgs[BaseInjectable.$inject.indexOf("$injector")];
     }
     
