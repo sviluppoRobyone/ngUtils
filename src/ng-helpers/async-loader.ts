@@ -42,7 +42,7 @@ export class AsyncLoader<T> {
     }
 
  
-    private _config: Config<T>=null;
+    private _config: Config<T>=new Config<T>();
 
     @enumerable(true)
     protected get IsLoading(){

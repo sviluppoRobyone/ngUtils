@@ -547,7 +547,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
     exports.Config = Config;
     var AsyncLoader = /** @class */ (function () {
         function AsyncLoader(c) {
-            this._config = null;
+            this._config = new Config();
             this._Data = null;
             this._config.args = c;
         }
