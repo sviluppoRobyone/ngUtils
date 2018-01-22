@@ -18,9 +18,6 @@ declare module "json-helpers/index" {
         function DateReviver(key: string, value: any): any;
     }
 }
-declare module "utility/decorators" {
-    export function enumerable(value: boolean): (target: any, propertyKey: string) => void;
-}
 declare module "ng-helpers/utils/base-injectable" {
     export abstract class BaseInjectable {
         static $inject: string[];

@@ -1,13 +1,4 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -96,24 +87,7 @@ define("json-helpers/index", ["require", "exports"], function (require, exports)
         JsonUtils.DateReviver = DateReviver;
     })(JsonUtils = exports.JsonUtils || (exports.JsonUtils = {}));
 });
-define("utility/decorators", ["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    function enumerable(value) {
-        return function (target, propertyKey) {
-            var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
-            if (descriptor && descriptor.enumerable !== value) {
-                descriptor.enumerable = value;
-                Object.defineProperty(target, propertyKey, descriptor);
-            }
-            else {
-                Object.defineProperty(target, propertyKey, { enumerable: value, writable: true, configurable: true });
-            }
-        };
-    }
-    exports.enumerable = enumerable;
-});
-define("ng-helpers/utils/base-injectable", ["require", "exports", "utility/decorators"], function (require, exports, decorators_1) {
+define("ng-helpers/utils/base-injectable", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseInjectable = /** @class */ (function () {
@@ -122,9 +96,13 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "utility/decor
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];
             }
+            var _this = this;
             this._store = {};
             this._args = [];
             this._args = args;
+            ["_store", "_args"].forEach(function (x) {
+                Object.defineProperty(_this, x, { enumerable: false });
+            });
         }
         BaseInjectable.prototype.getFromInject = function (key) {
             if (!this._store[key])
@@ -146,30 +124,6 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "utility/decor
             configurable: true
         });
         BaseInjectable.$inject = ["$injector"];
-        __decorate([
-            decorators_1.enumerable(false),
-            __metadata("design:type", Object)
-        ], BaseInjectable.prototype, "_store", void 0);
-        __decorate([
-            decorators_1.enumerable(false),
-            __metadata("design:type", Array)
-        ], BaseInjectable.prototype, "_args", void 0);
-        __decorate([
-            decorators_1.enumerable(false),
-            __metadata("design:type", Function),
-            __metadata("design:paramtypes", [String]),
-            __metadata("design:returntype", void 0)
-        ], BaseInjectable.prototype, "getFromInject", null);
-        __decorate([
-            decorators_1.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], BaseInjectable.prototype, "$injector", null);
-        __decorate([
-            decorators_1.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], BaseInjectable.prototype, "$injectedArgs", null);
         return BaseInjectable;
     }());
     exports.BaseInjectable = BaseInjectable;
@@ -540,7 +494,7 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
     }(bi.BaseInjectable));
     exports.Service = Service;
 });
-define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/utils/name-generator", "utility/decorators"], function (require, exports, bj, nameGenerator, decorators_2) {
+define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/utils/name-generator"], function (require, exports, bj, nameGenerator) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("AsyncLoader");
@@ -562,9 +516,13 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
     exports.Config = Config;
     var AsyncLoader = /** @class */ (function () {
         function AsyncLoader(c) {
+            var _this = this;
             this._config = new Config();
             this._Data = null;
             this._config.args = c;
+            ["_Data", "_config"].forEach(function (x) {
+                Object.defineProperty(_this, x, { enumerable: false });
+            });
         }
         Object.defineProperty(AsyncLoader.prototype, "$q", {
             get: function () {
@@ -636,50 +594,6 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
                 });
             });
         };
-        __decorate([
-            decorators_2.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], AsyncLoader.prototype, "$q", null);
-        __decorate([
-            decorators_2.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], AsyncLoader.prototype, "$timeout", null);
-        __decorate([
-            decorators_2.enumerable(false),
-            __metadata("design:type", Config)
-        ], AsyncLoader.prototype, "_config", void 0);
-        __decorate([
-            decorators_2.enumerable(true),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], AsyncLoader.prototype, "IsLoading", null);
-        __decorate([
-            decorators_2.enumerable(true),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], AsyncLoader.prototype, "IsSuccess", null);
-        __decorate([
-            decorators_2.enumerable(true),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], AsyncLoader.prototype, "IsFailed", null);
-        __decorate([
-            decorators_2.enumerable(false),
-            __metadata("design:type", Object)
-        ], AsyncLoader.prototype, "_Data", void 0);
-        __decorate([
-            decorators_2.enumerable(true),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], AsyncLoader.prototype, "Data", null);
-        __decorate([
-            decorators_2.enumerable(false),
-            __metadata("design:type", Function),
-            __metadata("design:paramtypes", []),
-            __metadata("design:returntype", void 0)
-        ], AsyncLoader.prototype, "Update", null);
         return AsyncLoader;
     }());
     exports.AsyncLoader = AsyncLoader;
@@ -709,16 +623,6 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
                 Fn: f
             });
         };
-        __decorate([
-            decorators_2.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], Service.prototype, "$q", null);
-        __decorate([
-            decorators_2.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], Service.prototype, "$timeout", null);
         return Service;
     }(bj.BaseInjectable));
     exports.Service = Service;
@@ -807,7 +711,7 @@ define("ng-helpers/fa-loading/themes", ["require", "exports", "ng-helpers/fa-loa
         baseTheme.DirectiveBuilder = DirectiveBuilder;
     })(baseTheme = exports.baseTheme || (exports.baseTheme = {}));
 });
-define("ng-helpers/utils/base-ctrl", ["require", "exports", "angular", "ng-helpers/service", "ng-helpers/utils/base-injectable", "utility/decorators"], function (require, exports, angular, ngUtils, base_injectable_2, decorators_3) {
+define("ng-helpers/utils/base-ctrl", ["require", "exports", "ng-helpers/service", "ng-helpers/utils/base-injectable"], function (require, exports, ngUtils, base_injectable_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseCtrl = /** @class */ (function (_super) {
@@ -865,41 +769,6 @@ define("ng-helpers/utils/base-ctrl", ["require", "exports", "angular", "ng-helpe
             configurable: true
         });
         BaseCtrl.$inject = base_injectable_2.BaseInjectable.$inject.concat(["$scope", ngUtils.serviceName]);
-        __decorate([
-            decorators_3.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], BaseCtrl.prototype, "$scope", null);
-        __decorate([
-            decorators_3.enumerable(false),
-            __metadata("design:type", ngUtils.Service),
-            __metadata("design:paramtypes", [])
-        ], BaseCtrl.prototype, "$ngUtils", null);
-        __decorate([
-            decorators_3.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], BaseCtrl.prototype, "$q", null);
-        __decorate([
-            decorators_3.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], BaseCtrl.prototype, "$state", null);
-        __decorate([
-            decorators_3.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], BaseCtrl.prototype, "$stateParams", null);
-        __decorate([
-            decorators_3.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], BaseCtrl.prototype, "$upload", null);
-        __decorate([
-            decorators_3.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], BaseCtrl.prototype, "$uibModal", null);
         return BaseCtrl;
     }(base_injectable_2.BaseInjectable));
     exports.BaseCtrl = BaseCtrl;
@@ -990,7 +859,7 @@ define("ng-helpers/promise-buttons/index", ["require", "exports"], function (req
     }
     exports.Configure = Configure;
 });
-define("ng-helpers/http-error-to-modal/modal-ctrl", ["require", "exports", "ng-helpers/utils/base-ctrl", "utility/decorators"], function (require, exports, base_ctrl_2, decorators_4) {
+define("ng-helpers/http-error-to-modal/modal-ctrl", ["require", "exports", "ng-helpers/utils/base-ctrl"], function (require, exports, base_ctrl_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ErrorKey = "ModalErrorData";
@@ -1007,11 +876,6 @@ define("ng-helpers/http-error-to-modal/modal-ctrl", ["require", "exports", "ng-h
             configurable: true
         });
         Ctrl.$inject = base_ctrl_2.BaseCtrl.$inject.concat([exports.ErrorKey]);
-        __decorate([
-            decorators_4.enumerable(true),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], Ctrl.prototype, "Errors", null);
         return Ctrl;
     }(base_ctrl_2.BaseCtrl));
     exports.Ctrl = Ctrl;
@@ -1243,7 +1107,7 @@ define("ng-helpers/formly/datepicker", ["require", "exports", "ng-helpers/utils/
     }
     exports.Configure = Configure;
 });
-define("ng-helpers/utils/base-ctrl-for-directive", ["require", "exports", "ng-helpers/utils/base-ctrl", "utility/decorators"], function (require, exports, base_ctrl_4, decorators_5) {
+define("ng-helpers/utils/base-ctrl-for-directive", ["require", "exports", "ng-helpers/utils/base-ctrl"], function (require, exports, base_ctrl_4) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseCtrlForDirective = /** @class */ (function (_super) {
@@ -1259,11 +1123,6 @@ define("ng-helpers/utils/base-ctrl-for-directive", ["require", "exports", "ng-he
             configurable: true
         });
         BaseCtrlForDirective.$inject = base_ctrl_4.BaseCtrl.$inject.concat(["$attrs"]);
-        __decorate([
-            decorators_5.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], BaseCtrlForDirective.prototype, "$attrs", null);
         return BaseCtrlForDirective;
     }(base_ctrl_4.BaseCtrl));
     exports.BaseCtrlForDirective = BaseCtrlForDirective;
@@ -1601,7 +1460,7 @@ define("ng-helpers/formly/nullable-date", ["require", "exports"], function (requ
     }
     exports.NullableDate = NullableDate;
 });
-define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/service", "utility/decorators"], function (require, exports, base_injectable_4, ngUtilsService, decorators_6) {
+define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/service"], function (require, exports, base_injectable_4, ngUtilsService) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseService = /** @class */ (function (_super) {
@@ -1631,21 +1490,6 @@ define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils
             configurable: true
         });
         BaseService.$inject = base_injectable_4.BaseInjectable.$inject.concat([ngUtilsService.serviceName]);
-        __decorate([
-            decorators_6.enumerable(false),
-            __metadata("design:type", ngUtilsService.Service),
-            __metadata("design:paramtypes", [])
-        ], BaseService.prototype, "$ngUtils", null);
-        __decorate([
-            decorators_6.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], BaseService.prototype, "$uibModal", null);
-        __decorate([
-            decorators_6.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], BaseService.prototype, "$q", null);
         return BaseService;
     }(base_injectable_4.BaseInjectable));
     exports.BaseService = BaseService;

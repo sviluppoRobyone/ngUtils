@@ -2,7 +2,6 @@ import * as angular from "angular";
 import * as bj from "./utils/base-injectable";
 import * as ngUtils from "./service";
 import * as nameGenerator from "./utils/name-generator";
-import { enumerable } from "../utility/decorators";
 
 
 export var serviceName = nameGenerator.GetServiceName("AsyncLoader");
@@ -31,47 +30,50 @@ export class Config<T>{
 
 export class AsyncLoader<T> {
 
-    @enumerable(false)
+    
     protected get $q(){
         return this._config.args.$q;
     }
 
-    @enumerable(false)
+   
     protected get $timeout(){
         return this._config.args.$timeout;
     }
 
-    @enumerable(false)
+   
     private _config: Config<T>=new Config<T>();
 
-    @enumerable(true)
+   
     protected get IsLoading(){
         return this._config.isLoading;
     }
 
-    @enumerable(true)
+  
     protected get IsSuccess(){
         return this._config.isSuccess;
     }
 
-    @enumerable(true)
+   
     protected get IsFailed(){
         return this._config.isFailed;
     }
 
-    @enumerable(false)
+    
     private _Data :T=null;
 
-    @enumerable(true)
+   
     public get Data(){
         return this._Data;
     }
 
     constructor(c:IAsyncLoaderConstructor<T>){
-       this._config.args=c;      
+       this._config.args=c; 
+       ["_Data","_config"].forEach(x=>{
+        Object.defineProperty(this,x,{enumerable:false});
+        });
     }
 
-    @enumerable(false)
+   
     Update(){
         return this.$q(ok=>{
             
@@ -110,12 +112,12 @@ export class AsyncLoader<T> {
 
 export class Service extends bj.BaseInjectable{
     
-    @enumerable(false)
+  
     protected get $q(){
         return this.getFromInject("$q") as ng.IQService;
     }
 
-    @enumerable(false)
+    
     protected get $timeout(){
         return this.getFromInject("$timeout") as ng.ITimeoutService;
     }
