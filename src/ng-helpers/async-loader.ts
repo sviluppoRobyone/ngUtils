@@ -41,7 +41,7 @@ export class AsyncLoader<T> {
         return this._config.args.$timeout;
     }
 
-    @enumerable(false)
+ 
     private _config: Config<T>=null;
 
     @enumerable(true)
@@ -59,7 +59,7 @@ export class AsyncLoader<T> {
         return this._config.isFailed;
     }
 
-    @enumerable(false)    
+   
     private _Data :T=null;
 
     @enumerable(true)

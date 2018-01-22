@@ -100,12 +100,8 @@ define("utility/decorators", ["require", "exports"], function (require, exports)
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function enumerable(value) {
-        return function (target, propertyKey) {
-            var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
-            if (descriptor) {
-                descriptor.enumerable = value;
-                Object.defineProperty(target, propertyKey, descriptor);
-            }
+        return function (target, propertyKey, descriptor) {
+            descriptor.enumerable = value;
         };
     }
     exports.enumerable = enumerable;
@@ -636,10 +632,6 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             __metadata("design:paramtypes", [])
         ], AsyncLoader.prototype, "$timeout", null);
         __decorate([
-            decorators_2.enumerable(false),
-            __metadata("design:type", Config)
-        ], AsyncLoader.prototype, "_config", void 0);
-        __decorate([
             decorators_2.enumerable(true),
             __metadata("design:type", Object),
             __metadata("design:paramtypes", [])
@@ -654,10 +646,6 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             __metadata("design:type", Object),
             __metadata("design:paramtypes", [])
         ], AsyncLoader.prototype, "IsFailed", null);
-        __decorate([
-            decorators_2.enumerable(false),
-            __metadata("design:type", Object)
-        ], AsyncLoader.prototype, "_Data", void 0);
         __decorate([
             decorators_2.enumerable(true),
             __metadata("design:type", Object),

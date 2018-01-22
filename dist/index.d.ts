@@ -19,7 +19,7 @@ declare module "json-helpers/index" {
     }
 }
 declare module "utility/decorators" {
-    export function enumerable(value: boolean): (target: any, propertyKey: string) => void;
+    export function enumerable(value: boolean): (target: any, propertyKey: string, descriptor: PropertyDescriptor) => void;
 }
 declare module "ng-helpers/utils/base-injectable" {
     export abstract class BaseInjectable {

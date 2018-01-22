@@ -1,11 +1,9 @@
 
 export function enumerable(value: boolean) {
-    return function (target: any, propertyKey: string) {
+    return function (target: any, propertyKey: string,descriptor: PropertyDescriptor) {
         
-        let descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);        
-        if (descriptor) {
+     
             descriptor.enumerable = value;
-            Object.defineProperty(target, propertyKey, descriptor)
-        }
-    };
+        
+    }
 }
