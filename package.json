@@ -1,6 +1,6 @@
 {
   "name": "@robyone/ng-utils",
-  "version": "1.1.32",
+  "version": "1.1.33",
   "main": "dist/",
   "repository": {
     "type": "git",
