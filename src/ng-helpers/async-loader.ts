@@ -8,7 +8,7 @@ import { enumerable } from "../utility/decorators";
 export var serviceName = nameGenerator.GetServiceName("asyncLoaderFactory");
 
 export function register(m:ng.IModule){
-    m.service(serviceName,Service);
+    m.service(serviceName,Service);    
 }
 
 export interface IGetDataFunction<T>{
@@ -22,9 +22,10 @@ export interface IAsyncLoaderConstructor<T>{
 
 export class Config<T>{
     public args:IAsyncLoaderConstructor<T>=null;
-    public _isLoading :boolean=false;
-    public _isSuccess: boolean=false;
-    public _isFailed: boolean=false;
+    public isLoading :boolean=false;
+    public isSuccess: boolean=false;
+    public isFailed: boolean=false;
+    public successCount:number=0;
     public GetDataFn:IGetDataFunction<T> =null;
 }
 
@@ -32,39 +33,38 @@ export class AsyncLoader<T> {
 
     @enumerable(false)
     protected get $q(){
-        return this.config.args.$q;
+        return this._config.args.$q;
     }
     @enumerable(false)
     protected get $timeout(){
-        return this.config.args.$timeout;
+        return this._config.args.$timeout;
     }
 
     @enumerable(false)
-    protected get config(){
-        return this._config;
-    }
     private _config: Config<T>=null;
 
     @enumerable(true)
     protected get IsLoading(){
-        return this.config._isLoading;
+        return this._config.isLoading;
     }
     @enumerable(true)
     protected get IsSuccess(){
-        return this.config._isSuccess;
+        return this._config.isSuccess;
     }
     @enumerable(true)
     protected get IsFailed(){
-        return this.config._isFailed;
+        return this._config.isFailed;
     }
-  
+    @enumerable(false)    
     private _Data :T=null;
+
     @enumerable(true)
     public get Data(){
         return this._Data;
     }
     constructor(c:IAsyncLoaderConstructor<T>){
-       this.config.args=c;
+       this._config.args=c;
+       
        
     }
 
@@ -73,15 +73,17 @@ export class AsyncLoader<T> {
         return this.$q(ok=>{
             
             this.$timeout(()=>{
-                this.config._isLoading=true;
+                this._config.isLoading=true;
             }).then(()=>{
-                this.$q<T>(this.config.args.Fn).then(data=>{ 
+                this.$q<T>(this._config.args.Fn).then(data=>{ 
 
                     this._Data=data;
+
                     this.$timeout(()=>{
-                        this.config._isLoading=false;
-                        this.config._isSuccess=true;
-                        this.config._isFailed=false;
+                        this._config.successCount++;
+                        this._config.isLoading=false;
+                        this._config.isSuccess=true;
+                        this._config.isFailed=false;
                     }).then(()=>{
                         ok();
                     });
@@ -89,9 +91,9 @@ export class AsyncLoader<T> {
                 }).catch(()=>{
                    
                     this.$timeout(()=>{
-                        this.config._isLoading=false;
-                        this.config._isSuccess=true;
-                        this.config._isFailed=false;
+                        this._config.isLoading=false;
+                        this._config.isSuccess=true;
+                        this._config.isFailed=false;
                     }).then(()=>{
                         ok();
                     });

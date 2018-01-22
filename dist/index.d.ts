@@ -19,7 +19,7 @@ declare module "json-helpers/index" {
     }
 }
 declare module "utility/decorators" {
-    export function enumerable(value: boolean): (target: any, propertyKey: string, descriptor: PropertyDescriptor) => void;
+    export function enumerable(value: boolean): (target: any, propertyKey: string) => void;
 }
 declare module "ng-helpers/utils/base-injectable" {
     export abstract class BaseInjectable {
@@ -120,15 +120,15 @@ declare module "ng-helpers/async-loader" {
     }
     export class Config<T> {
         args: IAsyncLoaderConstructor<T>;
-        _isLoading: boolean;
-        _isSuccess: boolean;
-        _isFailed: boolean;
+        isLoading: boolean;
+        isSuccess: boolean;
+        isFailed: boolean;
+        successCount: number;
         GetDataFn: IGetDataFunction<T>;
     }
     export class AsyncLoader<T> {
         protected readonly $q: angular.IQService;
         protected readonly $timeout: angular.ITimeoutService;
-        protected readonly config: Config<T>;
         private _config;
         protected readonly IsLoading: boolean;
         protected readonly IsSuccess: boolean;

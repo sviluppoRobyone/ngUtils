@@ -100,8 +100,12 @@ define("utility/decorators", ["require", "exports"], function (require, exports)
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function enumerable(value) {
-        return function (target, propertyKey, descriptor) {
-            descriptor.enumerable = value;
+        return function (target, propertyKey) {
+            var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
+            if (descriptor.enumerable != value) {
+                descriptor.enumerable = value;
+                Object.defineProperty(target, propertyKey, descriptor);
+            }
         };
     }
     exports.enumerable = enumerable;
@@ -532,9 +536,10 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
     var Config = /** @class */ (function () {
         function Config() {
             this.args = null;
-            this._isLoading = false;
-            this._isSuccess = false;
-            this._isFailed = false;
+            this.isLoading = false;
+            this.isSuccess = false;
+            this.isFailed = false;
+            this.successCount = 0;
             this.GetDataFn = null;
         }
         return Config;
@@ -544,46 +549,39 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
         function AsyncLoader(c) {
             this._config = null;
             this._Data = null;
-            this.config.args = c;
+            this._config.args = c;
         }
         Object.defineProperty(AsyncLoader.prototype, "$q", {
             get: function () {
-                return this.config.args.$q;
+                return this._config.args.$q;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(AsyncLoader.prototype, "$timeout", {
             get: function () {
-                return this.config.args.$timeout;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(AsyncLoader.prototype, "config", {
-            get: function () {
-                return this._config;
+                return this._config.args.$timeout;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(AsyncLoader.prototype, "IsLoading", {
             get: function () {
-                return this.config._isLoading;
+                return this._config.isLoading;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(AsyncLoader.prototype, "IsSuccess", {
             get: function () {
-                return this.config._isSuccess;
+                return this._config.isSuccess;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(AsyncLoader.prototype, "IsFailed", {
             get: function () {
-                return this.config._isFailed;
+                return this._config.isFailed;
             },
             enumerable: true,
             configurable: true
@@ -599,22 +597,23 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             var _this = this;
             return this.$q(function (ok) {
                 _this.$timeout(function () {
-                    _this.config._isLoading = true;
+                    _this._config.isLoading = true;
                 }).then(function () {
-                    _this.$q(_this.config.args.Fn).then(function (data) {
+                    _this.$q(_this._config.args.Fn).then(function (data) {
                         _this._Data = data;
                         _this.$timeout(function () {
-                            _this.config._isLoading = false;
-                            _this.config._isSuccess = true;
-                            _this.config._isFailed = false;
+                            _this._config.successCount++;
+                            _this._config.isLoading = false;
+                            _this._config.isSuccess = true;
+                            _this._config.isFailed = false;
                         }).then(function () {
                             ok();
                         });
                     }).catch(function () {
                         _this.$timeout(function () {
-                            _this.config._isLoading = false;
-                            _this.config._isSuccess = true;
-                            _this.config._isFailed = false;
+                            _this._config.isLoading = false;
+                            _this._config.isSuccess = true;
+                            _this._config.isFailed = false;
                         }).then(function () {
                             ok();
                         });
@@ -634,9 +633,8 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
         ], AsyncLoader.prototype, "$timeout", null);
         __decorate([
             decorators_2.enumerable(false),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [])
-        ], AsyncLoader.prototype, "config", null);
+            __metadata("design:type", Config)
+        ], AsyncLoader.prototype, "_config", void 0);
         __decorate([
             decorators_2.enumerable(true),
             __metadata("design:type", Object),
@@ -652,6 +650,10 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             __metadata("design:type", Object),
             __metadata("design:paramtypes", [])
         ], AsyncLoader.prototype, "IsFailed", null);
+        __decorate([
+            decorators_2.enumerable(false),
+            __metadata("design:type", Object)
+        ], AsyncLoader.prototype, "_Data", void 0);
         __decorate([
             decorators_2.enumerable(true),
             __metadata("design:type", Object),
