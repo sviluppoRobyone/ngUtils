@@ -5,10 +5,8 @@ import { enumerable } from "../../utility/decorators";
 export abstract class BaseInjectable{
     public static $inject = ["$injector"];
 
-    @enumerable(false)
     private _store : any= {};
-    
-    @enumerable(false)
+
     private _args : any[]=[];
 
     @enumerable(false)

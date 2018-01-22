@@ -145,14 +145,6 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "utility/decor
         BaseInjectable.$inject = ["$injector"];
         __decorate([
             decorators_1.enumerable(false),
-            __metadata("design:type", Object)
-        ], BaseInjectable.prototype, "_store", void 0);
-        __decorate([
-            decorators_1.enumerable(false),
-            __metadata("design:type", Array)
-        ], BaseInjectable.prototype, "_args", void 0);
-        __decorate([
-            decorators_1.enumerable(false),
             __metadata("design:type", Function),
             __metadata("design:paramtypes", [String]),
             __metadata("design:returntype", void 0)
