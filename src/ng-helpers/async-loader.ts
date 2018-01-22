@@ -12,7 +12,7 @@ export function register(m:ng.IModule){
 }
 
 export interface IGetDataFunction<T>{
-    (resolver: (resolve: ng.IQResolveReject<T>, reject: ng.IQResolveReject<any>) => any);
+    (resolve: ng.IQResolveReject<T>, reject: ng.IQResolveReject<any>):void;
 }
 export interface IAsyncLoaderConstructor<T>{
     $q:ng.IQService;
@@ -72,7 +72,7 @@ export class AsyncLoader<T> {
                 this.config._isLoading=true;
             }).then(()=>{
                 this.$q<T>(this.config.args.Fn).then(data=>{ 
-                                  
+
                     this.Data=data;
                     this.$timeout(()=>{
                         this.config._isLoading=false;
