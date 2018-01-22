@@ -44,7 +44,7 @@ import { BaseInjectable } from "./utils/base-injectable";
 
             class ModalCtrl extends BaseInjectable {
 
-                static $inject = ([] as string[]).concat(BaseInjectable.$inject, [fileKey]);
+                public static $inject = BaseInjectable.$inject.concat([fileKey]);
 
                 get file():File {
                     return this.$injectedArgs[ModalCtrl.$inject.indexOf(fileKey)];

@@ -5,7 +5,7 @@ import * as nameGenerator from "./utils/name-generator";
 import { enumerable } from "../utility/decorators";
 
 
-export var serviceName=nameGenerator.GetServiceName("asyncLoaderFactory");
+export var serviceName = nameGenerator.GetServiceName("asyncLoaderFactory");
 
 export function register(m:ng.IModule){
     m.service(serviceName,Service);

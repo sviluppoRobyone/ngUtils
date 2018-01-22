@@ -257,7 +257,7 @@ declare module "ng-helpers/formly/nullable-field-directive/index" {
 declare module "ng-helpers/formly/index" {
     export function Configure(m: ng.IModule): void;
 }
-declare module "prototype/string-prototype" {
+declare module "polyfill/string-prototype" {
     export function run(): void;
     global  {
         interface String {
@@ -265,7 +265,7 @@ declare module "prototype/string-prototype" {
         }
     }
 }
-declare module "prototype/array-prototype" {
+declare module "polyfill/array-prototype" {
     export function run(): void;
     global  {
         interface Array<T> {
@@ -273,7 +273,7 @@ declare module "prototype/array-prototype" {
         }
     }
 }
-declare module "prototype/all" {
+declare module "polyfill/all" {
     export function run(): void;
 }
 declare module "ng-helpers/init" {

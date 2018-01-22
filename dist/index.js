@@ -222,7 +222,7 @@ define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-i
             };
             reader.readAsDataURL(this.file);
         };
-        ModalCtrl.$inject = [].concat(base_injectable_1.BaseInjectable.$inject, [fileKey]);
+        ModalCtrl.$inject = base_injectable_1.BaseInjectable.$inject.concat([fileKey]);
         return ModalCtrl;
     }(base_injectable_1.BaseInjectable));
 });
@@ -337,7 +337,7 @@ define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/util
     }(bi.BaseInjectable));
     exports.Service = Service;
 });
-define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/file-viewer", "ng-helpers/utils/name-generator", "ng-helpers/debug/debug-service", "ng-helpers/async-loader", "../../node_modules/deprecated-decorator/bld/index"], function (require, exports, bi, fv, nameGenerator, debugService, AsyncLoader, index_1) {
+define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/file-viewer", "ng-helpers/utils/name-generator", "ng-helpers/debug/debug-service", "ng-helpers/async-loader"], function (require, exports, bi, fv, nameGenerator, debugService, AsyncLoader) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("$ngUtils");
@@ -476,6 +476,7 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
             enumerable: true,
             configurable: true
         });
+        ///@deprecated
         Service.prototype.manageAjaxLoading = function (before, ajax, after) {
             var _this = this;
             var qBefore = this.$q.defer();
@@ -516,12 +517,6 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
             return q.promise;
         };
         Service.$inject = bi.BaseInjectable.$inject.concat([debugService.serviceName, AsyncLoader.serviceName]);
-        __decorate([
-            index_1.default("$asyncLoader"),
-            __metadata("design:type", Function),
-            __metadata("design:paramtypes", [Function, Function, Function]),
-            __metadata("design:returntype", void 0)
-        ], Service.prototype, "manageAjaxLoading", null);
         return Service;
     }(bi.BaseInjectable));
     exports.Service = Service;
@@ -1454,7 +1449,7 @@ define("ng-helpers/formly/index", ["require", "exports", "ng-helpers/formly/date
     exports.Configure = Configure;
 });
 //https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
-define("prototype/string-prototype", ["require", "exports"], function (require, exports) {
+define("polyfill/string-prototype", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function run() {
@@ -1470,7 +1465,7 @@ define("prototype/string-prototype", ["require", "exports"], function (require, 
     }
     exports.run = run;
 });
-define("prototype/array-prototype", ["require", "exports"], function (require, exports) {
+define("polyfill/array-prototype", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function run() {
@@ -1495,7 +1490,7 @@ define("prototype/array-prototype", ["require", "exports"], function (require, e
     }
     exports.run = run;
 });
-define("prototype/all", ["require", "exports", "prototype/string-prototype", "prototype/array-prototype"], function (require, exports, stringFn, arrayFn) {
+define("polyfill/all", ["require", "exports", "polyfill/string-prototype", "polyfill/array-prototype"], function (require, exports, stringFn, arrayFn) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function run() {
@@ -1504,11 +1499,11 @@ define("prototype/all", ["require", "exports", "prototype/string-prototype", "pr
     }
     exports.run = run;
 });
-define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug-service", "ng-helpers/debug/debug-modal", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "prototype/all"], function (require, exports, ngUtils, filters, moduleExists, faLoading, promiseButton, HttpErrorToModal, debugService, debugModal, fileViewer, formly, asyncLoader, proto) {
+define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug-service", "ng-helpers/debug/debug-modal", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/all"], function (require, exports, ngUtils, filters, moduleExists, faLoading, promiseButton, HttpErrorToModal, debugService, debugModal, fileViewer, formly, asyncLoader, polyfill) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function init(m) {
-        proto.run();
+        polyfill.run();
         debugService.register(m);
         asyncLoader.register(m);
         ngUtils.register(m);

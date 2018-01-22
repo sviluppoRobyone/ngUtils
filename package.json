@@ -10,6 +10,7 @@
     "clean:dist": "del-cli ./dist/",
     "watch-ts": "tsc -w",
     "compile": "tsc",
+    "uglify":"uglifyjs --compress --mangle --output ./dist/index.min.js -- ./dist/index.js",
     "recompile": "npm run clean:dist && npm run compile",
     "git:commit": "git add -A && git commit -m \"auto commit\"",
     "git:push": "git push origin --follow-tags",
@@ -17,7 +18,7 @@
     "release:patch": "npm version patch",
     "git:commit:push": "npm run git:commit && npm run git:push",
     "publish-npm-github": "npm run git:commit && npm run release:patch && npm run publish-npm && npm run git:push",
-    "recompile:commit:publish:push": "npm run recompile && npm run publish-npm-github",
+    "recompile:commit:publish:push": "npm run recompile && npm run uglify && npm run publish-npm-github",
     "start": "npm run watch-ts"
   },
   "files": [
@@ -34,15 +35,16 @@
     "@types/jquery": "2.0.48",
     "@types/ng-file-upload": "^12.2.2",
     "@types/requirejs": "^2.1.31",
-    "bootstrap": "^3.3.7",
-    "deprecated-decorator": "^0.1.6"
+    "bootstrap": "^3.3.7"
+  
   },
   "bugs": {
     "url": "https://github.com/sviluppoRobyone/ngUtils/issues"
   },
   "homepage": "https://github.com/sviluppoRobyone/ngUtils#readme",
   "devDependencies": {
-    "del-cli": "^1.1.0"
+    "del-cli": "^1.1.0",
+    "uglify-js": "^3.3.8"
   },
   "description": ""
 }
