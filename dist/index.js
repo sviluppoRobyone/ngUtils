@@ -107,7 +107,7 @@ define("utility/decorators", ["require", "exports"], function (require, exports)
                 Object.defineProperty(target, propertyKey, descriptor);
             }
             else {
-                Object.defineProperty(target, propertyKey, { enumerable: value, writable: true });
+                Object.defineProperty(target, propertyKey, { enumerable: value, writable: true, configurable: true });
             }
         };
     }
