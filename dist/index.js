@@ -101,8 +101,8 @@ define("utility/decorators", ["require", "exports"], function (require, exports)
     Object.defineProperty(exports, "__esModule", { value: true });
     function enumerable(value) {
         return function (target, propertyKey) {
-            var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
-            if (descriptor.enumerable != value) {
+            var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
+            if (descriptor) {
                 descriptor.enumerable = value;
                 Object.defineProperty(target, propertyKey, descriptor);
             }
