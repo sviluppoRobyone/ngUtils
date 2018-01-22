@@ -494,12 +494,95 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
     }(bi.BaseInjectable));
     exports.Service = Service;
 });
-define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/utils/name-generator"], function (require, exports, bj, nameGenerator) {
+define("ng-helpers/utils/base-ctrl", ["require", "exports", "ng-helpers/service", "ng-helpers/utils/base-injectable"], function (require, exports, ngUtils, base_injectable_2) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BaseCtrl = /** @class */ (function (_super) {
+        __extends(BaseCtrl, _super);
+        function BaseCtrl() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(BaseCtrl.prototype, "$scope", {
+            get: function () {
+                return this.$injectedArgs[BaseCtrl.$inject.indexOf("$scope")];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseCtrl.prototype, "$ngUtils", {
+            get: function () {
+                return this.$injectedArgs[BaseCtrl.$inject.indexOf(ngUtils.serviceName)];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseCtrl.prototype, "$q", {
+            get: function () {
+                return this.$ngUtils.$q;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseCtrl.prototype, "$state", {
+            get: function () {
+                return this.$ngUtils.$state;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseCtrl.prototype, "$stateParams", {
+            get: function () {
+                return this.$ngUtils.$stateParams;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseCtrl.prototype, "$upload", {
+            get: function () {
+                return this.$ngUtils.$Upload;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseCtrl.prototype, "$uibModal", {
+            get: function () {
+                return this.$ngUtils.$uibModal;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        BaseCtrl.$inject = base_injectable_2.BaseInjectable.$inject.concat(["$scope", ngUtils.serviceName]);
+        return BaseCtrl;
+    }(base_injectable_2.BaseInjectable));
+    exports.BaseCtrl = BaseCtrl;
+});
+define("ng-helpers/utils/base-ctrl-for-directive", ["require", "exports", "ng-helpers/utils/base-ctrl"], function (require, exports, base_ctrl_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BaseCtrlForDirective = /** @class */ (function (_super) {
+        __extends(BaseCtrlForDirective, _super);
+        function BaseCtrlForDirective() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(BaseCtrlForDirective.prototype, "$attrs", {
+            get: function () {
+                return this.$injectedArgs[BaseCtrlForDirective.$inject.indexOf("$attrs")];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        BaseCtrlForDirective.$inject = base_ctrl_1.BaseCtrl.$inject.concat(["$attrs"]);
+        return BaseCtrlForDirective;
+    }(base_ctrl_1.BaseCtrl));
+    exports.BaseCtrlForDirective = BaseCtrlForDirective;
+});
+define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/utils/name-generator", "ng-helpers/utils/base-ctrl-for-directive"], function (require, exports, bj, nameGenerator, base_ctrl_for_directive_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("AsyncLoader");
     function register(m) {
         m.service(exports.serviceName, Service);
+        directive.register(m);
     }
     exports.register = register;
     var Config = /** @class */ (function () {
@@ -626,6 +709,66 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
         return Service;
     }(bj.BaseInjectable));
     exports.Service = Service;
+    var directive;
+    (function (directive_1) {
+        function register(m) {
+            m.directive("asyncLoader", directive);
+        }
+        directive_1.register = register;
+        function directive() {
+            return {
+                template: "\n            <fa-loading is-loading=\"Ctrl.IsLoading\"></fa-loading>\n            <ng-transclude></ng-transclude>\n            <span ng-if=\"Ctrl.IsFailed\">\n                Errore\n            </span>\n            ",
+                scope: {
+                    loaders: "="
+                },
+                controller: Ctrl,
+                controllerAs: "Ctrl",
+                transclude: true
+            };
+        }
+        var Ctrl = /** @class */ (function (_super) {
+            __extends(Ctrl, _super);
+            function Ctrl() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            Object.defineProperty(Ctrl.prototype, "loaders", {
+                get: function () {
+                    return this.$scope["loaders"];
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Ctrl.prototype, "AsyncLoaders", {
+                get: function () {
+                    return this.loaders.filter(function (x) { return x instanceof AsyncLoader; });
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Ctrl.prototype, "IsLoading", {
+                get: function () {
+                    return this.AsyncLoaders.some(function (x) { return x.IsLoading; });
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Ctrl.prototype, "IsSuccess", {
+                get: function () {
+                    return this.AsyncLoaders.every(function (x) { return x.IsSuccess; });
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Ctrl.prototype, "IsFailed", {
+                get: function () {
+                    return this.AsyncLoaders.some(function (x) { return x.IsFailed; });
+                },
+                enumerable: true,
+                configurable: true
+            });
+            return Ctrl;
+        }(base_ctrl_for_directive_1.BaseCtrlForDirective));
+    })(directive || (directive = {}));
 });
 define("ng-helpers/filters/index", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -700,7 +843,6 @@ define("ng-helpers/fa-loading/themes", ["require", "exports", "ng-helpers/fa-loa
     (function (baseTheme) {
         function DirectiveBuilder(loadingTemplate) {
             return function () {
-                console.log(loadingTemplate);
                 var originalDirective = d.directive();
                 originalDirective.transclude = true;
                 //language=html
@@ -711,69 +853,7 @@ define("ng-helpers/fa-loading/themes", ["require", "exports", "ng-helpers/fa-loa
         baseTheme.DirectiveBuilder = DirectiveBuilder;
     })(baseTheme = exports.baseTheme || (exports.baseTheme = {}));
 });
-define("ng-helpers/utils/base-ctrl", ["require", "exports", "ng-helpers/service", "ng-helpers/utils/base-injectable"], function (require, exports, ngUtils, base_injectable_2) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var BaseCtrl = /** @class */ (function (_super) {
-        __extends(BaseCtrl, _super);
-        function BaseCtrl() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        Object.defineProperty(BaseCtrl.prototype, "$scope", {
-            get: function () {
-                return this.$injectedArgs[BaseCtrl.$inject.indexOf("$scope")];
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseCtrl.prototype, "$ngUtils", {
-            get: function () {
-                return this.$injectedArgs[BaseCtrl.$inject.indexOf(ngUtils.serviceName)];
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseCtrl.prototype, "$q", {
-            get: function () {
-                return this.$ngUtils.$q;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseCtrl.prototype, "$state", {
-            get: function () {
-                return this.$ngUtils.$state;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseCtrl.prototype, "$stateParams", {
-            get: function () {
-                return this.$ngUtils.$stateParams;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseCtrl.prototype, "$upload", {
-            get: function () {
-                return this.$ngUtils.$Upload;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseCtrl.prototype, "$uibModal", {
-            get: function () {
-                return this.$ngUtils.$uibModal;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        BaseCtrl.$inject = base_injectable_2.BaseInjectable.$inject.concat(["$scope", ngUtils.serviceName]);
-        return BaseCtrl;
-    }(base_injectable_2.BaseInjectable));
-    exports.BaseCtrl = BaseCtrl;
-});
-define("ng-helpers/fa-loading/ctrl", ["require", "exports", "ng-helpers/utils/base-ctrl"], function (require, exports, base_ctrl_1) {
+define("ng-helpers/fa-loading/ctrl", ["require", "exports", "ng-helpers/utils/base-ctrl"], function (require, exports, base_ctrl_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Ctrl = /** @class */ (function (_super) {
@@ -789,7 +869,7 @@ define("ng-helpers/fa-loading/ctrl", ["require", "exports", "ng-helpers/utils/ba
             configurable: true
         });
         return Ctrl;
-    }(base_ctrl_1.BaseCtrl));
+    }(base_ctrl_2.BaseCtrl));
     exports.Ctrl = Ctrl;
 });
 define("ng-helpers/fa-loading/directive", ["require", "exports", "ng-helpers/fa-loading/ctrl", "ng-helpers/utils/name-generator"], function (require, exports, ctrl_1, nameGenerator) {
@@ -835,6 +915,7 @@ define("ng-helpers/fa-loading/index", ["require", "exports", "ng-helpers/fa-load
                     i.addClass("fa-" + size);
                 var html = $("<div/>").append(div).html();
                 var dirName = directive.directiveName + (size || "") + "T" + (spinnerIndex + 1);
+                console.log("register", dirName);
                 m.directive(dirName, themes_1.baseTheme.DirectiveBuilder(html));
             });
         });
@@ -859,7 +940,7 @@ define("ng-helpers/promise-buttons/index", ["require", "exports"], function (req
     }
     exports.Configure = Configure;
 });
-define("ng-helpers/http-error-to-modal/modal-ctrl", ["require", "exports", "ng-helpers/utils/base-ctrl"], function (require, exports, base_ctrl_2) {
+define("ng-helpers/http-error-to-modal/modal-ctrl", ["require", "exports", "ng-helpers/utils/base-ctrl"], function (require, exports, base_ctrl_3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ErrorKey = "ModalErrorData";
@@ -875,9 +956,9 @@ define("ng-helpers/http-error-to-modal/modal-ctrl", ["require", "exports", "ng-h
             enumerable: true,
             configurable: true
         });
-        Ctrl.$inject = base_ctrl_2.BaseCtrl.$inject.concat([exports.ErrorKey]);
+        Ctrl.$inject = base_ctrl_3.BaseCtrl.$inject.concat([exports.ErrorKey]);
         return Ctrl;
-    }(base_ctrl_2.BaseCtrl));
+    }(base_ctrl_3.BaseCtrl));
     exports.Ctrl = Ctrl;
 });
 define("ng-helpers/http-error-to-modal/interceptor", ["require", "exports", "ng-helpers/http-error-to-modal/modal-ctrl", "ng-helpers/utils/base-injectable"], function (require, exports, ModalController, base_injectable_3) {
@@ -959,7 +1040,7 @@ define("ng-helpers/http-error-to-modal/index", ["require", "exports", "ng-helper
     }
     exports.register = register;
 });
-define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/base-ctrl", "ng-helpers/utils/name-generator"], function (require, exports, base_ctrl_3, nameGenerator) {
+define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/base-ctrl", "ng-helpers/utils/name-generator"], function (require, exports, base_ctrl_4, nameGenerator) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var directiveName = nameGenerator.GetDirectiveName("debugModal");
@@ -1012,7 +1093,7 @@ define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/
             var _a;
         };
         return debugModalCtrl;
-    }(base_ctrl_3.BaseCtrl));
+    }(base_ctrl_4.BaseCtrl));
     var ModalCtrl = /** @class */ (function (_super) {
         __extends(ModalCtrl, _super);
         function ModalCtrl() {
@@ -1025,9 +1106,9 @@ define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/
             enumerable: true,
             configurable: true
         });
-        ModalCtrl.$inject = base_ctrl_3.BaseCtrl.$inject.concat([dataKey]);
+        ModalCtrl.$inject = base_ctrl_4.BaseCtrl.$inject.concat([dataKey]);
         return ModalCtrl;
-    }(base_ctrl_3.BaseCtrl));
+    }(base_ctrl_4.BaseCtrl));
 });
 define("ng-helpers/formly/datepicker", ["require", "exports", "ng-helpers/utils/module-exists", "angular"], function (require, exports, moduleExists, angular) {
     "use strict";
@@ -1107,27 +1188,7 @@ define("ng-helpers/formly/datepicker", ["require", "exports", "ng-helpers/utils/
     }
     exports.Configure = Configure;
 });
-define("ng-helpers/utils/base-ctrl-for-directive", ["require", "exports", "ng-helpers/utils/base-ctrl"], function (require, exports, base_ctrl_4) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var BaseCtrlForDirective = /** @class */ (function (_super) {
-        __extends(BaseCtrlForDirective, _super);
-        function BaseCtrlForDirective() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        Object.defineProperty(BaseCtrlForDirective.prototype, "$attrs", {
-            get: function () {
-                return this.$injectedArgs[BaseCtrlForDirective.$inject.indexOf("$attrs")];
-            },
-            enumerable: true,
-            configurable: true
-        });
-        BaseCtrlForDirective.$inject = base_ctrl_4.BaseCtrl.$inject.concat(["$attrs"]);
-        return BaseCtrlForDirective;
-    }(base_ctrl_4.BaseCtrl));
-    exports.BaseCtrlForDirective = BaseCtrlForDirective;
-});
-define("ng-helpers/formly/form-builder", ["require", "exports", "ng-helpers/utils/base-ctrl-for-directive"], function (require, exports, base_ctrl_for_directive_1) {
+define("ng-helpers/formly/form-builder", ["require", "exports", "ng-helpers/utils/base-ctrl-for-directive"], function (require, exports, base_ctrl_for_directive_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
@@ -1185,7 +1246,7 @@ define("ng-helpers/formly/form-builder", ["require", "exports", "ng-helpers/util
             return this.$scope["onSave"]();
         };
         return Ctrl;
-    }(base_ctrl_for_directive_1.BaseCtrlForDirective));
+    }(base_ctrl_for_directive_2.BaseCtrlForDirective));
 });
 define("ng-helpers/formly/nullable-field-directive/ctrl", ["require", "exports"], function (require, exports) {
     "use strict";

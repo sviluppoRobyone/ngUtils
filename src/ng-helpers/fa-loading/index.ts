@@ -28,6 +28,7 @@ export function register(m: ng.IModule) {
 
             var html = $("<div/>").append(div).html();
             var dirName = directive.directiveName + (size || "") + "T" + (spinnerIndex + 1);
+            console.log("register",dirName);
             m.directive(dirName, baseTheme.DirectiveBuilder(html));
         });
 

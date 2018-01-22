@@ -4,7 +4,7 @@ import * as d from "./directive";
 export namespace baseTheme {
   export function DirectiveBuilder(loadingTemplate: string) {
     return () => {
-      console.log(loadingTemplate);
+     
       var originalDirective = d.directive();
 
       originalDirective.transclude = true;

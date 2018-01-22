@@ -2,12 +2,14 @@ import * as angular from "angular";
 import * as bj from "./utils/base-injectable";
 import * as ngUtils from "./service";
 import * as nameGenerator from "./utils/name-generator";
+import { BaseCtrlForDirective } from "./utils/base-ctrl-for-directive";
 
 
 export var serviceName = nameGenerator.GetServiceName("AsyncLoader");
 
 export function register(m:ng.IModule){
-    m.service(serviceName,Service);    
+    m.service(serviceName,Service);
+    directive.register(m);
 }
 
 export interface IGetDataFunction<T>{
@@ -44,17 +46,17 @@ export class AsyncLoader<T> {
     private _config: Config<T>=new Config<T>();
 
    
-    protected get IsLoading(){
+    public get IsLoading(){
         return this._config.isLoading;
     }
 
   
-    protected get IsSuccess(){
+    public get IsSuccess(){
         return this._config.isSuccess;
     }
 
    
-    protected get IsFailed(){
+    public get IsFailed(){
         return this._config.isFailed;
     }
 
@@ -127,5 +129,53 @@ export class Service extends bj.BaseInjectable{
             $q:this.$q,
                     $timeout:this.$timeout,
                         Fn:f});
+    }
+}
+
+module directive{
+    export function register(m:ng.IModule){
+        m.directive("asyncLoader",directive);
+    }
+    function directive(){
+        return {
+            
+            template:`
+            <fa-loading is-loading="Ctrl.IsLoading"></fa-loading>
+            <ng-transclude></ng-transclude>
+            <span ng-if="Ctrl.IsFailed">
+                Errore
+            </span>
+            `,
+            scope:{
+                loaders:"="               
+            },
+            controller:Ctrl,
+            controllerAs:"Ctrl",
+            transclude:true
+
+        }as ng.IDirective;
+    }
+
+    class Ctrl extends BaseCtrlForDirective {
+
+        get loaders(){
+            return this.$scope["loaders"];
+        }
+        get AsyncLoaders():AsyncLoader<any>[]{
+            return this.loaders.filter(x=> x instanceof AsyncLoader);
+        }
+        
+        get IsLoading(){
+            return this.AsyncLoaders.some(x=>x.IsLoading);
+        }
+
+        get IsSuccess(){
+            return this.AsyncLoaders.every(x=>x.IsSuccess);
+        }
+
+        get IsFailed(){
+            return this.AsyncLoaders.some(x=>x.IsFailed);
+        }       
+        
     }
 }

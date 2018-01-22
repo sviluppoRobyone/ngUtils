@@ -103,6 +103,28 @@ declare module "ng-helpers/service" {
         onScopeDispose($scope: ng.IScope): angular.IPromise<{}>;
     }
 }
+declare module "ng-helpers/utils/base-ctrl" {
+    import * as angular from "angular";
+    import * as ngUtils from "ng-helpers/service";
+    import { BaseInjectable } from "ng-helpers/utils/base-injectable";
+    export abstract class BaseCtrl extends BaseInjectable implements ng.IController {
+        static $inject: string[];
+        protected readonly $scope: angular.IScope;
+        protected readonly $ngUtils: ngUtils.Service;
+        protected readonly $q: angular.IQService;
+        protected readonly $state: angular.ui.IStateService;
+        protected readonly $stateParams: angular.ui.IStateParamsService;
+        protected readonly $upload: angular.angularFileUpload.IUploadService;
+        protected readonly $uibModal: angular.ui.bootstrap.IModalService;
+    }
+}
+declare module "ng-helpers/utils/base-ctrl-for-directive" {
+    import { BaseCtrl } from "ng-helpers/utils/base-ctrl";
+    export abstract class BaseCtrlForDirective extends BaseCtrl {
+        static $inject: string[];
+        protected readonly $attrs: ng.IAttributes;
+    }
+}
 declare module "ng-helpers/async-loader" {
     import * as angular from "angular";
     import * as bj from "ng-helpers/utils/base-injectable";
@@ -128,9 +150,9 @@ declare module "ng-helpers/async-loader" {
         protected readonly $q: angular.IQService;
         protected readonly $timeout: angular.ITimeoutService;
         private _config;
-        protected readonly IsLoading: boolean;
-        protected readonly IsSuccess: boolean;
-        protected readonly IsFailed: boolean;
+        readonly IsLoading: boolean;
+        readonly IsSuccess: boolean;
+        readonly IsFailed: boolean;
         private _Data;
         readonly Data: T;
         constructor(c: IAsyncLoaderConstructor<T>);
@@ -156,21 +178,6 @@ declare module "ng-helpers/fa-loading/themes" {
     import * as angular from "angular";
     export namespace baseTheme {
         function DirectiveBuilder(loadingTemplate: string): () => angular.IDirective<angular.IScope>;
-    }
-}
-declare module "ng-helpers/utils/base-ctrl" {
-    import * as angular from "angular";
-    import * as ngUtils from "ng-helpers/service";
-    import { BaseInjectable } from "ng-helpers/utils/base-injectable";
-    export abstract class BaseCtrl extends BaseInjectable implements ng.IController {
-        static $inject: string[];
-        protected readonly $scope: angular.IScope;
-        protected readonly $ngUtils: ngUtils.Service;
-        protected readonly $q: angular.IQService;
-        protected readonly $state: angular.ui.IStateService;
-        protected readonly $stateParams: angular.ui.IStateParamsService;
-        protected readonly $upload: angular.angularFileUpload.IUploadService;
-        protected readonly $uibModal: angular.ui.bootstrap.IModalService;
     }
 }
 declare module "ng-helpers/fa-loading/ctrl" {
@@ -218,13 +225,6 @@ declare module "ng-helpers/debug/debug-modal" {
 }
 declare module "ng-helpers/formly/datepicker" {
     export function Configure(app: ng.IModule): void;
-}
-declare module "ng-helpers/utils/base-ctrl-for-directive" {
-    import { BaseCtrl } from "ng-helpers/utils/base-ctrl";
-    export abstract class BaseCtrlForDirective extends BaseCtrl {
-        static $inject: string[];
-        protected readonly $attrs: ng.IAttributes;
-    }
 }
 declare module "ng-helpers/formly/form-builder" {
     export function register(m: ng.IModule): void;
