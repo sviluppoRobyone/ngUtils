@@ -10,11 +10,9 @@ export function register(m:ng.IModule){
     m.service(serviceName,Service);
 }
 export class Service extends bi.BaseInjectable {
-    public static $inject=bi.BaseInjectable.$inject.concat([debugService.serviceName,AsyncLoader.serviceName]);
+    public static $inject=bi.BaseInjectable.$inject.concat([debugService.serviceName,AsyncLoader.serviceName,fv.serviceName]);
 
-    public get $debugService():debugService.Service{
-        return this.$injectedArgs[Service.$inject.indexOf(debugService.serviceName)];
-    }
+  
     public get $rootScope(){
         return this.getFromInject<ng.IRootScopeService>("$rootScope");
     }
@@ -60,11 +58,14 @@ export class Service extends bi.BaseInjectable {
     public get $uibModal(){
         return this.getFromInject<ng.ui.bootstrap.IModalService>("$uibModal");
     }
+    public get $debugService():debugService.Service{
+        return this.$injectedArgs[Service.$inject.indexOf(debugService.serviceName)];
+    }
     public get $fileViewer():fv.fileViewerService{        
-        return this.$injectedArgs[fv.serviceName];
+        return this.$injectedArgs[Service.$inject.indexOf(fv.serviceName)];
     }
     public get $asyncLoader():AsyncLoader.Service{
-        return this.$injectedArgs[AsyncLoader.serviceName];
+        return this.$injectedArgs[Service.$inject.indexOf(AsyncLoader.serviceName)];
     }
 
     ///@deprecated

@@ -145,6 +145,14 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "utility/decor
         BaseInjectable.$inject = ["$injector"];
         __decorate([
             decorators_1.enumerable(false),
+            __metadata("design:type", Object)
+        ], BaseInjectable.prototype, "_store", void 0);
+        __decorate([
+            decorators_1.enumerable(false),
+            __metadata("design:type", Array)
+        ], BaseInjectable.prototype, "_args", void 0);
+        __decorate([
+            decorators_1.enumerable(false),
             __metadata("design:type", Function),
             __metadata("design:paramtypes", [String]),
             __metadata("design:returntype", void 0)
@@ -272,6 +280,10 @@ define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/util
             return window[Detectors.DebugName];
         }
         Detectors.GetWindowDebugValue = GetWindowDebugValue;
+        function IsDev() {
+            return IsWindowDebugDefined() ? GetWindowDebugValue() : (IsLocalhost() || IsLocalDomain());
+        }
+        Detectors.IsDev = IsDev;
     })(Detectors = exports.Detectors || (exports.Detectors = {}));
     var Service = /** @class */ (function (_super) {
         __extends(Service, _super);
@@ -332,7 +344,7 @@ define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/util
         };
         Object.defineProperty(Service.prototype, "updateDebugV1", {
             get: function () {
-                return Detectors.IsWindowDebugDefined() ? Detectors.GetWindowDebugValue() : (Detectors.IsLocalhost() || Detectors.IsLocalDomain());
+                return Detectors.IsDev();
             },
             enumerable: true,
             configurable: true
@@ -354,13 +366,6 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
         function Service() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Object.defineProperty(Service.prototype, "$debugService", {
-            get: function () {
-                return this.$injectedArgs[Service.$inject.indexOf(debugService.serviceName)];
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(Service.prototype, "$rootScope", {
             get: function () {
                 return this.getFromInject("$rootScope");
@@ -466,16 +471,23 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(Service.prototype, "$debugService", {
+            get: function () {
+                return this.$injectedArgs[Service.$inject.indexOf(debugService.serviceName)];
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(Service.prototype, "$fileViewer", {
             get: function () {
-                return this.$injectedArgs[fv.serviceName];
+                return this.$injectedArgs[Service.$inject.indexOf(fv.serviceName)];
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$asyncLoader", {
             get: function () {
-                return this.$injectedArgs[AsyncLoader.serviceName];
+                return this.$injectedArgs[Service.$inject.indexOf(AsyncLoader.serviceName)];
             },
             enumerable: true,
             configurable: true
@@ -520,7 +532,7 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
             });
             return q.promise;
         };
-        Service.$inject = bi.BaseInjectable.$inject.concat([debugService.serviceName, AsyncLoader.serviceName]);
+        Service.$inject = bi.BaseInjectable.$inject.concat([debugService.serviceName, AsyncLoader.serviceName, fv.serviceName]);
         return Service;
     }(bi.BaseInjectable));
     exports.Service = Service;

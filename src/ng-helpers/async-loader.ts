@@ -35,6 +35,7 @@ export class AsyncLoader<T> {
     protected get $q(){
         return this._config.args.$q;
     }
+
     @enumerable(false)
     protected get $timeout(){
         return this._config.args.$timeout;
@@ -47,14 +48,17 @@ export class AsyncLoader<T> {
     protected get IsLoading(){
         return this._config.isLoading;
     }
+
     @enumerable(true)
     protected get IsSuccess(){
         return this._config.isSuccess;
     }
+
     @enumerable(true)
     protected get IsFailed(){
         return this._config.isFailed;
     }
+
     @enumerable(false)    
     private _Data :T=null;
 
@@ -62,10 +66,9 @@ export class AsyncLoader<T> {
     public get Data(){
         return this._Data;
     }
+
     constructor(c:IAsyncLoaderConstructor<T>){
-       this._config.args=c;
-       
-       
+       this._config.args=c;      
     }
 
     @enumerable(false)

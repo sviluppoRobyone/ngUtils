@@ -59,6 +59,7 @@ declare module "ng-helpers/debug/debug-service" {
         function IsLocalDomain(): boolean;
         function IsWindowDebugDefined(): boolean;
         function GetWindowDebugValue(): any;
+        function IsDev(): any;
     }
     export class Service extends bi.BaseInjectable {
         private readonly $timeout;
@@ -83,7 +84,6 @@ declare module "ng-helpers/service" {
     export function register(m: ng.IModule): void;
     export class Service extends bi.BaseInjectable {
         static $inject: string[];
-        readonly $debugService: debugService.Service;
         readonly $rootScope: angular.IRootScopeService;
         readonly $http: angular.IHttpService;
         readonly $location: angular.ILocationService;
@@ -99,6 +99,7 @@ declare module "ng-helpers/service" {
         readonly $stateParams: angular.ui.IStateParamsService;
         readonly $state: angular.ui.IStateService;
         readonly $uibModal: angular.ui.bootstrap.IModalService;
+        readonly $debugService: debugService.Service;
         readonly $fileViewer: fv.fileViewerService;
         readonly $asyncLoader: AsyncLoader.Service;
         manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function): angular.IPromise<{}>;

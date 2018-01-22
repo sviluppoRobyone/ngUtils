@@ -27,6 +27,10 @@ export module Detectors{
         return window[DebugName];
     }
 
+    export function IsDev(){
+        return IsWindowDebugDefined()?GetWindowDebugValue():(IsLocalhost() || IsLocalDomain());
+    }
+
 
 }
 export class Service extends bi.BaseInjectable{
@@ -72,10 +76,7 @@ export class Service extends bi.BaseInjectable{
         this.Updater=f;
     }
 
-    get updateDebugV1(){
-        
-        return Detectors.IsWindowDebugDefined()?Detectors.GetWindowDebugValue():(Detectors.IsLocalhost() || Detectors.IsLocalDomain());
-
-        
+    get updateDebugV1(){        
+        return Detectors.IsDev();        
     }
 }
