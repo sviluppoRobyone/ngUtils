@@ -107,9 +107,12 @@ export class AsyncLoader<T> {
 
 export class Service extends bj.BaseInjectable{
     
+    @enumerable(false)
     protected get $q(){
         return this.getFromInject("$q") as ng.IQService;
     }
+    
+    @enumerable(false)
     protected get $timeout(){
         return this.getFromInject("$timeout") as ng.ITimeoutService;
     }

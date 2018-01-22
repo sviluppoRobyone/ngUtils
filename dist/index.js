@@ -694,6 +694,16 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
                 Fn: f
             });
         };
+        __decorate([
+            decorators_2.enumerable(false),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [])
+        ], Service.prototype, "$q", null);
+        __decorate([
+            decorators_2.enumerable(false),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [])
+        ], Service.prototype, "$timeout", null);
         return Service;
     }(bj.BaseInjectable));
     exports.Service = Service;
