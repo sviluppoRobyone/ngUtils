@@ -8,7 +8,7 @@ export function enumerable(value: boolean) {
             descriptor.enumerable = value;
             Object.defineProperty(target, propertyKey, descriptor);
         }else{
-            Object.defineProperty(target,propertyKey,{enumerable:value});
+            Object.defineProperty(target,propertyKey,{enumerable:value,writable:true});
         }
     };
 }
