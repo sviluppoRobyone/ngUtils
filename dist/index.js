@@ -528,7 +528,7 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
 define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/utils/name-generator", "utility/decorators"], function (require, exports, bj, nameGenerator, decorators_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.serviceName = nameGenerator.GetServiceName("asyncLoaderFactory");
+    exports.serviceName = nameGenerator.GetServiceName("asyncLoader");
     function register(m) {
         m.service(exports.serviceName, Service);
     }

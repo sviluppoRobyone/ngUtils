@@ -5,7 +5,7 @@ import * as nameGenerator from "./utils/name-generator";
 import { enumerable } from "../utility/decorators";
 
 
-export var serviceName = nameGenerator.GetServiceName("asyncLoaderFactory");
+export var serviceName = nameGenerator.GetServiceName("asyncLoader");
 
 export function register(m:ng.IModule){
     m.service(serviceName,Service);    
@@ -111,7 +111,7 @@ export class Service extends bj.BaseInjectable{
     protected get $q(){
         return this.getFromInject("$q") as ng.IQService;
     }
-    
+
     @enumerable(false)
     protected get $timeout(){
         return this.getFromInject("$timeout") as ng.ITimeoutService;

@@ -17,6 +17,8 @@ export function init(m: ng.IModule) {
     polyfill.run();
     debugService.register(m);
     asyncLoader.register(m);
+
+    
     ngUtils.register(m);
     
     
