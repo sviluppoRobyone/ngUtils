@@ -20,8 +20,6 @@ declare module "json-helpers/index" {
 }
 declare module "utility/decorators" {
     export function enumerable(value: boolean): (target: any, propertyKey: string) => void;
-    export function SetNotEnumerable(): (target: any, propertyKey: string) => void;
-    export function SetEnumerable(): (target: any, propertyKey: string) => void;
 }
 declare module "ng-helpers/utils/base-injectable" {
     export abstract class BaseInjectable {

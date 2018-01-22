@@ -102,27 +102,16 @@ define("utility/decorators", ["require", "exports"], function (require, exports)
     function enumerable(value) {
         return function (target, propertyKey) {
             var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
-            if (descriptor)
+            if (descriptor && descriptor.enumerable !== value) {
                 descriptor.enumerable = value;
+                Object.defineProperty(target, propertyKey, descriptor);
+            }
+            else {
+                Object.defineProperty(target, propertyKey, { enumerable: value });
+            }
         };
     }
     exports.enumerable = enumerable;
-    function SetNotEnumerable() {
-        return function (target, propertyKey) {
-            var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
-            if (descriptor)
-                descriptor.enumerable = false;
-        };
-    }
-    exports.SetNotEnumerable = SetNotEnumerable;
-    function SetEnumerable() {
-        return function (target, propertyKey) {
-            var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
-            if (descriptor)
-                descriptor.enumerable = true;
-        };
-    }
-    exports.SetEnumerable = SetEnumerable;
 });
 define("ng-helpers/utils/base-injectable", ["require", "exports", "utility/decorators"], function (require, exports, decorators_1) {
     "use strict";

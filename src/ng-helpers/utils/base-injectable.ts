@@ -1,4 +1,4 @@
-import { enumerable, SetNotEnumerable } from "../../utility/decorators";
+import { enumerable } from "../../utility/decorators";
 
 
 
