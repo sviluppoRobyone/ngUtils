@@ -111,7 +111,7 @@ declare module "ng-helpers/async-loader" {
     export var serviceName: string;
     export function register(m: ng.IModule): void;
     export interface IGetDataFunction<T> {
-        (): ng.IPromise<T>;
+        (resolver: (resolve: ng.IQResolveReject<T>, reject: ng.IQResolveReject<any>) => any): any;
     }
     export interface IAsyncLoaderConstructor<T> {
         $q: ng.IQService;

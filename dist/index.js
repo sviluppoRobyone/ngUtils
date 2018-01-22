@@ -594,7 +594,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
                 _this.$timeout(function () {
                     _this.config._isLoading = true;
                 }).then(function () {
-                    _this.config.args.Fn().then(function (data) {
+                    _this.$q(_this.config.args.Fn).then(function (data) {
                         _this.Data = data;
                         _this.$timeout(function () {
                             _this.config._isLoading = false;
