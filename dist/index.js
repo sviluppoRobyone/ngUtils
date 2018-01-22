@@ -100,11 +100,29 @@ define("utility/decorators", ["require", "exports"], function (require, exports)
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function enumerable(value) {
-        return function (target, propertyKey, descriptor) {
-            descriptor.enumerable = value;
+        return function (target, propertyKey) {
+            var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
+            if (descriptor)
+                descriptor.enumerable = value;
         };
     }
     exports.enumerable = enumerable;
+    function SetNotEnumerable() {
+        return function (target, propertyKey) {
+            var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
+            if (descriptor)
+                descriptor.enumerable = false;
+        };
+    }
+    exports.SetNotEnumerable = SetNotEnumerable;
+    function SetEnumerable() {
+        return function (target, propertyKey) {
+            var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
+            if (descriptor)
+                descriptor.enumerable = true;
+        };
+    }
+    exports.SetEnumerable = SetEnumerable;
 });
 define("ng-helpers/utils/base-injectable", ["require", "exports", "utility/decorators"], function (require, exports, decorators_1) {
     "use strict";
@@ -139,6 +157,14 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "utility/decor
             configurable: true
         });
         BaseInjectable.$inject = ["$injector"];
+        __decorate([
+            decorators_1.enumerable(false),
+            __metadata("design:type", Object)
+        ], BaseInjectable.prototype, "_store", void 0);
+        __decorate([
+            decorators_1.enumerable(false),
+            __metadata("design:type", Array)
+        ], BaseInjectable.prototype, "_args", void 0);
         __decorate([
             decorators_1.enumerable(false),
             __metadata("design:type", Function),
@@ -632,6 +658,10 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             __metadata("design:paramtypes", [])
         ], AsyncLoader.prototype, "$timeout", null);
         __decorate([
+            decorators_2.enumerable(false),
+            __metadata("design:type", Config)
+        ], AsyncLoader.prototype, "_config", void 0);
+        __decorate([
             decorators_2.enumerable(true),
             __metadata("design:type", Object),
             __metadata("design:paramtypes", [])
@@ -646,6 +676,10 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             __metadata("design:type", Object),
             __metadata("design:paramtypes", [])
         ], AsyncLoader.prototype, "IsFailed", null);
+        __decorate([
+            decorators_2.enumerable(false),
+            __metadata("design:type", Object)
+        ], AsyncLoader.prototype, "_Data", void 0);
         __decorate([
             decorators_2.enumerable(true),
             __metadata("design:type", Object),
