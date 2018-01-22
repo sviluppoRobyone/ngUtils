@@ -523,6 +523,10 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             ["_Data", "_config"].forEach(function (x) {
                 Object.defineProperty(_this, x, { enumerable: false });
             });
+            ["Data", "IsLoading", "IsSuccess", "IsFailed"].forEach(function (x) {
+                var j = _this[x];
+                Object.defineProperty(_this, x, { enumerable: true });
+            });
         }
         Object.defineProperty(AsyncLoader.prototype, "$q", {
             get: function () {

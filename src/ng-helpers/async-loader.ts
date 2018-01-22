@@ -71,6 +71,11 @@ export class AsyncLoader<T> {
        ["_Data","_config"].forEach(x=>{
         Object.defineProperty(this,x,{enumerable:false});
         });
+
+        ["Data","IsLoading","IsSuccess","IsFailed"].forEach(x=>{
+            var j=this[x];
+            Object.defineProperty(this,x,{enumerable:true});
+        })
     }
 
    
