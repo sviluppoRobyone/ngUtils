@@ -57,8 +57,12 @@ export class AsyncLoader<T> {
     protected get IsFailed(){
         return this.config._isFailed;
     }
-
-    protected Data :T=null;
+  
+    private _Data :T=null;
+    @enumerable(true)
+    public get Data(){
+        return this._Data;
+    }
     constructor(c:IAsyncLoaderConstructor<T>){
        this.config.args=c;
        
@@ -73,7 +77,7 @@ export class AsyncLoader<T> {
             }).then(()=>{
                 this.$q<T>(this.config.args.Fn).then(data=>{ 
 
-                    this.Data=data;
+                    this._Data=data;
                     this.$timeout(()=>{
                         this.config._isLoading=false;
                         this.config._isSuccess=true;

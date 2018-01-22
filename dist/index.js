@@ -543,7 +543,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
     var AsyncLoader = /** @class */ (function () {
         function AsyncLoader(c) {
             this._config = null;
-            this.Data = null;
+            this._Data = null;
             this.config.args = c;
         }
         Object.defineProperty(AsyncLoader.prototype, "$q", {
@@ -588,6 +588,13 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(AsyncLoader.prototype, "Data", {
+            get: function () {
+                return this._Data;
+            },
+            enumerable: true,
+            configurable: true
+        });
         AsyncLoader.prototype.Update = function () {
             var _this = this;
             return this.$q(function (ok) {
@@ -595,7 +602,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
                     _this.config._isLoading = true;
                 }).then(function () {
                     _this.$q(_this.config.args.Fn).then(function (data) {
-                        _this.Data = data;
+                        _this._Data = data;
                         _this.$timeout(function () {
                             _this.config._isLoading = false;
                             _this.config._isSuccess = true;
@@ -645,6 +652,11 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             __metadata("design:type", Object),
             __metadata("design:paramtypes", [])
         ], AsyncLoader.prototype, "IsFailed", null);
+        __decorate([
+            decorators_2.enumerable(true),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [])
+        ], AsyncLoader.prototype, "Data", null);
         __decorate([
             decorators_2.enumerable(false),
             __metadata("design:type", Function),

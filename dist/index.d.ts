@@ -133,7 +133,8 @@ declare module "ng-helpers/async-loader" {
         protected readonly IsLoading: boolean;
         protected readonly IsSuccess: boolean;
         protected readonly IsFailed: boolean;
-        protected Data: T;
+        private _Data;
+        readonly Data: T;
         constructor(c: IAsyncLoaderConstructor<T>);
         Update(): angular.IPromise<{}>;
     }
