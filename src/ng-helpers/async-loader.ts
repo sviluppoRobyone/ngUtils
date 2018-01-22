@@ -2,7 +2,7 @@ import * as angular from "angular";
 import * as bj from "./utils/base-injectable";
 import * as ngUtils from "./service";
 import * as nameGenerator from "./utils/name-generator";
-import { BaseCtrlForDirective } from "./utils/base-ctrl-for-directive";
+import { BaseInjectable } from "./utils/base-injectable";
 
 
 export var serviceName = nameGenerator.GetServiceName("AsyncLoader");
@@ -156,8 +156,11 @@ module directive{
         }as ng.IDirective;
     }
 
-    class Ctrl extends BaseCtrlForDirective {
-
+    class Ctrl extends BaseInjectable {
+        public $inject=BaseInjectable.$inject.concat(["$scope"]);
+        get $scope():ng.IScope{
+            return this.$injectedArgs[Ctrl.$inject.indexOf("$scope")];
+        }
         get loaders(){
             return this.$scope["loaders"];
         }
