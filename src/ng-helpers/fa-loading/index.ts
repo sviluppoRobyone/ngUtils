@@ -1,8 +1,10 @@
 import * as directive from "./directive";
 import * as $ from "jquery";
 import {baseTheme} from "./themes";
+import { registerDirective } from "../core";
 export function register(m: ng.IModule) {
-    m.directive(directive.directiveName, directive.directive);
+    registerDirective(m,directive.directiveName,directive.directive);
+ 
 
     var spinners = ["circle-o-notch", "cog", "gear", "refresh", "spinner"];
 
@@ -28,8 +30,9 @@ export function register(m: ng.IModule) {
 
             var html = $("<div/>").append(div).html();
             var dirName = directive.directiveName + (size || "") + "T" + (spinnerIndex + 1);
-            console.log("register",dirName);
-            m.directive(dirName, baseTheme.DirectiveBuilder(html));
+            
+          
+            registerDirective(m,dirName,baseTheme.DirectiveBuilder(html));
         });
 
     });

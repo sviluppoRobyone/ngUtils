@@ -128,73 +128,6 @@ define("ng-helpers/utils/base-injectable", ["require", "exports"], function (req
     }());
     exports.BaseInjectable = BaseInjectable;
 });
-define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-injectable"], function (require, exports, base_injectable_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var fileKey = "fileToView";
-    exports.serviceName = "fileViewer";
-    function register(m) {
-        m.service(exports.serviceName, fileViewerService);
-    }
-    exports.register = register;
-    var fileViewerService = /** @class */ (function (_super) {
-        __extends(fileViewerService, _super);
-        function fileViewerService() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        Object.defineProperty(fileViewerService.prototype, "$uibModal", {
-            get: function () {
-                return this.getFromInjector("$uibModal");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        fileViewerService.prototype.viewFile = function (file) {
-            return this.$uibModal.open({
-                controllerAs: "Ctrl",
-                controller: ModalCtrl,
-                size: "lg",
-                resolve: (_a = {},
-                    _a[fileKey] = function () { return file; },
-                    _a),
-                template: "\n                        <div class=\"modal-header\">\n                            <h3>Titolo</h3>\n                        </div>\n                        <div class=\"modal-body\">\n                            <div class=\"embed-responsive embed-responsive-4by3\">\n                              <iframe class=\"embed-responsive-item\" ng-src=\"{{Ctrl.dataUri|url}}\"></iframe>\n                            </div>\n                            \n                        </div>\n                        "
-            });
-            var _a;
-        };
-        return fileViewerService;
-    }(base_injectable_1.BaseInjectable));
-    exports.fileViewerService = fileViewerService;
-    var ModalCtrl = /** @class */ (function (_super) {
-        __extends(ModalCtrl, _super);
-        function ModalCtrl() {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            var _this = _super.apply(this, args) || this;
-            _this.dataUri = null;
-            _this.buildDataUri();
-            return _this;
-        }
-        Object.defineProperty(ModalCtrl.prototype, "file", {
-            get: function () {
-                return this.$injectedArgs[ModalCtrl.$inject.indexOf(fileKey)];
-            },
-            enumerable: true,
-            configurable: true
-        });
-        ModalCtrl.prototype.buildDataUri = function () {
-            var _this = this;
-            var reader = new FileReader();
-            reader.onload = function () {
-                _this.dataUri = reader.result;
-            };
-            reader.readAsDataURL(this.file);
-        };
-        ModalCtrl.$inject = base_injectable_1.BaseInjectable.$inject.concat([fileKey]);
-        return ModalCtrl;
-    }(base_injectable_1.BaseInjectable));
-});
 define("ng-helpers/utils/name-generator", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -208,11 +141,11 @@ define("ng-helpers/utils/name-generator", ["require", "exports"], function (requ
     }
     exports.GetDirectiveName = GetDirectiveName;
 });
-define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/utils/name-generator"], function (require, exports, bi, nameGenerator) {
+define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/utils/name-generator", "ng-helpers/core"], function (require, exports, bi, nameGenerator, core_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
-        m.service(exports.serviceName, Service);
+        core_1.registerService(m, exports.serviceName, Service);
     }
     exports.register = register;
     exports.serviceName = nameGenerator.GetServiceName("debug");
@@ -237,10 +170,10 @@ define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/util
             return window[Detectors.DebugName];
         }
         Detectors.GetWindowDebugValue = GetWindowDebugValue;
-        function IsDev() {
+        function IsDebugEnabled() {
             return IsWindowDebugDefined() ? GetWindowDebugValue() : (IsLocalhost() || IsLocalDomain());
         }
-        Detectors.IsDev = IsDev;
+        Detectors.IsDebugEnabled = IsDebugEnabled;
     })(Detectors = exports.Detectors || (exports.Detectors = {}));
     var Service = /** @class */ (function (_super) {
         __extends(Service, _super);
@@ -301,7 +234,7 @@ define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/util
         };
         Object.defineProperty(Service.prototype, "updateDebugV1", {
             get: function () {
-                return Detectors.IsDev();
+                return Detectors.IsDebugEnabled();
             },
             enumerable: true,
             configurable: true
@@ -310,12 +243,103 @@ define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/util
     }(bi.BaseInjectable));
     exports.Service = Service;
 });
-define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/file-viewer", "ng-helpers/utils/name-generator", "ng-helpers/debug/debug-service", "ng-helpers/async-loader"], function (require, exports, bi, fv, nameGenerator, debugService, AsyncLoader) {
+define("ng-helpers/core", ["require", "exports", "angular"], function (require, exports, angular) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function registerDirective(m, directiveName, directive) {
+        var $log = ConsoleUtils.GetLogger();
+        $log.debug("Registering directive", directiveName, "inside module", m.name);
+        m.directive(directiveName, directive);
+    }
+    exports.registerDirective = registerDirective;
+    function registerService(m, serviceName, service) {
+        var $log = ConsoleUtils.GetLogger();
+        $log.debug("Registering service", serviceName, "inside module", m.name);
+        m.service(serviceName, service);
+    }
+    exports.registerService = registerService;
+    var ConsoleUtils;
+    (function (ConsoleUtils) {
+        function GetLogger() {
+            var $log = angular.injector(['ng']).get('$log');
+            return $log;
+        }
+        ConsoleUtils.GetLogger = GetLogger;
+    })(ConsoleUtils = exports.ConsoleUtils || (exports.ConsoleUtils = {}));
+});
+define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, base_injectable_1, core_2) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var fileKey = "fileToView";
+    exports.serviceName = "fileViewer";
+    function register(m) {
+        core_2.registerService(m, exports.serviceName, fileViewerService);
+    }
+    exports.register = register;
+    var fileViewerService = /** @class */ (function (_super) {
+        __extends(fileViewerService, _super);
+        function fileViewerService() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(fileViewerService.prototype, "$uibModal", {
+            get: function () {
+                return this.getFromInjector("$uibModal");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        fileViewerService.prototype.viewFile = function (file) {
+            return this.$uibModal.open({
+                controllerAs: "Ctrl",
+                controller: ModalCtrl,
+                size: "lg",
+                resolve: (_a = {},
+                    _a[fileKey] = function () { return file; },
+                    _a),
+                template: "\n                        <div class=\"modal-header\">\n                            <h3>Titolo</h3>\n                        </div>\n                        <div class=\"modal-body\">\n                            <div class=\"embed-responsive embed-responsive-4by3\">\n                              <iframe class=\"embed-responsive-item\" ng-src=\"{{Ctrl.dataUri|url}}\"></iframe>\n                            </div>\n                            \n                        </div>\n                        "
+            });
+            var _a;
+        };
+        return fileViewerService;
+    }(base_injectable_1.BaseInjectable));
+    exports.fileViewerService = fileViewerService;
+    var ModalCtrl = /** @class */ (function (_super) {
+        __extends(ModalCtrl, _super);
+        function ModalCtrl() {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            var _this = _super.apply(this, args) || this;
+            _this.dataUri = null;
+            _this.buildDataUri();
+            return _this;
+        }
+        Object.defineProperty(ModalCtrl.prototype, "file", {
+            get: function () {
+                return this.$injectedArgs[ModalCtrl.$inject.indexOf(fileKey)];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        ModalCtrl.prototype.buildDataUri = function () {
+            var _this = this;
+            var reader = new FileReader();
+            reader.onload = function () {
+                _this.dataUri = reader.result;
+            };
+            reader.readAsDataURL(this.file);
+        };
+        ModalCtrl.$inject = base_injectable_1.BaseInjectable.$inject.concat([fileKey]);
+        return ModalCtrl;
+    }(base_injectable_1.BaseInjectable));
+});
+define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/file-viewer", "ng-helpers/utils/name-generator", "ng-helpers/debug/debug-service", "ng-helpers/async-loader", "ng-helpers/core"], function (require, exports, bi, fv, nameGenerator, debugService, AsyncLoader, core_3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("$ngUtils");
     function register(m) {
-        m.service(exports.serviceName, Service);
+        core_3.registerService(m, exports.serviceName, Service);
     }
     exports.register = register;
     var Service = /** @class */ (function (_super) {
@@ -494,12 +518,12 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
     }(bi.BaseInjectable));
     exports.Service = Service;
 });
-define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/utils/name-generator", "ng-helpers/utils/base-injectable"], function (require, exports, bj, nameGenerator, base_injectable_2) {
+define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/utils/name-generator", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, bj, nameGenerator, base_injectable_2, core_4) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("AsyncLoader");
     function register(m) {
-        m.service(exports.serviceName, Service);
+        core_4.registerService(m, exports.serviceName, Service);
         directive.register(m);
     }
     exports.register = register;
@@ -633,7 +657,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
     var directive;
     (function (directive_1) {
         function register(m) {
-            m.directive("asyncLoader", directive);
+            core_4.registerDirective(m, "asyncLoader", directive);
         }
         directive_1.register = register;
         var scopeLoadersKey = "loaders";
@@ -890,11 +914,11 @@ define("ng-helpers/fa-loading/directive", ["require", "exports", "ng-helpers/fa-
     }
     exports.directive = directive;
 });
-define("ng-helpers/fa-loading/index", ["require", "exports", "ng-helpers/fa-loading/directive", "jquery", "ng-helpers/fa-loading/themes"], function (require, exports, directive, $, themes_1) {
+define("ng-helpers/fa-loading/index", ["require", "exports", "ng-helpers/fa-loading/directive", "jquery", "ng-helpers/fa-loading/themes", "ng-helpers/core"], function (require, exports, directive, $, themes_1, core_5) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
-        m.directive(directive.directiveName, directive.directive);
+        core_5.registerDirective(m, directive.directiveName, directive.directive);
         var spinners = ["circle-o-notch", "cog", "gear", "refresh", "spinner"];
         var sizes = [null, "lg", "2x", "3x", "4x", "5x"];
         var baseTmpl = $("<div/>");
@@ -911,8 +935,7 @@ define("ng-helpers/fa-loading/index", ["require", "exports", "ng-helpers/fa-load
                     i.addClass("fa-" + size);
                 var html = $("<div/>").append(div).html();
                 var dirName = directive.directiveName + (size || "") + "T" + (spinnerIndex + 1);
-                console.log("register", dirName);
-                m.directive(dirName, themes_1.baseTheme.DirectiveBuilder(html));
+                core_5.registerDirective(m, dirName, themes_1.baseTheme.DirectiveBuilder(html));
             });
         });
     }
@@ -1036,13 +1059,13 @@ define("ng-helpers/http-error-to-modal/index", ["require", "exports", "ng-helper
     }
     exports.register = register;
 });
-define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/base-ctrl", "ng-helpers/utils/name-generator"], function (require, exports, base_ctrl_3, nameGenerator) {
+define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/base-ctrl", "ng-helpers/utils/name-generator", "ng-helpers/core"], function (require, exports, base_ctrl_3, nameGenerator, core_6) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var directiveName = nameGenerator.GetDirectiveName("debugModal");
     var dataKey = directiveName + "debugData";
     function register(m) {
-        m.directive(directiveName, directive);
+        core_6.registerDirective(m, directiveName, directive);
     }
     exports.register = register;
     function directive() {
@@ -1478,6 +1501,9 @@ define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpe
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function init(m) {
+        m.config(["$logProvider", function ($logProvider) {
+                $logProvider.debugEnabled(debugService.Detectors.IsDebugEnabled());
+            }]);
         polyfill.run();
         debugService.register(m);
         asyncLoader.register(m);

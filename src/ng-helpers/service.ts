@@ -5,9 +5,10 @@ import * as nameGenerator from "./utils/name-generator";
 import * as debugService from "./debug/debug-service";
 export var serviceName=nameGenerator.GetServiceName("$ngUtils");
 import * as AsyncLoader from "./async-loader";
+import { registerService } from "./core";
 
 export function register(m:ng.IModule){
-    m.service(serviceName,Service);
+    registerService(m,serviceName,Service);
 }
 export class Service extends bi.BaseInjectable {
     public static $inject=bi.BaseInjectable.$inject.concat([debugService.serviceName,AsyncLoader.serviceName,fv.serviceName]);

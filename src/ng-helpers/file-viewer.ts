@@ -1,5 +1,6 @@
 import * as angular from "angular";
 import { BaseInjectable } from "./utils/base-injectable";
+import { registerService } from "./core";
 
 
 
@@ -8,8 +9,8 @@ import { BaseInjectable } from "./utils/base-injectable";
             export const serviceName = "fileViewer";
 
             export function register(m: ng.IModule) {
-
-                m.service(serviceName, fileViewerService);
+                registerService(m,serviceName,fileViewerService);
+               
 
             }
 

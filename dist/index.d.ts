@@ -29,16 +29,6 @@ declare module "ng-helpers/utils/base-injectable" {
         protected readonly $injectedArgs: any[];
     }
 }
-declare module "ng-helpers/file-viewer" {
-    import * as angular from "angular";
-    import { BaseInjectable } from "ng-helpers/utils/base-injectable";
-    export const serviceName = "fileViewer";
-    export function register(m: ng.IModule): void;
-    export class fileViewerService extends BaseInjectable {
-        readonly $uibModal: angular.ui.bootstrap.IModalService;
-        viewFile(file: File): angular.ui.bootstrap.IModalInstanceService;
-    }
-}
 declare module "ng-helpers/utils/name-generator" {
     export function GetServiceName(name: any): string;
     export function GetDirectiveName(name: any): any;
@@ -56,7 +46,7 @@ declare module "ng-helpers/debug/debug-service" {
         function IsLocalDomain(): boolean;
         function IsWindowDebugDefined(): boolean;
         function GetWindowDebugValue(): any;
-        function IsDev(): any;
+        function IsDebugEnabled(): any;
     }
     export class Service extends bi.BaseInjectable {
         private readonly $timeout;
@@ -69,6 +59,27 @@ declare module "ng-helpers/debug/debug-service" {
         private init();
         SetDebugUpdater(f: IDebugDetectorFunction): void;
         readonly updateDebugV1: any;
+    }
+}
+declare module "ng-helpers/core" {
+    import * as angular from "angular";
+    export interface IDirectiveFn {
+        (): ng.IDirective;
+    }
+    export function registerDirective(m: ng.IModule, directiveName: string, directive: IDirectiveFn): void;
+    export function registerService(m: ng.IModule, serviceName: string, service: ng.Injectable<Function>): void;
+    export module ConsoleUtils {
+        function GetLogger(): angular.ILogService;
+    }
+}
+declare module "ng-helpers/file-viewer" {
+    import * as angular from "angular";
+    import { BaseInjectable } from "ng-helpers/utils/base-injectable";
+    export const serviceName = "fileViewer";
+    export function register(m: ng.IModule): void;
+    export class fileViewerService extends BaseInjectable {
+        readonly $uibModal: angular.ui.bootstrap.IModalService;
+        viewFile(file: File): angular.ui.bootstrap.IModalInstanceService;
     }
 }
 declare module "ng-helpers/service" {

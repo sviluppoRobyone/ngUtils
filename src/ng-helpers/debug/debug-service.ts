@@ -1,9 +1,10 @@
 import * as angular from "angular";
 import * as bi from "../utils/base-injectable";
 import * as nameGenerator from "../utils/name-generator";
+import { registerService } from "../core";
 
 export function register(m:ng.IModule){
-    m.service(serviceName,Service);
+    registerService(m,serviceName,Service);
 }
 export var serviceName=nameGenerator.GetServiceName("debug");
 export interface IDebugDetectorFunction{
@@ -27,7 +28,7 @@ export module Detectors{
         return window[DebugName];
     }
 
-    export function IsDev(){
+    export function IsDebugEnabled(){
         return IsWindowDebugDefined()?GetWindowDebugValue():(IsLocalhost() || IsLocalDomain());
     }
 
@@ -77,6 +78,6 @@ export class Service extends bi.BaseInjectable{
     }
 
     get updateDebugV1(){        
-        return Detectors.IsDev();        
+        return Detectors.IsDebugEnabled();        
     }
 }

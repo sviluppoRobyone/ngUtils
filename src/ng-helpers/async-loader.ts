@@ -3,12 +3,13 @@ import * as bj from "./utils/base-injectable";
 import * as ngUtils from "./service";
 import * as nameGenerator from "./utils/name-generator";
 import { BaseInjectable } from "./utils/base-injectable";
+import { registerService, registerDirective } from "./core";
 
 
 export var serviceName = nameGenerator.GetServiceName("AsyncLoader");
 
 export function register(m:ng.IModule){
-    m.service(serviceName,Service);
+    registerService(m,serviceName,Service);
     directive.register(m);
 }
 
@@ -131,7 +132,7 @@ export class Service extends bj.BaseInjectable{
 
 module directive{
     export function register(m:ng.IModule){
-        m.directive("asyncLoader",directive);
+        registerDirective(m,"asyncLoader",directive);      
     }
     var scopeLoadersKey="loaders";
     function directive(){

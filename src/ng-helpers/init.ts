@@ -10,10 +10,14 @@ import * as debugModal from "./debug/debug-modal";
 import * as fileViewer from "./file-viewer";
 import * as formly from "./formly/index";
 import * as asyncLoader from "./async-loader";
-
 import * as  polyfill from  "../polyfill/all";
 
 export function init(m: ng.IModule) {
+
+    m.config(["$logProvider",($logProvider:ng.ILogProvider)=>{
+        $logProvider.debugEnabled(debugService.Detectors.IsDebugEnabled())
+    }]);
+    
     polyfill.run();
     debugService.register(m);
     asyncLoader.register(m);

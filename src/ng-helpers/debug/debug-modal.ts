@@ -1,12 +1,11 @@
 import { BaseCtrl } from "../utils/base-ctrl";
 import * as nameGenerator from "../utils/name-generator";
+import { registerDirective } from "../core";
 
 const directiveName = nameGenerator.GetDirectiveName("debugModal");
 const dataKey = directiveName+"debugData";
 export function register(m: ng.IModule) {
-
-    m.directive(directiveName, directive);
-
+    registerDirective(m,directiveName,directive);
 }
 
 function directive() {
@@ -63,7 +62,7 @@ class debugModalCtrl extends BaseCtrl {
 
 class ModalCtrl extends BaseCtrl {
 
-    static $inject = BaseCtrl.$inject.concat([dataKey]);
+    public static $inject = BaseCtrl.$inject.concat([dataKey]);
 
     private get data() {
         return this.$injectedArgs[ModalCtrl.$inject.indexOf(dataKey)];
