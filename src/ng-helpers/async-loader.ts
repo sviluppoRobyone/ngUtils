@@ -67,7 +67,7 @@ export class AsyncLoader<T> {
 
     constructor(c:IAsyncLoaderConstructor<T>){
        this._c.args=c; 
-       ["_Data","_config"].forEach(x=>{
+       ["_Data","_c"].forEach(x=>{
         Object.defineProperty(this,x,{enumerable:false});
         });
     }

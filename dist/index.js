@@ -521,7 +521,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             this._Data = null;
             this._c = new Config();
             this._c.args = c;
-            ["_Data", "_config"].forEach(function (x) {
+            ["_Data", "_c"].forEach(function (x) {
                 Object.defineProperty(_this, x, { enumerable: false });
             });
         }
