@@ -15,7 +15,7 @@ import { BaseInjectable } from "./utils/base-injectable";
 
             export class fileViewerService extends BaseInjectable {
                 get $uibModal(){
-                    return this.getFromInject<angular.ui.bootstrap.IModalService>("$uibModal");
+                    return this.getFromInjector<angular.ui.bootstrap.IModalService>("$uibModal");
                 }
                 viewFile(file: File) {
 

@@ -14,49 +14,49 @@ export class Service extends bi.BaseInjectable {
 
   
     public get $rootScope(){
-        return this.getFromInject<ng.IRootScopeService>("$rootScope");
+        return this.getFromInjector<ng.IRootScopeService>("$rootScope");
     }
     public get $http()  {
-        return this.getFromInject<ng.IHttpService>("$http");
+        return this.getFromInjector<ng.IHttpService>("$http");
     }
     public get $location()  {
-        return this.getFromInject<ng.ILocationService>("$location");
+        return this.getFromInjector<ng.ILocationService>("$location");
     }
     public get $q() {
-        return this.getFromInject<ng.IQService>("$q");
+        return this.getFromInjector<ng.IQService>("$q");
     }
     public get $filter() {
-        return this.getFromInject<ng.IFilterService>("$filter");
+        return this.getFromInjector<ng.IFilterService>("$filter");
     }
     public get $timeout() {
-        return this.getFromInject<ng.ITimeoutService>("$timeout");
+        return this.getFromInjector<ng.ITimeoutService>("$timeout");
     }
     public get $cacheFactory() {
-        return this.getFromInject<ng.ICacheFactoryService>("$cacheFactory");
+        return this.getFromInjector<ng.ICacheFactoryService>("$cacheFactory");
     }
     public get $locale(){
-        return this.getFromInject<ng.ILocaleService>("$locale");
+        return this.getFromInjector<ng.ILocaleService>("$locale");
     }
     public get $interval() {
-        return this.getFromInject<ng.IIntervalService>("$interval");
+        return this.getFromInjector<ng.IIntervalService>("$interval");
     }
     public get $log() {
-        return this.getFromInject<ng.ILogService>("$log");
+        return this.getFromInjector<ng.ILogService>("$log");
     }
     public get $sce() {
-        return this.getFromInject<ng.ISCEService>("$sce");
+        return this.getFromInjector<ng.ISCEService>("$sce");
     }
     public get $Upload() {
-        return this.getFromInject<ng.angularFileUpload.IUploadService>("Upload");
+        return this.getFromInjector<ng.angularFileUpload.IUploadService>("Upload");
     }    
     public get $stateParams() {
-        return this.getFromInject<ng.ui.IStateParamsService>("$stateParams");
+        return this.getFromInjector<ng.ui.IStateParamsService>("$stateParams");
     }
     public get $state() {
-        return this.getFromInject<ng.ui.IStateService>("$state");
+        return this.getFromInjector<ng.ui.IStateService>("$state");
     }
     public get $uibModal(){
-        return this.getFromInject<ng.ui.bootstrap.IModalService>("$uibModal");
+        return this.getFromInjector<ng.ui.bootstrap.IModalService>("$uibModal");
     }
     public get $debugService():debugService.Service{
         return this.$injectedArgs[Service.$inject.indexOf(debugService.serviceName)];

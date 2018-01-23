@@ -7,7 +7,7 @@ export abstract class BaseInjectable{
     private _args : any[]=[];
 
    
-    protected getFromInject<T>(key: string) {
+    protected getFromInjector<T>(key: string) {
         if (!this._store[key])
             this._store[key] = this.$injector.get<T>(key);
 

@@ -32,36 +32,33 @@ export class Config<T>{
 
 export class AsyncLoader<T> {
 
-    
+    private _Data :T=null;
+    private _c: Config<T>=new Config<T>();
+
     protected get $q(){
-        return this._config.args.$q;
+        return this._c.args.$q;
     }
 
    
     protected get $timeout(){
-        return this._config.args.$timeout;
-    }
-
-   
-    private _config: Config<T>=new Config<T>();
+        return this._c.args.$timeout;
+    }  
 
    
     public get IsLoading(){
-        return this._config.isLoading;
+        return this._c.isLoading;
     }
 
   
     public get IsSuccess(){
-        return this._config.isSuccess;
+        return this._c.isSuccess;
     }
 
    
     public get IsFailed(){
-        return this._config.isFailed;
-    }
-
-    
-    private _Data :T=null;
+        return this._c.isFailed;
+    }  
+ 
 
    
     public get Data(){
@@ -69,7 +66,7 @@ export class AsyncLoader<T> {
     }
 
     constructor(c:IAsyncLoaderConstructor<T>){
-       this._config.args=c; 
+       this._c.args=c; 
        ["_Data","_config"].forEach(x=>{
         Object.defineProperty(this,x,{enumerable:false});
         });
@@ -77,32 +74,32 @@ export class AsyncLoader<T> {
 
    
     Update(){
-        return this.$q(ok=>{
+        return this.$q((ok,ko)=>{
             
             this.$timeout(()=>{
-                this._config.isLoading=true;
+                this._c.isLoading=true;
             }).then(()=>{
-                this.$q<T>(this._config.args.Fn).then(data=>{ 
+                this.$q<T>(this._c.args.Fn).then(data=>{ 
 
                     this._Data=data;
 
                     this.$timeout(()=>{
-                        this._config.successCount++;
-                        this._config.isLoading=false;
-                        this._config.isSuccess=true;
-                        this._config.isFailed=false;
+                        this._c.successCount++;
+                        this._c.isLoading=false;
+                        this._c.isSuccess=true;
+                        this._c.isFailed=false;
                     }).then(()=>{
                         ok();
                     });
                     
                 }).catch(()=>{
-                   
+                    this._Data=null;
                     this.$timeout(()=>{
-                        this._config.isLoading=false;
-                        this._config.isSuccess=true;
-                        this._config.isFailed=false;
+                        this._c.isLoading=false;
+                        this._c.isSuccess=false;
+                        this._c.isFailed=true;
                     }).then(()=>{
-                        ok();
+                        ko();
                     });
                 });
 
@@ -116,12 +113,12 @@ export class Service extends bj.BaseInjectable{
     
   
     protected get $q(){
-        return this.getFromInject("$q") as ng.IQService;
+        return this.getFromInjector("$q") as ng.IQService;
     }
 
     
     protected get $timeout(){
-        return this.getFromInject("$timeout") as ng.ITimeoutService;
+        return this.getFromInjector("$timeout") as ng.ITimeoutService;
     }
 
     public Create<T>(f:IGetDataFunction<T>) :AsyncLoader<T>{
@@ -164,29 +161,28 @@ module directive{
 
     class Ctrl extends BaseInjectable {
         public static $inject=BaseInjectable.$inject.concat(["$scope"]);
-        get $scope():ng.IScope{
+        protected get $scope():ng.IScope{
             return this.$injectedArgs[Ctrl.$inject.indexOf("$scope")];
         }
-        get loaders():any[]{
+        protected get loaders():any[]{
           return this.$scope[scopeLoadersKey] && this.$scope[scopeLoadersKey] instanceof Array? this.$scope[scopeLoadersKey]:[this.$scope[scopeLoadersKey]];
            
         }
-        get AsyncLoaders():AsyncLoader<any>[]{
+        public get AsyncLoaders():AsyncLoader<any>[]{
 
-            var l= this.loaders.filter(x=> x instanceof AsyncLoader);
-            console.log(l);
-            return l;
+            return this.loaders.filter(x=> x instanceof AsyncLoader);
+           
         }
         
-        get IsLoading(){
+        public get IsLoading(){
             return this.AsyncLoaders.some(x=>x.IsLoading);
         }
 
-        get IsSuccess(){
+        public get IsSuccess(){
             return this.AsyncLoaders.every(x=>x.IsSuccess);
         }
 
-        get IsFailed(){
+        public get IsFailed(){
             return this.AsyncLoaders.some(x=>x.IsFailed);
         }       
         

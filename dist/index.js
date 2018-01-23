@@ -104,7 +104,7 @@ define("ng-helpers/utils/base-injectable", ["require", "exports"], function (req
                 Object.defineProperty(_this, x, { enumerable: false });
             });
         }
-        BaseInjectable.prototype.getFromInject = function (key) {
+        BaseInjectable.prototype.getFromInjector = function (key) {
             if (!this._store[key])
                 this._store[key] = this.$injector.get(key);
             return this._store[key];
@@ -144,7 +144,7 @@ define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-i
         }
         Object.defineProperty(fileViewerService.prototype, "$uibModal", {
             get: function () {
-                return this.getFromInject("$uibModal");
+                return this.getFromInjector("$uibModal");
             },
             enumerable: true,
             configurable: true
@@ -257,21 +257,21 @@ define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/util
         }
         Object.defineProperty(Service.prototype, "$timeout", {
             get: function () {
-                return this.getFromInject("$timeout");
+                return this.getFromInjector("$timeout");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$rootScope", {
             get: function () {
-                return this.getFromInject("$rootScope");
+                return this.getFromInjector("$rootScope");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$q", {
             get: function () {
-                return this.getFromInject("$q");
+                return this.getFromInjector("$q");
             },
             enumerable: true,
             configurable: true
@@ -325,105 +325,105 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
         }
         Object.defineProperty(Service.prototype, "$rootScope", {
             get: function () {
-                return this.getFromInject("$rootScope");
+                return this.getFromInjector("$rootScope");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$http", {
             get: function () {
-                return this.getFromInject("$http");
+                return this.getFromInjector("$http");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$location", {
             get: function () {
-                return this.getFromInject("$location");
+                return this.getFromInjector("$location");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$q", {
             get: function () {
-                return this.getFromInject("$q");
+                return this.getFromInjector("$q");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$filter", {
             get: function () {
-                return this.getFromInject("$filter");
+                return this.getFromInjector("$filter");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$timeout", {
             get: function () {
-                return this.getFromInject("$timeout");
+                return this.getFromInjector("$timeout");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$cacheFactory", {
             get: function () {
-                return this.getFromInject("$cacheFactory");
+                return this.getFromInjector("$cacheFactory");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$locale", {
             get: function () {
-                return this.getFromInject("$locale");
+                return this.getFromInjector("$locale");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$interval", {
             get: function () {
-                return this.getFromInject("$interval");
+                return this.getFromInjector("$interval");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$log", {
             get: function () {
-                return this.getFromInject("$log");
+                return this.getFromInjector("$log");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$sce", {
             get: function () {
-                return this.getFromInject("$sce");
+                return this.getFromInjector("$sce");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$Upload", {
             get: function () {
-                return this.getFromInject("Upload");
+                return this.getFromInjector("Upload");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$stateParams", {
             get: function () {
-                return this.getFromInject("$stateParams");
+                return this.getFromInjector("$stateParams");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$state", {
             get: function () {
-                return this.getFromInject("$state");
+                return this.getFromInjector("$state");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$uibModal", {
             get: function () {
-                return this.getFromInject("$uibModal");
+                return this.getFromInjector("$uibModal");
             },
             enumerable: true,
             configurable: true
@@ -518,44 +518,44 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
     var AsyncLoader = /** @class */ (function () {
         function AsyncLoader(c) {
             var _this = this;
-            this._config = new Config();
             this._Data = null;
-            this._config.args = c;
+            this._c = new Config();
+            this._c.args = c;
             ["_Data", "_config"].forEach(function (x) {
                 Object.defineProperty(_this, x, { enumerable: false });
             });
         }
         Object.defineProperty(AsyncLoader.prototype, "$q", {
             get: function () {
-                return this._config.args.$q;
+                return this._c.args.$q;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(AsyncLoader.prototype, "$timeout", {
             get: function () {
-                return this._config.args.$timeout;
+                return this._c.args.$timeout;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(AsyncLoader.prototype, "IsLoading", {
             get: function () {
-                return this._config.isLoading;
+                return this._c.isLoading;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(AsyncLoader.prototype, "IsSuccess", {
             get: function () {
-                return this._config.isSuccess;
+                return this._c.isSuccess;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(AsyncLoader.prototype, "IsFailed", {
             get: function () {
-                return this._config.isFailed;
+                return this._c.isFailed;
             },
             enumerable: true,
             configurable: true
@@ -569,27 +569,28 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
         });
         AsyncLoader.prototype.Update = function () {
             var _this = this;
-            return this.$q(function (ok) {
+            return this.$q(function (ok, ko) {
                 _this.$timeout(function () {
-                    _this._config.isLoading = true;
+                    _this._c.isLoading = true;
                 }).then(function () {
-                    _this.$q(_this._config.args.Fn).then(function (data) {
+                    _this.$q(_this._c.args.Fn).then(function (data) {
                         _this._Data = data;
                         _this.$timeout(function () {
-                            _this._config.successCount++;
-                            _this._config.isLoading = false;
-                            _this._config.isSuccess = true;
-                            _this._config.isFailed = false;
+                            _this._c.successCount++;
+                            _this._c.isLoading = false;
+                            _this._c.isSuccess = true;
+                            _this._c.isFailed = false;
                         }).then(function () {
                             ok();
                         });
                     }).catch(function () {
+                        _this._Data = null;
                         _this.$timeout(function () {
-                            _this._config.isLoading = false;
-                            _this._config.isSuccess = true;
-                            _this._config.isFailed = false;
+                            _this._c.isLoading = false;
+                            _this._c.isSuccess = false;
+                            _this._c.isFailed = true;
                         }).then(function () {
-                            ok();
+                            ko();
                         });
                     });
                 });
@@ -605,14 +606,14 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
         }
         Object.defineProperty(Service.prototype, "$q", {
             get: function () {
-                return this.getFromInject("$q");
+                return this.getFromInjector("$q");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Service.prototype, "$timeout", {
             get: function () {
-                return this.getFromInject("$timeout");
+                return this.getFromInjector("$timeout");
             },
             enumerable: true,
             configurable: true
@@ -670,9 +671,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             });
             Object.defineProperty(Ctrl.prototype, "AsyncLoaders", {
                 get: function () {
-                    var l = this.loaders.filter(function (x) { return x instanceof AsyncLoader; });
-                    console.log(l);
-                    return l;
+                    return this.loaders.filter(function (x) { return x instanceof AsyncLoader; });
                 },
                 enumerable: true,
                 configurable: true

@@ -23,7 +23,7 @@ declare module "ng-helpers/utils/base-injectable" {
         static $inject: string[];
         private _store;
         private _args;
-        protected getFromInject<T>(key: string): T;
+        protected getFromInjector<T>(key: string): T;
         constructor(...args: any[]);
         protected readonly $injector: ng.auto.IInjectorService;
         protected readonly $injectedArgs: any[];
@@ -125,13 +125,13 @@ declare module "ng-helpers/async-loader" {
         GetDataFn: IGetDataFunction<T>;
     }
     export class AsyncLoader<T> {
+        private _Data;
+        private _c;
         protected readonly $q: angular.IQService;
         protected readonly $timeout: angular.ITimeoutService;
-        private _config;
         readonly IsLoading: boolean;
         readonly IsSuccess: boolean;
         readonly IsFailed: boolean;
-        private _Data;
         readonly Data: T;
         constructor(c: IAsyncLoaderConstructor<T>);
         Update(): angular.IPromise<{}>;
