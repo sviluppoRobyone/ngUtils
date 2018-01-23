@@ -541,7 +541,6 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
         });
         Object.defineProperty(AsyncLoader.prototype, "IsLoading", {
             get: function () {
-                console.log(this);
                 return this.config.isLoading;
             },
             enumerable: true,
@@ -573,6 +572,8 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             return this.$q(function (ok, ko) {
                 _this.$timeout(function () {
                     _this.config.isLoading = true;
+                    _this.config.isSuccess = false;
+                    _this.config.isFailed = false;
                 }).then(function () {
                     _this.$q(_this.config.args.Fn).then(function (data) {
                         _this.internalData = data;

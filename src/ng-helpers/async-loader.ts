@@ -38,18 +38,14 @@ export class AsyncLoader<T> {
     protected get $q(){
         return this.config.args.$q;
     }
-
    
     protected get $timeout(){
         return this.config.args.$timeout;
-    }  
-
+    }
    
     public get IsLoading(){
-        console.log(this);
         return this.config.isLoading;
     }
-
   
     public get IsSuccess(){
         return this.config.isSuccess;
@@ -79,6 +75,8 @@ export class AsyncLoader<T> {
             
             this.$timeout(()=>{
                 this.config.isLoading=true;
+                this.config.isSuccess=false;
+                this.config.isFailed=false;
             }).then(()=>{
                 this.$q<T>(this.config.args.Fn).then(data=>{ 
 
