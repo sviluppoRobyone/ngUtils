@@ -633,12 +633,13 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             m.directive("asyncLoader", directive);
         }
         directive_1.register = register;
+        var scopeLoadersKey = "loaders";
         function directive() {
             return {
                 template: "\n        \n            <span ng-transclude=\"content\" ng-if=\"Ctrl.IsSuccess\"></span>\n            <span ng-transclude=\"loading\" ng-if=\"Ctrl.IsLoading\"></span>\n            <span ng-if=\"Ctrl.IsFailed\">\n                Errore\n            </span>\n            ",
-                scope: {
-                    loaders: "="
-                },
+                scope: (_a = {},
+                    _a[scopeLoadersKey] = "=",
+                    _a),
                 controller: Ctrl,
                 controllerAs: "Ctrl",
                 transclude: {
@@ -646,6 +647,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
                     content: "content"
                 }
             };
+            var _a;
         }
         var Ctrl = /** @class */ (function (_super) {
             __extends(Ctrl, _super);
@@ -661,7 +663,9 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             });
             Object.defineProperty(Ctrl.prototype, "loaders", {
                 get: function () {
-                    return this.$scope["loaders"];
+                    var l = this.$scope[scopeLoadersKey] && this.$scope[scopeLoadersKey] instanceof Array ? this.$scope[scopeLoadersKey] : [this.$scope[scopeLoadersKey]];
+                    console.log(l);
+                    return l;
                 },
                 enumerable: true,
                 configurable: true

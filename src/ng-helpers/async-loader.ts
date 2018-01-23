@@ -127,8 +127,9 @@ export class Service extends bj.BaseInjectable{
     public Create<T>(f:IGetDataFunction<T>) :AsyncLoader<T>{
         return new AsyncLoader({
             $q:this.$q,
-                    $timeout:this.$timeout,
-                        Fn:f});
+            $timeout:this.$timeout,
+            Fn:f
+        });
     }
 }
 
@@ -136,6 +137,7 @@ module directive{
     export function register(m:ng.IModule){
         m.directive("asyncLoader",directive);
     }
+    var scopeLoadersKey="loaders";
     function directive(){
         return {
             
@@ -148,7 +150,7 @@ module directive{
             </span>
             `,
             scope:{
-                loaders:"="               
+                [scopeLoadersKey]:"="               
             },
             controller:Ctrl,
             controllerAs:"Ctrl",
@@ -165,8 +167,10 @@ module directive{
         get $scope():ng.IScope{
             return this.$injectedArgs[Ctrl.$inject.indexOf("$scope")];
         }
-        get loaders(){
-            return this.$scope["loaders"];
+        get loaders():any[]{
+            var l= this.$scope[scopeLoadersKey] && this.$scope[scopeLoadersKey] instanceof Array? this.$scope[scopeLoadersKey]:[this.$scope[scopeLoadersKey]];
+            console.log(l);
+            return l;
         }
         get AsyncLoaders():AsyncLoader<any>[]{
             return this.loaders.filter(x=> x instanceof AsyncLoader);
