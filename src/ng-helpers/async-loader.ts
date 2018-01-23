@@ -168,12 +168,14 @@ module directive{
             return this.$injectedArgs[Ctrl.$inject.indexOf("$scope")];
         }
         get loaders():any[]{
-            var l= this.$scope[scopeLoadersKey] && this.$scope[scopeLoadersKey] instanceof Array? this.$scope[scopeLoadersKey]:[this.$scope[scopeLoadersKey]];
-            console.log(l);
-            return l;
+          return this.$scope[scopeLoadersKey] && this.$scope[scopeLoadersKey] instanceof Array? this.$scope[scopeLoadersKey]:[this.$scope[scopeLoadersKey]];
+           
         }
         get AsyncLoaders():AsyncLoader<any>[]{
-            return this.loaders.filter(x=> x instanceof AsyncLoader);
+
+            var l= this.loaders.filter(x=> x instanceof AsyncLoader);
+            console.log(l);
+            return l;
         }
         
         get IsLoading(){

@@ -663,16 +663,16 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             });
             Object.defineProperty(Ctrl.prototype, "loaders", {
                 get: function () {
-                    var l = this.$scope[scopeLoadersKey] && this.$scope[scopeLoadersKey] instanceof Array ? this.$scope[scopeLoadersKey] : [this.$scope[scopeLoadersKey]];
-                    console.log(l);
-                    return l;
+                    return this.$scope[scopeLoadersKey] && this.$scope[scopeLoadersKey] instanceof Array ? this.$scope[scopeLoadersKey] : [this.$scope[scopeLoadersKey]];
                 },
                 enumerable: true,
                 configurable: true
             });
             Object.defineProperty(Ctrl.prototype, "AsyncLoaders", {
                 get: function () {
-                    return this.loaders.filter(function (x) { return x instanceof AsyncLoader; });
+                    var l = this.loaders.filter(function (x) { return x instanceof AsyncLoader; });
+                    console.log(l);
+                    return l;
                 },
                 enumerable: true,
                 configurable: true
