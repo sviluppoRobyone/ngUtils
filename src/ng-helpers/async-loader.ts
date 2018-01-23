@@ -140,8 +140,9 @@ module directive{
         return {
             
             template:`
-            <fa-loading is-loading="Ctrl.IsLoading"></fa-loading>
-            <ng-transclude></ng-transclude>
+        
+            <span ng-transclude="content" ng-if="Ctrl.IsSuccess"></span>
+            <span ng-transclude="loading" ng-if="Ctrl.IsLoading"></span>
             <span ng-if="Ctrl.IsFailed">
                 Errore
             </span>
@@ -151,7 +152,10 @@ module directive{
             },
             controller:Ctrl,
             controllerAs:"Ctrl",
-            transclude:true
+            transclude:{
+                loading:"loading",
+                content:"content"
+            }
 
         }as ng.IDirective;
     }

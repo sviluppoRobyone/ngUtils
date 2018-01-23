@@ -635,13 +635,16 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
         directive_1.register = register;
         function directive() {
             return {
-                template: "\n            <fa-loading is-loading=\"Ctrl.IsLoading\"></fa-loading>\n            <ng-transclude></ng-transclude>\n            <span ng-if=\"Ctrl.IsFailed\">\n                Errore\n            </span>\n            ",
+                template: "\n        \n            <span ng-transclude=\"content\" ng-if=\"Ctrl.IsSuccess\"></span>\n            <span ng-transclude=\"loading\" ng-if=\"Ctrl.IsLoading\"></span>\n            <span ng-if=\"Ctrl.IsFailed\">\n                Errore\n            </span>\n            ",
                 scope: {
                     loaders: "="
                 },
                 controller: Ctrl,
                 controllerAs: "Ctrl",
-                transclude: true
+                transclude: {
+                    loading: "loading",
+                    content: "content"
+                }
             };
         }
         var Ctrl = /** @class */ (function (_super) {
