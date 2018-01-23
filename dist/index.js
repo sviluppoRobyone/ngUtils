@@ -541,6 +541,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
         });
         Object.defineProperty(AsyncLoader.prototype, "IsLoading", {
             get: function () {
+                console.log(this);
                 return this._c.isLoading;
             },
             enumerable: true,

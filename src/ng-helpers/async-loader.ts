@@ -46,6 +46,7 @@ export class AsyncLoader<T> {
 
    
     public get IsLoading(){
+        console.log(this);
         return this._c.isLoading;
     }
 
