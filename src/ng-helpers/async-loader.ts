@@ -32,43 +32,43 @@ export class Config<T>{
 
 export class AsyncLoader<T> {
 
-    private _Data :T=null;
-    private _c: Config<T>=new Config<T>();
+    private internalData :T=null;
+    private config: Config<T>=new Config<T>();
 
     protected get $q(){
-        return this._c.args.$q;
+        return this.config.args.$q;
     }
 
    
     protected get $timeout(){
-        return this._c.args.$timeout;
+        return this.config.args.$timeout;
     }  
 
    
     public get IsLoading(){
         console.log(this);
-        return this._c.isLoading;
+        return this.config.isLoading;
     }
 
   
     public get IsSuccess(){
-        return this._c.isSuccess;
+        return this.config.isSuccess;
     }
 
    
     public get IsFailed(){
-        return this._c.isFailed;
+        return this.config.isFailed;
     }  
  
 
    
     public get Data(){
-        return this._Data;
+        return this.internalData;
     }
 
     constructor(c:IAsyncLoaderConstructor<T>){
-       this._c.args=c; 
-       ["_Data","_c"].forEach(x=>{
+       this.config.args=c; 
+       ["internalData","config"].forEach(x=>{
         Object.defineProperty(this,x,{enumerable:false});
         });
     }
@@ -78,27 +78,27 @@ export class AsyncLoader<T> {
         return this.$q((ok,ko)=>{
             
             this.$timeout(()=>{
-                this._c.isLoading=true;
+                this.config.isLoading=true;
             }).then(()=>{
-                this.$q<T>(this._c.args.Fn).then(data=>{ 
+                this.$q<T>(this.config.args.Fn).then(data=>{ 
 
-                    this._Data=data;
+                    this.internalData=data;
 
                     this.$timeout(()=>{
-                        this._c.successCount++;
-                        this._c.isLoading=false;
-                        this._c.isSuccess=true;
-                        this._c.isFailed=false;
+                        this.config.successCount++;
+                        this.config.isLoading=false;
+                        this.config.isSuccess=true;
+                        this.config.isFailed=false;
                     }).then(()=>{
                         ok();
                     });
                     
                 }).catch(()=>{
-                    this._Data=null;
+                    this.internalData=null;
                     this.$timeout(()=>{
-                        this._c.isLoading=false;
-                        this._c.isSuccess=false;
-                        this._c.isFailed=true;
+                        this.config.isLoading=false;
+                        this.config.isSuccess=false;
+                        this.config.isFailed=true;
                     }).then(()=>{
                         ko();
                     });

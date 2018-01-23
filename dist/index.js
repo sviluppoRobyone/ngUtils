@@ -518,23 +518,23 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
     var AsyncLoader = /** @class */ (function () {
         function AsyncLoader(c) {
             var _this = this;
-            this._Data = null;
-            this._c = new Config();
-            this._c.args = c;
-            ["_Data", "_c"].forEach(function (x) {
+            this.internalData = null;
+            this.config = new Config();
+            this.config.args = c;
+            ["internalData", "config"].forEach(function (x) {
                 Object.defineProperty(_this, x, { enumerable: false });
             });
         }
         Object.defineProperty(AsyncLoader.prototype, "$q", {
             get: function () {
-                return this._c.args.$q;
+                return this.config.args.$q;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(AsyncLoader.prototype, "$timeout", {
             get: function () {
-                return this._c.args.$timeout;
+                return this.config.args.$timeout;
             },
             enumerable: true,
             configurable: true
@@ -542,28 +542,28 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
         Object.defineProperty(AsyncLoader.prototype, "IsLoading", {
             get: function () {
                 console.log(this);
-                return this._c.isLoading;
+                return this.config.isLoading;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(AsyncLoader.prototype, "IsSuccess", {
             get: function () {
-                return this._c.isSuccess;
+                return this.config.isSuccess;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(AsyncLoader.prototype, "IsFailed", {
             get: function () {
-                return this._c.isFailed;
+                return this.config.isFailed;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(AsyncLoader.prototype, "Data", {
             get: function () {
-                return this._Data;
+                return this.internalData;
             },
             enumerable: true,
             configurable: true
@@ -572,24 +572,24 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
             var _this = this;
             return this.$q(function (ok, ko) {
                 _this.$timeout(function () {
-                    _this._c.isLoading = true;
+                    _this.config.isLoading = true;
                 }).then(function () {
-                    _this.$q(_this._c.args.Fn).then(function (data) {
-                        _this._Data = data;
+                    _this.$q(_this.config.args.Fn).then(function (data) {
+                        _this.internalData = data;
                         _this.$timeout(function () {
-                            _this._c.successCount++;
-                            _this._c.isLoading = false;
-                            _this._c.isSuccess = true;
-                            _this._c.isFailed = false;
+                            _this.config.successCount++;
+                            _this.config.isLoading = false;
+                            _this.config.isSuccess = true;
+                            _this.config.isFailed = false;
                         }).then(function () {
                             ok();
                         });
                     }).catch(function () {
-                        _this._Data = null;
+                        _this.internalData = null;
                         _this.$timeout(function () {
-                            _this._c.isLoading = false;
-                            _this._c.isSuccess = false;
-                            _this._c.isFailed = true;
+                            _this.config.isLoading = false;
+                            _this.config.isSuccess = false;
+                            _this.config.isFailed = true;
                         }).then(function () {
                             ko();
                         });

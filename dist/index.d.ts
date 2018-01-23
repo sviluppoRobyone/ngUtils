@@ -125,8 +125,8 @@ declare module "ng-helpers/async-loader" {
         GetDataFn: IGetDataFunction<T>;
     }
     export class AsyncLoader<T> {
-        private _Data;
-        private _c;
+        private internalData;
+        private config;
         protected readonly $q: angular.IQService;
         protected readonly $timeout: angular.ITimeoutService;
         readonly IsLoading: boolean;
