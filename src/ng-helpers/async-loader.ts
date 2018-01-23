@@ -157,11 +157,11 @@ module directive{
                 content:"content"
             }
 
-        }as ng.IDirective;
+        } as ng.IDirective;
     }
 
     class Ctrl extends BaseInjectable {
-        public $inject=BaseInjectable.$inject.concat(["$scope"]);
+        public static $inject=BaseInjectable.$inject.concat(["$scope"]);
         get $scope():ng.IScope{
             return this.$injectedArgs[Ctrl.$inject.indexOf("$scope")];
         }

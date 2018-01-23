@@ -650,9 +650,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
         var Ctrl = /** @class */ (function (_super) {
             __extends(Ctrl, _super);
             function Ctrl() {
-                var _this = _super !== null && _super.apply(this, arguments) || this;
-                _this.$inject = base_injectable_2.BaseInjectable.$inject.concat(["$scope"]);
-                return _this;
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Object.defineProperty(Ctrl.prototype, "$scope", {
                 get: function () {
@@ -696,6 +694,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/base-
                 enumerable: true,
                 configurable: true
             });
+            Ctrl.$inject = base_injectable_2.BaseInjectable.$inject.concat(["$scope"]);
             return Ctrl;
         }(base_injectable_2.BaseInjectable));
     })(directive || (directive = {}));
