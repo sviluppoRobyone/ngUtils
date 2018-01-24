@@ -3,6 +3,9 @@
 /// <reference types="ng-file-upload" />
 /// <reference types="angular-ui-router" />
 /// <reference types="angular-formly" />
+declare module "ng-utils" {
+    export {  };
+}
 declare module "file-helpers/index" {
     export function base64ToBlob(base64encodedString: string, myme: string): Blob;
     export function blobToBase64(blob: Blob, cb: {

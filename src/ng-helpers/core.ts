@@ -3,6 +3,8 @@ import * as angular from "angular";
 import  BaseInjectable  from "./utils/base-injectable";
 
 
+    
+
 export interface IDirectiveFn{
     ():ng.IDirective
 }
