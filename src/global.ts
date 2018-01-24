@@ -1,4 +1,2 @@
-declare module "ng-utils"{
-    export {};
-}
+declare module "ng-utils";
 
