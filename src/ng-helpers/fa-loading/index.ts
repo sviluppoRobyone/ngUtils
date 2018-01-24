@@ -2,7 +2,7 @@ import * as directive from "./directive";
 import * as $ from "jquery";
 import {baseTheme} from "./themes";
 import { registerDirective } from "../core";
-export function register(m: ng.IModule) {
+export default function register(m: ng.IModule) {
     registerDirective(m,directive.directiveName,directive.directive);
  
 

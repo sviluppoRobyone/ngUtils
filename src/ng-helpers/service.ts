@@ -1,5 +1,5 @@
 import * as angular from "angular";
-import * as bi from "./utils/base-injectable";
+import BaseInjectable from "./utils/base-injectable";
 import * as fv from "./file-viewer";
 import * as nameGenerator from "./utils/name-generator";
 import * as debugService from "./debug/debug-service";
@@ -7,11 +7,11 @@ export var serviceName=nameGenerator.GetServiceName("$ngUtils");
 import * as AsyncLoader from "./async-loader";
 import { registerService } from "./core";
 
-export function register(m:ng.IModule){
+export default function register(m:ng.IModule){
     registerService(m,serviceName,Service);
 }
-export class Service extends bi.BaseInjectable {
-    public static $inject=bi.BaseInjectable.$inject.concat([debugService.serviceName,AsyncLoader.serviceName,fv.serviceName]);
+export class Service extends BaseInjectable {
+    public static $inject= BaseInjectable.$inject.concat([debugService.serviceName,AsyncLoader.serviceName,fv.serviceName]);
 
   
     public get $rootScope(){

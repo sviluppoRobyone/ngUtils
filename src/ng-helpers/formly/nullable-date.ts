@@ -1,4 +1,4 @@
-   export function NullableDate(key: string, label: string): AngularFormly.IFieldArray {
+   export default function NullableDate(key: string, label: string): AngularFormly.IFieldArray {
             console &&
                 console.warn &&
                 console.warn("Usare la directive nullabled-field anzichè la funzione nullableDate");

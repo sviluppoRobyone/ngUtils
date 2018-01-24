@@ -1,4 +1,4 @@
-export abstract class BaseInjectable{
+export default abstract class BaseInjectable{
     public static $inject = ["$injector"];
 
    

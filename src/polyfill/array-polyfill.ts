@@ -1,6 +1,10 @@
 
 
-export function run(){
+export default function run(){
+   polyfill_FIND();
+}
+
+function polyfill_FIND(){
     if (!Array.prototype.find) {
         Array.prototype.find = function (predicate) {
     
@@ -22,6 +26,7 @@ export function run(){
         };
     }
 }
+
 declare global{
     interface Array<T> {
         find(predicate: (search: T) => boolean): T;

@@ -1,6 +1,6 @@
 import { Interceptor } from "./interceptor";
 
-export function register(m: ng.IModule) {
+export default function register(m: ng.IModule) {
   var factoryName = "HttpErrorToModalFactory";
   m.config([
     "$httpProvider",

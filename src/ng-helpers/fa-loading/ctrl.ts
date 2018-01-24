@@ -1,4 +1,4 @@
-import {BaseCtrl} from "../utils/base-ctrl";
+import BaseCtrl from "../utils/base-ctrl";
 export class Ctrl extends BaseCtrl{
 
     get IsLoading(): boolean {

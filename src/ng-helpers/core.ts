@@ -1,6 +1,7 @@
 import {Detectors} from "./debug/debug-service";
 import * as angular from "angular";
-import { BaseInjectable } from "./utils/base-injectable";
+import  BaseInjectable  from "./utils/base-injectable";
+
 
 export interface IDirectiveFn{
     ():ng.IDirective

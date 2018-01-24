@@ -1,10 +1,10 @@
-import { BaseCtrl } from "../utils/base-ctrl";
+import BaseCtrl from "../utils/base-ctrl";
 import * as nameGenerator from "../utils/name-generator";
 import { registerDirective } from "../core";
 
 const directiveName = nameGenerator.GetDirectiveName("debugModal");
 const dataKey = directiveName+"debugData";
-export function register(m: ng.IModule) {
+export default function register(m: ng.IModule) {
     registerDirective(m,directiveName,directive);
 }
 

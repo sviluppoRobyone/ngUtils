@@ -3,9 +3,6 @@
 /// <reference types="ng-file-upload" />
 /// <reference types="angular-ui-router" />
 /// <reference types="angular-formly" />
-interface Array<T> {
-    find(predicate: (search: T) => boolean): T;
-}
 declare module "file-helpers/index" {
     export function base64ToBlob(base64encodedString: string, myme: string): Blob;
     export function blobToBase64(blob: Blob, cb: {
@@ -19,7 +16,7 @@ declare module "json-helpers/index" {
     }
 }
 declare module "ng-helpers/utils/base-injectable" {
-    export abstract class BaseInjectable {
+    export default abstract class BaseInjectable {
         static $inject: string[];
         private _store;
         private _args;
@@ -34,8 +31,8 @@ declare module "ng-helpers/utils/name-generator" {
     export function GetDirectiveName(name: any): any;
 }
 declare module "ng-helpers/debug/debug-service" {
-    import * as bi from "ng-helpers/utils/base-injectable";
-    export function register(m: ng.IModule): void;
+    import BaseInjectable from "ng-helpers/utils/base-injectable";
+    export default function register(m: ng.IModule): void;
     export var serviceName: string;
     export interface IDebugDetectorFunction {
         (): ng.IPromise<boolean>;
@@ -48,7 +45,7 @@ declare module "ng-helpers/debug/debug-service" {
         function GetWindowDebugValue(): any;
         function IsDebugEnabled(): any;
     }
-    export class Service extends bi.BaseInjectable {
+    export class Service extends BaseInjectable {
         private readonly $timeout;
         private readonly $rootScope;
         private readonly $q;
@@ -74,9 +71,9 @@ declare module "ng-helpers/core" {
 }
 declare module "ng-helpers/file-viewer" {
     import * as angular from "angular";
-    import { BaseInjectable } from "ng-helpers/utils/base-injectable";
+    import BaseInjectable from "ng-helpers/utils/base-injectable";
     export const serviceName = "fileViewer";
-    export function register(m: ng.IModule): void;
+    export default function register(m: ng.IModule): void;
     export class fileViewerService extends BaseInjectable {
         readonly $uibModal: angular.ui.bootstrap.IModalService;
         viewFile(file: File): angular.ui.bootstrap.IModalInstanceService;
@@ -84,13 +81,13 @@ declare module "ng-helpers/file-viewer" {
 }
 declare module "ng-helpers/service" {
     import * as angular from "angular";
-    import * as bi from "ng-helpers/utils/base-injectable";
+    import BaseInjectable from "ng-helpers/utils/base-injectable";
     import * as fv from "ng-helpers/file-viewer";
     import * as debugService from "ng-helpers/debug/debug-service";
     export var serviceName: string;
     import * as AsyncLoader from "ng-helpers/async-loader";
-    export function register(m: ng.IModule): void;
-    export class Service extends bi.BaseInjectable {
+    export default function register(m: ng.IModule): void;
+    export class Service extends BaseInjectable {
         static $inject: string[];
         readonly $rootScope: angular.IRootScopeService;
         readonly $http: angular.IHttpService;
@@ -116,9 +113,9 @@ declare module "ng-helpers/service" {
 }
 declare module "ng-helpers/async-loader" {
     import * as angular from "angular";
-    import * as bj from "ng-helpers/utils/base-injectable";
+    import BaseInjectable from "ng-helpers/utils/base-injectable";
     export var serviceName: string;
-    export function register(m: ng.IModule): void;
+    export default function register(m: ng.IModule): void;
     export interface IGetDataFunction<T> {
         (resolve: ng.IQResolveReject<T>, reject: ng.IQResolveReject<any>): void;
     }
@@ -147,7 +144,7 @@ declare module "ng-helpers/async-loader" {
         constructor(c: IAsyncLoaderConstructor<T>);
         Update(): angular.IPromise<{}>;
     }
-    export class Service extends bj.BaseInjectable {
+    export class Service extends BaseInjectable {
         protected readonly $q: angular.IQService;
         protected readonly $timeout: angular.ITimeoutService;
         Create<T>(f: IGetDataFunction<T>): AsyncLoader<T>;
@@ -157,7 +154,7 @@ declare module "ng-helpers/filters/index" {
     export function html(m: ng.IModule): void;
     export function url(m: ng.IModule): void;
     export function bytes(m: ng.IModule): void;
-    export function RegisterAllFilters(m: ng.IModule): void;
+    export default function RegisterAllFilters(m: ng.IModule): void;
 }
 declare module "ng-helpers/utils/module-exists" {
     export function moduleExists(m: ng.IModule, names: string[]): boolean;
@@ -172,8 +169,8 @@ declare module "ng-helpers/fa-loading/themes" {
 declare module "ng-helpers/utils/base-ctrl" {
     import * as angular from "angular";
     import * as ngUtils from "ng-helpers/service";
-    import { BaseInjectable } from "ng-helpers/utils/base-injectable";
-    export abstract class BaseCtrl extends BaseInjectable implements ng.IController {
+    import BaseInjectable from "ng-helpers/utils/base-injectable";
+    export default abstract class BaseCtrl extends BaseInjectable implements ng.IController {
         static $inject: string[];
         protected readonly $scope: angular.IScope;
         protected readonly $ngUtils: ngUtils.Service;
@@ -185,7 +182,7 @@ declare module "ng-helpers/utils/base-ctrl" {
     }
 }
 declare module "ng-helpers/fa-loading/ctrl" {
-    import { BaseCtrl } from "ng-helpers/utils/base-ctrl";
+    import BaseCtrl from "ng-helpers/utils/base-ctrl";
     export class Ctrl extends BaseCtrl {
         readonly IsLoading: boolean;
     }
@@ -196,13 +193,13 @@ declare module "ng-helpers/fa-loading/directive" {
     export function directive(): angular.IDirective<angular.IScope>;
 }
 declare module "ng-helpers/fa-loading/index" {
-    export function register(m: ng.IModule): void;
+    export default function register(m: ng.IModule): void;
 }
 declare module "ng-helpers/promise-buttons/index" {
-    export function Configure(module: ng.IModule): void;
+    export default function Configure(m: ng.IModule): void;
 }
 declare module "ng-helpers/http-error-to-modal/modal-ctrl" {
-    import { BaseCtrl } from "ng-helpers/utils/base-ctrl";
+    import BaseCtrl from "ng-helpers/utils/base-ctrl";
     export var ErrorKey: string;
     export class Ctrl extends BaseCtrl {
         static $inject: string[];
@@ -211,7 +208,7 @@ declare module "ng-helpers/http-error-to-modal/modal-ctrl" {
 }
 declare module "ng-helpers/http-error-to-modal/interceptor" {
     import * as angular from "angular";
-    import { BaseInjectable } from "ng-helpers/utils/base-injectable";
+    import BaseInjectable from "ng-helpers/utils/base-injectable";
     export class Interceptor extends BaseInjectable implements ng.IHttpInterceptor {
         static $inject: string[];
         private errorList;
@@ -222,23 +219,23 @@ declare module "ng-helpers/http-error-to-modal/interceptor" {
     }
 }
 declare module "ng-helpers/http-error-to-modal/index" {
-    export function register(m: ng.IModule): void;
+    export default function register(m: ng.IModule): void;
 }
 declare module "ng-helpers/debug/debug-modal" {
-    export function register(m: ng.IModule): void;
+    export default function register(m: ng.IModule): void;
 }
 declare module "ng-helpers/formly/datepicker" {
     export function Configure(app: ng.IModule): void;
 }
 declare module "ng-helpers/utils/base-ctrl-for-directive" {
-    import { BaseCtrl } from "ng-helpers/utils/base-ctrl";
-    export abstract class BaseCtrlForDirective extends BaseCtrl {
+    import BaseCtrl from "ng-helpers/utils/base-ctrl";
+    export default abstract class BaseCtrlForDirective extends BaseCtrl {
         static $inject: string[];
         protected readonly $attrs: ng.IAttributes;
     }
 }
 declare module "ng-helpers/formly/form-builder" {
-    export function register(m: ng.IModule): void;
+    export default function register(m: ng.IModule): void;
 }
 declare module "ng-helpers/formly/nullable-field-directive/ctrl" {
     export class Ctrl {
@@ -265,38 +262,38 @@ declare module "ng-helpers/formly/nullable-field-directive/index" {
     export function register(m: ng.IModule): void;
 }
 declare module "ng-helpers/formly/index" {
-    export function Configure(m: ng.IModule): void;
+    export default function Configure(m: ng.IModule): void;
 }
-declare module "polyfill/string-prototype" {
-    export function run(): void;
+declare module "polyfill/string-polyfill" {
+    export default function run(): void;
     global  {
         interface String {
             endsWith(search: string, len?: number): boolean;
         }
     }
 }
-declare module "polyfill/array-prototype" {
-    export function run(): void;
+declare module "polyfill/array-polyfill" {
+    export default function run(): void;
     global  {
         interface Array<T> {
             find(predicate: (search: T) => boolean): T;
         }
     }
 }
-declare module "polyfill/all" {
-    export function run(): void;
+declare module "polyfill/index" {
+    export default function run(): void;
 }
 declare module "ng-helpers/init" {
     export function init(m: ng.IModule): void;
 }
 declare module "ng-helpers/formly/nullable-date" {
-    export function NullableDate(key: string, label: string): AngularFormly.IFieldArray;
+    export default function NullableDate(key: string, label: string): AngularFormly.IFieldArray;
 }
 declare module "ng-helpers/utils/base-service" {
     import * as angular from "angular";
-    import { BaseInjectable } from "ng-helpers/utils/base-injectable";
+    import BaseInjectable from "ng-helpers/utils/base-injectable";
     import * as ngUtilsService from "ng-helpers/service";
-    export abstract class BaseService extends BaseInjectable {
+    export default abstract class BaseService extends BaseInjectable {
         static $inject: string[];
         protected readonly $ngUtils: ngUtilsService.Service;
         protected readonly $uibModal: angular.ui.bootstrap.IModalService;

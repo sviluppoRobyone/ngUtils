@@ -1,7 +1,7 @@
-export function Configure(module: ng.IModule) {
+export default function Configure(m: ng.IModule) {
 
     
-    module.config([        "angularPromiseButtonsProvider", (angularPromiseButtonsProvider) => {
+    m.config(["angularPromiseButtonsProvider", (angularPromiseButtonsProvider) => {
             angularPromiseButtonsProvider.extendConfig({
               
                 spinnerTpl: ' <span class="fa fa-spin fa-circle-o-notch fa-loading"></span> ',

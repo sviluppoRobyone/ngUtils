@@ -1,9 +1,9 @@
 import * as angular from "angular";
-import * as bi from "../utils/base-injectable";
+import BaseInjectable from "../utils/base-injectable";
 import * as nameGenerator from "../utils/name-generator";
 import { registerService } from "../core";
 
-export function register(m:ng.IModule){
+export default function register(m:ng.IModule){
     registerService(m,serviceName,Service);
 }
 export var serviceName=nameGenerator.GetServiceName("debug");
@@ -34,7 +34,7 @@ export module Detectors{
 
 
 }
-export class Service extends bi.BaseInjectable{
+export class Service extends BaseInjectable{
     private get $timeout(): ng.ITimeoutService {
         return this.getFromInjector("$timeout");
     }

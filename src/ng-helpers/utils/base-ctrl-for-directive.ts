@@ -1,6 +1,6 @@
 import * as angular from "angular";
-import { BaseCtrl } from "./base-ctrl";
-export abstract class BaseCtrlForDirective extends BaseCtrl {
+import  BaseCtrl  from "./base-ctrl";
+export default abstract class BaseCtrlForDirective extends BaseCtrl {
     
     public static $inject: string[] = BaseCtrl.$inject.concat(["$attrs"]);    
     
