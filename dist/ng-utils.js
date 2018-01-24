@@ -1510,7 +1510,7 @@ define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpe
             file_viewer_1.default(m);
         });
     }
-    exports.init = init;
+    exports.default = init;
 });
 define("ng-helpers/formly/nullable-date", ["require", "exports"], function (require, exports) {
     "use strict";

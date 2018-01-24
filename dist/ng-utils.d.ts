@@ -284,7 +284,7 @@ declare module "polyfill/index" {
     export default function run(): void;
 }
 declare module "ng-helpers/init" {
-    export function init(m: ng.IModule): void;
+    export default function init(m: ng.IModule): void;
 }
 declare module "ng-helpers/formly/nullable-date" {
     export default function NullableDate(key: string, label: string): AngularFormly.IFieldArray;

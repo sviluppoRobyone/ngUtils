@@ -13,7 +13,7 @@ import asyncLoader from "./async-loader";
 import polyfill from  "../polyfill/index";
 import {Detectors as DebugDetectors} from "./debug/debug-service";
 
-export function init(m: ng.IModule) {
+export default function init(m: ng.IModule) {
 
     m.config(["$logProvider",($logProvider:ng.ILogProvider)=>{
         $logProvider.debugEnabled(DebugDetectors.IsDebugEnabled())
