@@ -10,7 +10,7 @@
      "declaration": true,                   /* Generates corresponding '.d.ts' file. */
      "sourceMap": false,                    /* Generates corresponding '.map' file. */
                    /* Concatenate and emit output to single file. */
-     "outFile": "./dist/index.js",                        /* Redirect output structure to the directory. */
+     "outFile": "./dist/ng-utils.js",                        /* Redirect output structure to the directory. */
  
     "strict": true,                            /* Enable all strict type-checking options. */
      "noImplicitAny": false,                 /* Raise error on expressions and declarations with an implied 'any' type. */

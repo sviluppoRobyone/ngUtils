@@ -1,7 +1,8 @@
 {
   "name": "@robyone/ng-utils",
   "version": "1.1.61",
-  "main": "dist/",
+  "main": "./dist/ng-utils.js",
+  "types":"./dist/ng-utils.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sviluppoRobyone/ngUtils.git"
@@ -10,7 +11,7 @@
     "clean:dist": "del-cli ./dist/",
     "watch-ts": "tsc -w",
     "compile": "tsc",
-    "uglify": "uglifyjs --compress --mangle --output ./dist/index.min.js -- ./dist/index.js",
+    "uglify": "uglifyjs --compress --mangle --output ./dist/ng-utils.min.js -- ./dist/ng-utils.js",
     "recompile": "npm run clean:dist && npm run compile",
     "git:commit": "git add -A && git commit -m \"auto commit\"",
     "git:push": "git push origin --follow-tags",
