@@ -22,6 +22,7 @@ export module ifDebug{
             controller:IfDebugCtrl,
             controllerAs:"Ctrl",
             transclude:true,
+            scope:{},
             template:`<ng-transclude ng-if="Ctrl.Debug"></ng-transclude>`
 
         }   as ng.IDirective;
