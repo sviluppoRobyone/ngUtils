@@ -34,11 +34,11 @@ export class AsyncLoader<T> extends BaseInjectable {
 
    
     public static BuildFactoryFn(){
-        var arr=(AsyncLoader.$inject as any[]).concat([(...args)=>{
+        var arr=(BaseInjectable.$inject as any[]).concat([(...args)=>{
             
             var l=ConsoleUtils.GetLogger();
             l.debug(factoryName,args);
-            return new AsyncLoader<any>(...args);
+            return <T>()=>{new AsyncLoader<T>(...args)};
         }]);
         return arr;
         
@@ -121,14 +121,21 @@ export class AsyncLoader<T> extends BaseInjectable {
 }
 
 export class Service extends BaseInjectable{
-    public static $inject =BaseInjectable.$inject.concat([factoryName]);
+    public static $inject = BaseInjectable.$inject.concat([factoryName]);
 
     private get factory():AsyncLoaderFactory{
         return this.$injectedArgs[Service.$inject.indexOf(factoryName)];
     }
 
     public Create<T>(f:IGetDataFunction<T>) :AsyncLoader<T>{
-       var loader= this.factory<T>();
+
+       
+        this.$log.debug(this.$injectedArgs);
+        var loader= this.factory<T>();
+
+      
+    
+
        loader.SetDataFunction(f);
        return loader;
     }

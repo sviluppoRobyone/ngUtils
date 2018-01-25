@@ -35,6 +35,7 @@ export default abstract class BaseInjectable{
     protected get $rootScope(){
         return this.getFromInjector<ng.IRootScopeService>("$rootScope");
     }
+
     protected get $http()  {
         return this.getFromInjector<ng.IHttpService>("$http");
     }

@@ -553,14 +553,14 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
             return _this;
         }
         AsyncLoader.BuildFactoryFn = function () {
-            var arr = AsyncLoader.$inject.concat([function () {
+            var arr = base_injectable_4.default.$inject.concat([function () {
                     var args = [];
                     for (var _i = 0; _i < arguments.length; _i++) {
                         args[_i] = arguments[_i];
                     }
                     var l = core_4.ConsoleUtils.GetLogger();
                     l.debug(exports.factoryName, args);
-                    return new (AsyncLoader.bind.apply(AsyncLoader, [void 0].concat(args)))();
+                    return function () { new (AsyncLoader.bind.apply(AsyncLoader, [void 0].concat(args)))(); };
                 }]);
             return arr;
         };
@@ -642,6 +642,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
             configurable: true
         });
         Service.prototype.Create = function (f) {
+            this.$log.debug(this.$injectedArgs);
             var loader = this.factory();
             loader.SetDataFunction(f);
             return loader;
