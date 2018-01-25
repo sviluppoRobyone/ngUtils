@@ -273,7 +273,18 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/co
                 logger.debug("----");
                 logger.debug("Init", _this._className);
                 logger.debug("Args[" + args.length + "]", args, JSON.stringify(obj_helpers_1.arrays.describeArray(args)));
-                logger.debug("$inject[" + _this._self$inject.length + "]", _this._self$inject);
+                if (_this._self$inject) {
+                    logger.debug("$inject[" + _this._self$inject.length + "]", _this._self$inject);
+                    if (args.length != _this._self$inject.length) {
+                        logger.error("Incongruenza dipendenze");
+                    }
+                    _this._self$inject.filter(function (x, index) { return !args[index]; }).forEach(function (x, index) {
+                        logger.error("La dipendenza", x, "non è stata soddisfatta", args[index]);
+                    });
+                }
+                else {
+                    logger.debug("No $inject array detected");
+                }
                 logger.debug("----");
             }
             _this._args = args;

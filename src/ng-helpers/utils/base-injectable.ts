@@ -30,7 +30,20 @@ export default abstract class BaseInjectable extends BaseObj{
             logger.debug("----");
             logger.debug("Init",this._className);
             logger.debug("Args["+args.length+"]",args,JSON.stringify(arrays.describeArray(args)));
-            logger.debug("$inject["+this._self$inject.length+"]",this._self$inject);
+            if (this._self$inject)
+            {
+                logger.debug("$inject["+this._self$inject.length+"]",this._self$inject);
+                if (args.length!=this._self$inject.length){
+                    logger.error("Incongruenza dipendenze");
+                }
+                this._self$inject.filter((x,index)=>!args[index]).forEach((x,index)=>{
+                    logger.error("La dipendenza",x,"non è stata soddisfatta",args[index]);
+                });
+            }
+            else
+            {
+                    logger.debug("No $inject array detected");
+            }
             logger.debug("----");
         }
 
