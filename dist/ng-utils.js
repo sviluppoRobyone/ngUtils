@@ -95,8 +95,8 @@ define("js-helpers/obj-helpers", ["require", "exports"], function (require, expo
     var arrays;
     (function (arrays) {
         function describeArray(a) {
-            return (a || []).map(function (x) {
-                return (typeof (x) == "object" ? x.constructor.name : typeof (x)) + "";
+            return a.map(function (x) {
+                return (typeof (x) === typeof ({}) ? x.constructor.name : typeof (x)) + "";
             });
         }
         arrays.describeArray = describeArray;
@@ -271,8 +271,8 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/co
             {
                 var logger = core_2.ConsoleUtils.GetLogger();
                 logger.debug("----");
-                logger.debug("Init", _this._className, "with", args.length, "args", args, JSON.stringify(args.map(function (x) { return typeof (x); })));
-                logger.debug("Args[" + args.length + "]", args, obj_helpers_1.arrays.describeArray(args));
+                logger.debug("Init", _this._className);
+                logger.debug("Args[" + args.length + "]", args, JSON.stringify(obj_helpers_1.arrays.describeArray(args)));
                 logger.debug("$inject[" + _this._self$inject.length + "]", _this._self$inject);
                 logger.debug("----");
             }

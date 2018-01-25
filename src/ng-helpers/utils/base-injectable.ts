@@ -28,8 +28,8 @@ export default abstract class BaseInjectable extends BaseObj{
         {
             var logger= ConsoleUtils.GetLogger();
             logger.debug("----");
-            logger.debug("Init",this._className,"with",args.length,"args",args,JSON.stringify(args.map(x=>typeof(x))));
-            logger.debug("Args["+args.length+"]",args,arrays.describeArray(args));
+            logger.debug("Init",this._className);
+            logger.debug("Args["+args.length+"]",args,JSON.stringify(arrays.describeArray(args)));
             logger.debug("$inject["+this._self$inject.length+"]",this._self$inject);
             logger.debug("----");
         }
