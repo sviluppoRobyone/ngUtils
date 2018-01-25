@@ -25,7 +25,6 @@ export class Config<T>{
     public isFailed: boolean=false;
     public successCount:number=0;
     public GetDataFn:IGetDataFunction<T> =null;
-    public Fn:IGetDataFunction<T>=null;
 }
 interface AsyncLoaderFactory{
     <T>():AsyncLoader<T>
@@ -76,7 +75,7 @@ export class AsyncLoader<T> extends BaseInjectable {
                 this.config.isSuccess=false;
                 this.config.isFailed=false;
             }).then(()=>{
-                this.$q<T>(this.config.Fn).then(data=>{ 
+                this.$q<T>(this.config.GetDataFn).then(data=>{ 
 
                     this.internalData=data;
 
@@ -107,7 +106,6 @@ export class AsyncLoader<T> extends BaseInjectable {
 }
 
 export class AsyncLoaderService extends BaseInjectable{
-  
 
    
     public Create<T>(f:IGetDataFunction<T>) :AsyncLoader<T>{

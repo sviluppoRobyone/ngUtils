@@ -142,7 +142,6 @@ declare module "ng-helpers/async-loader" {
         isFailed: boolean;
         successCount: number;
         GetDataFn: IGetDataFunction<T>;
-        Fn: IGetDataFunction<T>;
     }
     export class AsyncLoader<T> extends BaseInjectable {
         private internalData;

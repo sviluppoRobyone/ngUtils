@@ -591,7 +591,6 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
             this.isFailed = false;
             this.successCount = 0;
             this.GetDataFn = null;
-            this.Fn = null;
         }
         return Config;
     }());
@@ -650,7 +649,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
                     _this.config.isSuccess = false;
                     _this.config.isFailed = false;
                 }).then(function () {
-                    _this.$q(_this.config.Fn).then(function (data) {
+                    _this.$q(_this.config.GetDataFn).then(function (data) {
                         _this.internalData = data;
                         _this.$timeout(function () {
                             _this.config.successCount++;
