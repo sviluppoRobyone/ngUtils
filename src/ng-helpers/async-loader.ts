@@ -3,7 +3,7 @@ import * as bj from "./utils/base-injectable";
 import * as ngUtils from "./service";
 import * as nameGenerator from "./utils/name-generator";
 import  BaseInjectable  from "./utils/base-injectable";
-import { registerService, registerDirective, registerFactory } from "./core";
+import { registerService, registerDirective, registerFactory, ConsoleUtils } from "./core";
 
 
 export var serviceName = nameGenerator.GetServiceName("AsyncLoader");
@@ -34,10 +34,14 @@ export class AsyncLoader<T> extends BaseInjectable {
 
    
     public static BuildFactoryFn(){
-        var arr=(BaseInjectable.$inject as any[]).concat([(...args)=>{            
-            return ()=>{ new AsyncLoader<any>(...args)};
+        var arr=(AsyncLoader.$inject as any[]).concat([(...args)=>{
+            
+            var l=ConsoleUtils.GetLogger();
+            l.debug(factoryName,args);
+            return new AsyncLoader<any>(...args);
         }]);
         return arr;
+        
         
     }
 
