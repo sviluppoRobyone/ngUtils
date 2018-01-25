@@ -20,6 +20,11 @@ export function registerService(m:ng.IModule,serviceName:string,service:ng.Injec
     $log.debug("Registering service",serviceName,"inside module",m.name);
     m.service(serviceName,service);
 }
+export function registerFactory(m:ng.IModule,factoryName:string,factory:ng.Injectable<Function>){
+    var $log=ConsoleUtils.GetLogger();
+    $log.debug("Registering factory",factoryName,"inside module",m.name);
+    m.factory(factoryName,factory);
+}
 export module ConsoleUtils{
     export function GetLogger(){
         var $log =  angular.injector(['ng']).get('$log');

@@ -9,7 +9,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define("file-helpers/index", ["require", "exports"], function (require, exports) {
+define("js-helpers/file-helpers", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     //http://wiki.lenux.org/base64-string-to-blob-object/
@@ -51,7 +51,7 @@ define("file-helpers/index", ["require", "exports"], function (require, exports)
     }
     exports.download = download;
 });
-define("json-helpers/index", ["require", "exports"], function (require, exports) {
+define("js-helpers/json-helpers", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var JsonUtils;
@@ -68,6 +68,31 @@ define("json-helpers/index", ["require", "exports"], function (require, exports)
         }
         JsonUtils.DateReviver = DateReviver;
     })(JsonUtils = exports.JsonUtils || (exports.JsonUtils = {}));
+});
+define("js-helpers/random-string", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function randomStringV1(length) {
+        return randomSeedOfLength(length);
+    }
+    exports.randomStringV1 = randomStringV1;
+    function randomSeed() {
+        return Math.random().toString(36).substring(2, 15);
+    }
+    function randomSeedOfLength(length) {
+        var s = randomSeed();
+        while (s.length < length)
+            s += randomSeed();
+        return s.length > length ? s.substring(0, length) : s;
+    }
+});
+define("js-helpers/string-helpers", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function capitalizeFirstLetter(s) {
+        return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+    exports.capitalizeFirstLetter = capitalizeFirstLetter;
 });
 define("ng-helpers/utils/base-injectable", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -215,14 +240,18 @@ define("ng-helpers/utils/base-injectable", ["require", "exports"], function (req
     }());
     exports.default = BaseInjectable;
 });
-define("ng-helpers/utils/name-generator", ["require", "exports"], function (require, exports) {
+define("ng-helpers/utils/name-generator", ["require", "exports", "js-helpers/string-helpers"], function (require, exports, stringHelpers) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var prefix = "$ngu";
     function GetServiceName(name) {
-        return prefix + name + "Service";
+        return prefix + stringHelpers.capitalizeFirstLetter(name) + "Service";
     }
     exports.GetServiceName = GetServiceName;
+    function GetFactoryName(name) {
+        return prefix + stringHelpers.capitalizeFirstLetter(name) + "Service";
+    }
+    exports.GetFactoryName = GetFactoryName;
     function GetDirectiveName(name) {
         return name;
     }
@@ -324,6 +353,12 @@ define("ng-helpers/core", ["require", "exports", "angular"], function (require, 
         m.service(serviceName, service);
     }
     exports.registerService = registerService;
+    function registerFactory(m, factoryName, factory) {
+        var $log = ConsoleUtils.GetLogger();
+        $log.debug("Registering factory", factoryName, "inside module", m.name);
+        m.factory(factoryName, factory);
+    }
+    exports.registerFactory = registerFactory;
     var ConsoleUtils;
     (function (ConsoleUtils) {
         function GetLogger() {
@@ -413,111 +448,6 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
         function Service() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Object.defineProperty(Service.prototype, "$rootScope", {
-            get: function () {
-                return this.getFromInjector("$rootScope");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$http", {
-            get: function () {
-                return this.getFromInjector("$http");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$location", {
-            get: function () {
-                return this.getFromInjector("$location");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$q", {
-            get: function () {
-                return this.getFromInjector("$q");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$filter", {
-            get: function () {
-                return this.getFromInjector("$filter");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$timeout", {
-            get: function () {
-                return this.getFromInjector("$timeout");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$cacheFactory", {
-            get: function () {
-                return this.getFromInjector("$cacheFactory");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$locale", {
-            get: function () {
-                return this.getFromInjector("$locale");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$interval", {
-            get: function () {
-                return this.getFromInjector("$interval");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$log", {
-            get: function () {
-                return this.getFromInjector("$log");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$sce", {
-            get: function () {
-                return this.getFromInjector("$sce");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$Upload", {
-            get: function () {
-                return this.getFromInjector("Upload");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$stateParams", {
-            get: function () {
-                return this.getFromInjector("$stateParams");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$state", {
-            get: function () {
-                return this.getFromInjector("$state");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$uibModal", {
-            get: function () {
-                return this.getFromInjector("$uibModal");
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(Service.prototype, "$debugService", {
             get: function () {
                 return this.$injectedArgs[Service.$inject.indexOf(debugService.serviceName)];
@@ -588,7 +518,9 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("AsyncLoader");
+    exports.factoryName = nameGenerator.GetFactoryName("AsyncLoaderFactory");
     function register(m) {
+        core_4.registerFactory(m, exports.factoryName, AsyncLoader.BuildFactoryFn());
         core_4.registerService(m, exports.serviceName, Service);
         directive.register(m);
     }
@@ -700,34 +632,27 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
         function Service() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Object.defineProperty(Service.prototype, "$q", {
+        Object.defineProperty(Service.prototype, "factory", {
             get: function () {
-                return this.getFromInjector("$q");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Service.prototype, "$timeout", {
-            get: function () {
-                return this.getFromInjector("$timeout");
+                return this.$injectedArgs[Service.$inject.indexOf(exports.factoryName)];
             },
             enumerable: true,
             configurable: true
         });
         Service.prototype.Create = function (f) {
-            return new AsyncLoader({
-                $q: this.$q,
-                $timeout: this.$timeout,
-                Fn: f
-            });
+            var loader = this.factory();
+            loader.SetDataFunction(f);
+            return loader;
         };
+        Service.$inject = base_injectable_4.default.$inject.concat([exports.factoryName]);
         return Service;
     }(base_injectable_4.default));
     exports.Service = Service;
     var directive;
     (function (directive_1) {
+        directive_1.directiveName = nameGenerator.GetDirectiveName("asyncLoader");
         function register(m) {
-            core_4.registerDirective(m, "asyncLoader", directive);
+            core_4.registerDirective(m, directive_1.directiveName, directive);
         }
         directive_1.register = register;
         var scopeLoadersKey = "loaders";
@@ -1608,21 +1533,4 @@ define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils
         return BaseService;
     }(base_injectable_7.default));
     exports.default = BaseService;
-});
-define("random-helpers/string", ["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    function randomStringV1(length) {
-        return randomSeedOfLength(length);
-    }
-    exports.randomStringV1 = randomStringV1;
-    function randomSeed() {
-        return Math.random().toString(36).substring(2, 15);
-    }
-    function randomSeedOfLength(length) {
-        var s = randomSeed();
-        while (s.length < length)
-            s += randomSeed();
-        return s.length > length ? s.substring(0, length) : s;
-    }
 });

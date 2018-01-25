@@ -3,13 +3,15 @@ import * as bj from "./utils/base-injectable";
 import * as ngUtils from "./service";
 import * as nameGenerator from "./utils/name-generator";
 import  BaseInjectable  from "./utils/base-injectable";
-import { registerService, registerDirective } from "./core";
+import { registerService, registerDirective, registerFactory } from "./core";
 
 
 export var serviceName = nameGenerator.GetServiceName("AsyncLoader");
-
+export var factoryName=nameGenerator.GetFactoryName("AsyncLoaderFactory");
 export default function register(m:ng.IModule){
+    registerFactory(m,factoryName,AsyncLoader.BuildFactoryFn());
     registerService(m,serviceName,Service);
+    
     directive.register(m);
 }
 
@@ -31,7 +33,9 @@ export class Config<T>{
     public GetDataFn:IGetDataFunction<T> =null;
     public Fn:IGetDataFunction<T>=null;
 }
-
+interface AsyncLoaderFactory{
+    <T>():AsyncLoader<T>
+}
 export class AsyncLoader<T> extends BaseInjectable {
 
    
@@ -42,6 +46,7 @@ export class AsyncLoader<T> extends BaseInjectable {
         return arr;
         
     }
+
     private internalData :T=null;
     private config: Config<T>=new Config<T>();
 
@@ -118,29 +123,23 @@ export class AsyncLoader<T> extends BaseInjectable {
 }
 
 export class Service extends BaseInjectable{
-    
-  
-    protected get $q(){
-        return this.getFromInjector("$q") as ng.IQService;
-    }
+    public static $inject =BaseInjectable.$inject.concat([factoryName]);
 
-    
-    protected get $timeout(){
-        return this.getFromInjector("$timeout") as ng.ITimeoutService;
+    private get factory():AsyncLoaderFactory{
+        return this.$injectedArgs[Service.$inject.indexOf(factoryName)];
     }
 
     public Create<T>(f:IGetDataFunction<T>) :AsyncLoader<T>{
-        return new AsyncLoader({
-            $q:this.$q,
-            $timeout:this.$timeout,
-            Fn:f
-        });
+       var loader= this.factory<T>();
+       loader.SetDataFunction(f);
+       return loader;
     }
 }
 
 module directive{
+    export var directiveName=nameGenerator.GetDirectiveName("asyncLoader");
     export function register(m:ng.IModule){
-        registerDirective(m,"asyncLoader",directive);      
+        registerDirective(m,directiveName,directive);      
     }
     var scopeLoadersKey="loaders";
     function directive(){

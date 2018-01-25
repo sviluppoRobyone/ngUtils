@@ -3,17 +3,23 @@
 /// <reference types="angular-ui-router" />
 /// <reference types="angular-ui-bootstrap" />
 /// <reference types="angular-formly" />
-declare module "ng-utils";declare module "file-helpers/index" {
+declare module "ng-utils";declare module "js-helpers/file-helpers" {
     export function base64ToBlob(base64encodedString: string, myme: string): Blob;
     export function blobToBase64(blob: Blob, cb: {
         (base64String: string): void;
     }): void;
     export function download(fileName: string, blob: Blob): void;
 }
-declare module "json-helpers/index" {
+declare module "js-helpers/json-helpers" {
     export module JsonUtils {
         function DateReviver(key: string, value: any): any;
     }
+}
+declare module "js-helpers/random-string" {
+    export function randomStringV1(length: number): string;
+}
+declare module "js-helpers/string-helpers" {
+    export function capitalizeFirstLetter(s: string): string;
 }
 declare module "ng-helpers/utils/base-injectable" {
     import * as angular from "angular";
@@ -44,6 +50,7 @@ declare module "ng-helpers/utils/base-injectable" {
 }
 declare module "ng-helpers/utils/name-generator" {
     export function GetServiceName(name: any): string;
+    export function GetFactoryName(name: any): string;
     export function GetDirectiveName(name: any): any;
 }
 declare module "ng-helpers/debug/debug-service" {
@@ -78,6 +85,7 @@ declare module "ng-helpers/core" {
     }
     export function registerDirective(m: ng.IModule, directiveName: string, directive: IDirectiveFn): void;
     export function registerService(m: ng.IModule, serviceName: string, service: ng.Injectable<Function>): void;
+    export function registerFactory(m: ng.IModule, factoryName: string, factory: ng.Injectable<Function>): void;
     export module ConsoleUtils {
         function GetLogger(): angular.ILogService;
     }
@@ -102,21 +110,6 @@ declare module "ng-helpers/service" {
     export default function register(m: ng.IModule): void;
     export class Service extends BaseInjectable {
         static $inject: string[];
-        readonly $rootScope: angular.IRootScopeService;
-        readonly $http: angular.IHttpService;
-        readonly $location: angular.ILocationService;
-        readonly $q: angular.IQService;
-        readonly $filter: angular.IFilterService;
-        readonly $timeout: angular.ITimeoutService;
-        readonly $cacheFactory: angular.ICacheFactoryService;
-        readonly $locale: angular.ILocaleService;
-        readonly $interval: angular.IIntervalService;
-        readonly $log: angular.ILogService;
-        readonly $sce: angular.ISCEService;
-        readonly $Upload: angular.angularFileUpload.IUploadService;
-        readonly $stateParams: angular.ui.IStateParamsService;
-        readonly $state: angular.ui.IStateService;
-        readonly $uibModal: angular.ui.bootstrap.IModalService;
         readonly $debugService: debugService.Service;
         readonly $fileViewer: fv.fileViewerService;
         readonly $asyncLoader: AsyncLoader.Service;
@@ -128,6 +121,7 @@ declare module "ng-helpers/async-loader" {
     import * as angular from "angular";
     import BaseInjectable from "ng-helpers/utils/base-injectable";
     export var serviceName: string;
+    export var factoryName: string;
     export default function register(m: ng.IModule): void;
     export interface IGetDataFunction<T> {
         (resolve: ng.IQResolveReject<T>, reject: ng.IQResolveReject<any>): void;
@@ -157,8 +151,8 @@ declare module "ng-helpers/async-loader" {
         Update(): angular.IPromise<{}>;
     }
     export class Service extends BaseInjectable {
-        protected readonly $q: angular.IQService;
-        protected readonly $timeout: angular.ITimeoutService;
+        static $inject: string[];
+        private readonly factory;
         Create<T>(f: IGetDataFunction<T>): AsyncLoader<T>;
     }
 }
@@ -300,7 +294,4 @@ declare module "ng-helpers/utils/base-service" {
         static $inject: string[];
         protected readonly $ngUtils: ngUtilsService.Service;
     }
-}
-declare module "random-helpers/string" {
-    export function randomStringV1(length: number): string;
 }

@@ -14,51 +14,7 @@ export class Service extends BaseInjectable {
     public static $inject= BaseInjectable.$inject.concat([debugService.serviceName,AsyncLoader.serviceName,fv.serviceName]);
 
   
-    public get $rootScope(){
-        return this.getFromInjector<ng.IRootScopeService>("$rootScope");
-    }
-    public get $http()  {
-        return this.getFromInjector<ng.IHttpService>("$http");
-    }
-    public get $location()  {
-        return this.getFromInjector<ng.ILocationService>("$location");
-    }
-    public get $q() {
-        return this.getFromInjector<ng.IQService>("$q");
-    }
-    public get $filter() {
-        return this.getFromInjector<ng.IFilterService>("$filter");
-    }
-    public get $timeout() {
-        return this.getFromInjector<ng.ITimeoutService>("$timeout");
-    }
-    public get $cacheFactory() {
-        return this.getFromInjector<ng.ICacheFactoryService>("$cacheFactory");
-    }
-    public get $locale(){
-        return this.getFromInjector<ng.ILocaleService>("$locale");
-    }
-    public get $interval() {
-        return this.getFromInjector<ng.IIntervalService>("$interval");
-    }
-    public get $log() {
-        return this.getFromInjector<ng.ILogService>("$log");
-    }
-    public get $sce() {
-        return this.getFromInjector<ng.ISCEService>("$sce");
-    }
-    public get $Upload() {
-        return this.getFromInjector<ng.angularFileUpload.IUploadService>("Upload");
-    }    
-    public get $stateParams() {
-        return this.getFromInjector<ng.ui.IStateParamsService>("$stateParams");
-    }
-    public get $state() {
-        return this.getFromInjector<ng.ui.IStateService>("$state");
-    }
-    public get $uibModal(){
-        return this.getFromInjector<ng.ui.bootstrap.IModalService>("$uibModal");
-    }
+   
     public get $debugService():debugService.Service{
         return this.$injectedArgs[Service.$inject.indexOf(debugService.serviceName)];
     }
