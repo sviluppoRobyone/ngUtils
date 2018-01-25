@@ -3,17 +3,8 @@ import * as angular from "angular";
 import  BaseInjectable  from "../utils/base-injectable";
 export class Interceptor  extends BaseInjectable implements ng.IHttpInterceptor {
     
-                public static $inject: string[] = BaseInjectable.$inject.concat(["$q"]);
-                
+              
                 private errorList: any[] = [];
-             
-                private get $q(): ng.IQService {
-                    return this.$injectedArgs[Interceptor.$inject.indexOf("$q")];
-                }
-                private get $uibModal(): angular.ui.bootstrap.IModalService {
-                    return this.$injector.get<angular.ui.bootstrap.IModalService>("$uibModal");
-                }
-    
     
                 private $modal: angular.ui.bootstrap.IModalServiceInstance = null;
     

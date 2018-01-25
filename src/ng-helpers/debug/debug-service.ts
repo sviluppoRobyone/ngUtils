@@ -35,15 +35,7 @@ export module Detectors{
 
 }
 export class Service extends BaseInjectable{
-    private get $timeout(): ng.ITimeoutService {
-        return this.getFromInjector("$timeout");
-    }
-    private get $rootScope(): ng.IRootScopeService {
-        return this.getFromInjector("$rootScope");
-    }
-    private get $q(): ng.IQService {
-        return this.getFromInjector("$q");
-    }
+   
     DebugStatus:boolean=false;
 
     private Updater:IDebugDetectorFunction=null;

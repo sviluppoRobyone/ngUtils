@@ -16,27 +16,5 @@ export default abstract class BaseCtrl extends BaseInjectable implements ng.ICon
     }
 
 
-    protected get $q() {
-        return this.$ngUtils.$q;
-    }
-
-
-    protected get $state(){
-        return this.$ngUtils.$state;
-    }
-
     
-    protected get $stateParams(){
-        return this.$ngUtils.$stateParams;
-    }
-
-   
-    protected get $upload(){
-        return this.$ngUtils.$Upload;
-    }
-    
-    
-    protected get $uibModal(){
-        return this.$ngUtils.$uibModal;
-    }
 }

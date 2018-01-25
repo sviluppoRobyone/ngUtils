@@ -19,30 +19,34 @@ export interface IGetDataFunction<T>{
 export interface IAsyncLoaderConstructor<T>{
     $q:ng.IQService;
     $timeout:ng.ITimeoutService;
-    Fn:IGetDataFunction<T>
+  
 }
 
 export class Config<T>{
-    public args:IAsyncLoaderConstructor<T>=null;
+   
     public isLoading :boolean=false;
     public isSuccess: boolean=false;
     public isFailed: boolean=false;
     public successCount:number=0;
     public GetDataFn:IGetDataFunction<T> =null;
+    public Fn:IGetDataFunction<T>=null;
 }
 
-export class AsyncLoader<T> {
+export class AsyncLoader<T> extends BaseInjectable {
 
+   
+    public static BuildFactoryFn(){
+        var arr=(BaseInjectable.$inject as any[]).concat([(...args)=>{            
+            return new AsyncLoader<any>(...args);
+        }]);
+        return arr;
+        
+    }
     private internalData :T=null;
     private config: Config<T>=new Config<T>();
 
-    protected get $q(){
-        return this.config.args.$q;
-    }
+    
    
-    protected get $timeout(){
-        return this.config.args.$timeout;
-    }
    
     public get IsLoading(){
         return this.config.isLoading;
@@ -62,9 +66,13 @@ export class AsyncLoader<T> {
     public get Data(){
         return this.internalData;
     }
+    SetDataFunction(fn:IGetDataFunction<T>){
+        this.config.GetDataFn=fn;
+    }
+    constructor(...args){
+        super(...args);
 
-    constructor(c:IAsyncLoaderConstructor<T>){
-       this.config.args=c; 
+       
        ["internalData","config"].forEach(x=>{
         Object.defineProperty(this,x,{enumerable:false});
         });
@@ -79,7 +87,7 @@ export class AsyncLoader<T> {
                 this.config.isSuccess=false;
                 this.config.isFailed=false;
             }).then(()=>{
-                this.$q<T>(this.config.args.Fn).then(data=>{ 
+                this.$q<T>(this.config.Fn).then(data=>{ 
 
                     this.internalData=data;
 

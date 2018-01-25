@@ -1,7 +1,7 @@
 /// <reference types="angular" />
-/// <reference types="angular-ui-bootstrap" />
 /// <reference types="ng-file-upload" />
 /// <reference types="angular-ui-router" />
+/// <reference types="angular-ui-bootstrap" />
 /// <reference types="angular-formly" />
 declare module "ng-utils";declare module "file-helpers/index" {
     export function base64ToBlob(base64encodedString: string, myme: string): Blob;
@@ -16,6 +16,7 @@ declare module "json-helpers/index" {
     }
 }
 declare module "ng-helpers/utils/base-injectable" {
+    import * as angular from "angular";
     export default abstract class BaseInjectable {
         static $inject: string[];
         private _store;
@@ -24,6 +25,21 @@ declare module "ng-helpers/utils/base-injectable" {
         constructor(...args: any[]);
         protected readonly $injector: ng.auto.IInjectorService;
         protected readonly $injectedArgs: any[];
+        protected readonly $rootScope: angular.IRootScopeService;
+        protected readonly $http: angular.IHttpService;
+        protected readonly $location: angular.ILocationService;
+        protected readonly $q: angular.IQService;
+        protected readonly $filter: angular.IFilterService;
+        protected readonly $timeout: angular.ITimeoutService;
+        protected readonly $cacheFactory: angular.ICacheFactoryService;
+        protected readonly $locale: angular.ILocaleService;
+        protected readonly $interval: angular.IIntervalService;
+        protected readonly $log: angular.ILogService;
+        protected readonly $sce: angular.ISCEService;
+        protected readonly $Upload: angular.angularFileUpload.IUploadService;
+        protected readonly $stateParams: angular.ui.IStateParamsService;
+        protected readonly $state: angular.ui.IStateService;
+        protected readonly $uibModal: angular.ui.bootstrap.IModalService;
     }
 }
 declare module "ng-helpers/utils/name-generator" {
@@ -46,9 +62,6 @@ declare module "ng-helpers/debug/debug-service" {
         function IsDebugEnabled(): any;
     }
     export class Service extends BaseInjectable {
-        private readonly $timeout;
-        private readonly $rootScope;
-        private readonly $q;
         DebugStatus: boolean;
         private Updater;
         constructor(...args: any[]);
@@ -122,26 +135,25 @@ declare module "ng-helpers/async-loader" {
     export interface IAsyncLoaderConstructor<T> {
         $q: ng.IQService;
         $timeout: ng.ITimeoutService;
-        Fn: IGetDataFunction<T>;
     }
     export class Config<T> {
-        args: IAsyncLoaderConstructor<T>;
         isLoading: boolean;
         isSuccess: boolean;
         isFailed: boolean;
         successCount: number;
         GetDataFn: IGetDataFunction<T>;
+        Fn: IGetDataFunction<T>;
     }
-    export class AsyncLoader<T> {
+    export class AsyncLoader<T> extends BaseInjectable {
+        static BuildFactoryFn(): any[];
         private internalData;
         private config;
-        protected readonly $q: angular.IQService;
-        protected readonly $timeout: angular.ITimeoutService;
         readonly IsLoading: boolean;
         readonly IsSuccess: boolean;
         readonly IsFailed: boolean;
         readonly Data: T;
-        constructor(c: IAsyncLoaderConstructor<T>);
+        SetDataFunction(fn: IGetDataFunction<T>): void;
+        constructor(...args: any[]);
         Update(): angular.IPromise<{}>;
     }
     export class Service extends BaseInjectable {
@@ -174,11 +186,6 @@ declare module "ng-helpers/utils/base-ctrl" {
         static $inject: string[];
         protected readonly $scope: angular.IScope;
         protected readonly $ngUtils: ngUtils.Service;
-        protected readonly $q: angular.IQService;
-        protected readonly $state: angular.ui.IStateService;
-        protected readonly $stateParams: angular.ui.IStateParamsService;
-        protected readonly $upload: angular.angularFileUpload.IUploadService;
-        protected readonly $uibModal: angular.ui.bootstrap.IModalService;
     }
 }
 declare module "ng-helpers/fa-loading/ctrl" {
@@ -210,10 +217,7 @@ declare module "ng-helpers/http-error-to-modal/interceptor" {
     import * as angular from "angular";
     import BaseInjectable from "ng-helpers/utils/base-injectable";
     export class Interceptor extends BaseInjectable implements ng.IHttpInterceptor {
-        static $inject: string[];
         private errorList;
-        private readonly $q;
-        private readonly $uibModal;
         private $modal;
         responseError: (rejection: any) => angular.IPromise<never>;
     }
@@ -290,14 +294,11 @@ declare module "ng-helpers/formly/nullable-date" {
     export default function NullableDate(key: string, label: string): AngularFormly.IFieldArray;
 }
 declare module "ng-helpers/utils/base-service" {
-    import * as angular from "angular";
     import BaseInjectable from "ng-helpers/utils/base-injectable";
     import * as ngUtilsService from "ng-helpers/service";
     export default abstract class BaseService extends BaseInjectable {
         static $inject: string[];
         protected readonly $ngUtils: ngUtilsService.Service;
-        protected readonly $uibModal: angular.ui.bootstrap.IModalService;
-        protected readonly $q: angular.IQService;
     }
 }
 declare module "random-helpers/string" {

@@ -10,13 +10,6 @@ export default abstract class BaseService extends BaseInjectable {
     }
     
   
-    protected get $uibModal(){
-        return this.$ngUtils.$uibModal;
-    }
-
  
-    protected get $q(){
-        return this.$ngUtils.$q;
-    }
 
 }
