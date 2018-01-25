@@ -642,7 +642,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
             configurable: true
         });
         Service.prototype.Create = function (f) {
-            this.$log.debug(this.$injectedArgs);
+            this.$log.debug(Service.$inject, this.$injectedArgs);
             var loader = this.factory();
             loader.SetDataFunction(f);
             return loader;

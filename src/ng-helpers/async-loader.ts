@@ -130,7 +130,7 @@ export class Service extends BaseInjectable{
     public Create<T>(f:IGetDataFunction<T>) :AsyncLoader<T>{
 
        
-        this.$log.debug(this.$injectedArgs);
+        this.$log.debug(Service.$inject,this.$injectedArgs);
         var loader= this.factory<T>();
 
       
