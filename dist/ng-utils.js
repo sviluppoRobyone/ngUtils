@@ -249,7 +249,7 @@ define("ng-helpers/utils/name-generator", ["require", "exports", "js-helpers/str
     }
     exports.GetServiceName = GetServiceName;
     function GetFactoryName(name) {
-        return prefix + stringHelpers.capitalizeFirstLetter(name) + "Service";
+        return prefix + stringHelpers.capitalizeFirstLetter(name) + "Factory";
     }
     exports.GetFactoryName = GetFactoryName;
     function GetDirectiveName(name) {
@@ -518,7 +518,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("AsyncLoader");
-    exports.factoryName = nameGenerator.GetFactoryName("AsyncLoaderFactory");
+    exports.factoryName = nameGenerator.GetFactoryName("AsyncLoader");
     function register(m) {
         core_4.registerFactory(m, exports.factoryName, AsyncLoader.BuildFactoryFn());
         core_4.registerService(m, exports.serviceName, Service);
