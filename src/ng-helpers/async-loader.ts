@@ -10,7 +10,7 @@ export var serviceName = nameGenerator.GetServiceName("AsyncLoader");
 
 export default function register(m:ng.IModule){
     
-    registerService(m,serviceName,Service);
+    registerService(m,serviceName,AsyncLoaderService);
     
     directive.register(m);
 }
@@ -106,7 +106,7 @@ export class AsyncLoader<T> extends BaseInjectable {
     }
 }
 
-export class Service extends BaseInjectable{
+export class AsyncLoaderService extends BaseInjectable{
   
 
    
@@ -141,7 +141,7 @@ module directive{
             scope:{
                 [scopeLoadersKey]:"="               
             },
-            controller:Ctrl,
+            controller:AsyncLoaderDirectiveCtrl,
             controllerAs:"Ctrl",
             transclude:{
                 loading:"loading",
@@ -151,10 +151,10 @@ module directive{
         } as ng.IDirective;
     }
 
-    class Ctrl extends BaseInjectable {
+    class AsyncLoaderDirectiveCtrl extends BaseInjectable {
         public static $inject=BaseInjectable.$inject.concat(["$scope"]);
         protected get $scope():ng.IScope{
-            return this.$injectedArgs[Ctrl.$inject.indexOf("$scope")];
+            return this.$injectedArgs[AsyncLoaderDirectiveCtrl.$inject.indexOf("$scope")];
         }
         protected get loaders():any[]{
           return this.$scope[scopeLoadersKey] && this.$scope[scopeLoadersKey] instanceof Array? this.$scope[scopeLoadersKey]:[this.$scope[scopeLoadersKey]];

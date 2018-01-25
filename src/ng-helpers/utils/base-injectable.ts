@@ -4,6 +4,10 @@ import { BaseObj } from "../../js-helpers/obj-helpers";
 export default abstract class BaseInjectable extends BaseObj{
     public static $inject = ["$injector"];
 
+    private get _self$inject():string[]{
+        return this._constructor.$inject;
+    }
+
    
     private _store : any= {};
   
@@ -20,7 +24,16 @@ export default abstract class BaseInjectable extends BaseObj{
 
     public constructor(...args){
         super();
-        ConsoleUtils.GetLogger().debug("Init",this._className,"with",args.length,"args",args,args.map(x=>typeof(x)));
+
+        {
+            var logger= ConsoleUtils.GetLogger();
+            logger.debug("----");
+            logger.debug("Init",this._className,"with",args.length,"args",args,JSON.stringify(args.map(x=>typeof(x))));
+            logger.debug("Args["+args.length+"]: ",args);
+            logger.debug("$inject["+this._self$inject.length+"]: ",this._self$inject);
+            logger.debug("----");
+        }
+
         this._args = args;
         ["_store","_args"].forEach(x=>{
             Object.defineProperty(this,x,{enumerable:false});

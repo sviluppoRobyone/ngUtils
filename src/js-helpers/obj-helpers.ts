@@ -1,6 +1,9 @@
 export class BaseObj{
-    public get _className(){
+    protected get _className(){
         return (<any>this).constructor.name;
-    }   
+    } 
+    protected get _constructor(){
+        return (<any>this).constructor;
+    }  
     
 }

@@ -17,7 +17,8 @@ declare module "js-helpers/json-helpers" {
 }
 declare module "js-helpers/obj-helpers" {
     export class BaseObj {
-        readonly _className: any;
+        protected readonly _className: any;
+        protected readonly _constructor: any;
     }
 }
 declare module "js-helpers/random-string" {
@@ -73,6 +74,7 @@ declare module "ng-helpers/utils/base-injectable" {
     import { BaseObj } from "js-helpers/obj-helpers";
     export default abstract class BaseInjectable extends BaseObj {
         static $inject: string[];
+        private readonly _self$inject;
         private _store;
         private _args;
         protected getFromInjector<T>(key: string): T;
@@ -118,7 +120,7 @@ declare module "ng-helpers/service" {
         static $inject: string[];
         readonly $debugService: debugService.Service;
         readonly $fileViewer: fv.fileViewerService;
-        readonly $asyncLoader: AsyncLoader.Service;
+        readonly $asyncLoader: AsyncLoader.AsyncLoaderService;
         manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function): angular.IPromise<{}>;
         onScopeDispose($scope: ng.IScope): angular.IPromise<{}>;
     }
@@ -150,7 +152,7 @@ declare module "ng-helpers/async-loader" {
         constructor(...args: any[]);
         Update(): angular.IPromise<{}>;
     }
-    export class Service extends BaseInjectable {
+    export class AsyncLoaderService extends BaseInjectable {
         Create<T>(f: IGetDataFunction<T>): AsyncLoader<T>;
     }
 }

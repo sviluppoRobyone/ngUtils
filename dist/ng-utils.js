@@ -82,6 +82,13 @@ define("js-helpers/obj-helpers", ["require", "exports"], function (require, expo
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(BaseObj.prototype, "_constructor", {
+            get: function () {
+                return this.constructor;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return BaseObj;
     }());
     exports.BaseObj = BaseObj;
@@ -252,13 +259,27 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/co
             var _this = _super.call(this) || this;
             _this._store = {};
             _this._args = [];
-            core_2.ConsoleUtils.GetLogger().debug("Init", _this._className, "with", args.length, "args", args, args.map(function (x) { return typeof (x); }));
+            {
+                var logger = core_2.ConsoleUtils.GetLogger();
+                logger.debug("----");
+                logger.debug("Init", _this._className, "with", args.length, "args", args, JSON.stringify(args.map(function (x) { return typeof (x); })));
+                logger.debug("Args[" + args.length + "]: ", args);
+                logger.debug("$inject[" + _this._self$inject.length + "]: ", _this._self$inject);
+                logger.debug("----");
+            }
             _this._args = args;
             ["_store", "_args"].forEach(function (x) {
                 Object.defineProperty(_this, x, { enumerable: false });
             });
             return _this;
         }
+        Object.defineProperty(BaseInjectable.prototype, "_self$inject", {
+            get: function () {
+                return this._constructor.$inject;
+            },
+            enumerable: true,
+            configurable: true
+        });
         BaseInjectable.prototype.getFromInjector = function (key) {
             if (!this._store[key])
                 this._store[key] = this.$injector.get(key);
@@ -539,7 +560,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("AsyncLoader");
     function register(m) {
-        core_5.registerService(m, exports.serviceName, Service);
+        core_5.registerService(m, exports.serviceName, AsyncLoaderService);
         directive.register(m);
     }
     exports.default = register;
@@ -635,19 +656,19 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
         return AsyncLoader;
     }(base_injectable_4.default));
     exports.AsyncLoader = AsyncLoader;
-    var Service = /** @class */ (function (_super) {
-        __extends(Service, _super);
-        function Service() {
+    var AsyncLoaderService = /** @class */ (function (_super) {
+        __extends(AsyncLoaderService, _super);
+        function AsyncLoaderService() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Service.prototype.Create = function (f) {
+        AsyncLoaderService.prototype.Create = function (f) {
             var loader = new (AsyncLoader.bind.apply(AsyncLoader, [void 0].concat(this.$injectedArgs)))();
             loader.SetDataFunction(f);
             return loader;
         };
-        return Service;
+        return AsyncLoaderService;
     }(base_injectable_4.default));
-    exports.Service = Service;
+    exports.AsyncLoaderService = AsyncLoaderService;
     var directive;
     (function (directive_1) {
         directive_1.directiveName = nameGenerator.GetDirectiveName("asyncLoader");
@@ -662,7 +683,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
                 scope: (_a = {},
                     _a[scopeLoadersKey] = "=",
                     _a),
-                controller: Ctrl,
+                controller: AsyncLoaderDirectiveCtrl,
                 controllerAs: "Ctrl",
                 transclude: {
                     loading: "loading",
@@ -671,55 +692,55 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
             };
             var _a;
         }
-        var Ctrl = /** @class */ (function (_super) {
-            __extends(Ctrl, _super);
-            function Ctrl() {
+        var AsyncLoaderDirectiveCtrl = /** @class */ (function (_super) {
+            __extends(AsyncLoaderDirectiveCtrl, _super);
+            function AsyncLoaderDirectiveCtrl() {
                 return _super !== null && _super.apply(this, arguments) || this;
             }
-            Object.defineProperty(Ctrl.prototype, "$scope", {
+            Object.defineProperty(AsyncLoaderDirectiveCtrl.prototype, "$scope", {
                 get: function () {
-                    return this.$injectedArgs[Ctrl.$inject.indexOf("$scope")];
+                    return this.$injectedArgs[AsyncLoaderDirectiveCtrl.$inject.indexOf("$scope")];
                 },
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Ctrl.prototype, "loaders", {
+            Object.defineProperty(AsyncLoaderDirectiveCtrl.prototype, "loaders", {
                 get: function () {
                     return this.$scope[scopeLoadersKey] && this.$scope[scopeLoadersKey] instanceof Array ? this.$scope[scopeLoadersKey] : [this.$scope[scopeLoadersKey]];
                 },
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Ctrl.prototype, "AsyncLoaders", {
+            Object.defineProperty(AsyncLoaderDirectiveCtrl.prototype, "AsyncLoaders", {
                 get: function () {
                     return this.loaders.filter(function (x) { return x instanceof AsyncLoader; });
                 },
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Ctrl.prototype, "IsLoading", {
+            Object.defineProperty(AsyncLoaderDirectiveCtrl.prototype, "IsLoading", {
                 get: function () {
                     return this.AsyncLoaders.some(function (x) { return x.IsLoading; });
                 },
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Ctrl.prototype, "IsSuccess", {
+            Object.defineProperty(AsyncLoaderDirectiveCtrl.prototype, "IsSuccess", {
                 get: function () {
                     return this.AsyncLoaders.every(function (x) { return x.IsSuccess; });
                 },
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(Ctrl.prototype, "IsFailed", {
+            Object.defineProperty(AsyncLoaderDirectiveCtrl.prototype, "IsFailed", {
                 get: function () {
                     return this.AsyncLoaders.some(function (x) { return x.IsFailed; });
                 },
                 enumerable: true,
                 configurable: true
             });
-            Ctrl.$inject = base_injectable_4.default.$inject.concat(["$scope"]);
-            return Ctrl;
+            AsyncLoaderDirectiveCtrl.$inject = base_injectable_4.default.$inject.concat(["$scope"]);
+            return AsyncLoaderDirectiveCtrl;
         }(base_injectable_4.default));
     })(directive || (directive = {}));
 });

@@ -21,7 +21,7 @@ export class Service extends BaseInjectable {
     public get $fileViewer():fv.fileViewerService{        
         return this.$injectedArgs[Service.$inject.indexOf(fv.serviceName)];
     }
-    public get $asyncLoader():AsyncLoader.Service{
+    public get $asyncLoader():AsyncLoader.AsyncLoaderService{
         return this.$injectedArgs[Service.$inject.indexOf(AsyncLoader.serviceName)];
     }
 
