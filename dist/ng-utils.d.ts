@@ -121,7 +121,6 @@ declare module "ng-helpers/async-loader" {
     import * as angular from "angular";
     import BaseInjectable from "ng-helpers/utils/base-injectable";
     export var serviceName: string;
-    export var factoryNameBuilder: string;
     export default function register(m: ng.IModule): void;
     export interface IGetDataFunction<T> {
         (resolve: ng.IQResolveReject<T>, reject: ng.IQResolveReject<any>): void;

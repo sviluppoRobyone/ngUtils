@@ -7,9 +7,9 @@ import { registerService, registerDirective, registerFactory, ConsoleUtils } fro
 
 
 export var serviceName = nameGenerator.GetServiceName("AsyncLoader");
-export var factoryNameBuilder=nameGenerator.GetServiceName("AsyncLoaderBuilder");
+
 export default function register(m:ng.IModule){
-    registerService(m,factoryNameBuilder,AsyncLoader);
+    
     registerService(m,serviceName,Service);
     
     directive.register(m);

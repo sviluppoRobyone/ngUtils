@@ -518,9 +518,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("AsyncLoader");
-    exports.factoryNameBuilder = nameGenerator.GetServiceName("AsyncLoaderBuilder");
     function register(m) {
-        core_4.registerService(m, exports.factoryNameBuilder, AsyncLoader);
         core_4.registerService(m, exports.serviceName, Service);
         directive.register(m);
     }
