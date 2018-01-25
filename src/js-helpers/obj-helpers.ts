@@ -7,3 +7,10 @@ export class BaseObj{
     }  
     
 }
+export module arrays{
+    export function describeArray(a:any[]):string[]{
+        return (a||[]).map(x=>{
+           return (typeof (x) =="object" ? x.constructor.name:typeof(x))+"";
+        });
+    }
+}

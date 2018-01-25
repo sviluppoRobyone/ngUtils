@@ -92,6 +92,15 @@ define("js-helpers/obj-helpers", ["require", "exports"], function (require, expo
         return BaseObj;
     }());
     exports.BaseObj = BaseObj;
+    var arrays;
+    (function (arrays) {
+        function describeArray(a) {
+            return (a || []).map(function (x) {
+                return (typeof (x) == "object" ? x.constructor.name : typeof (x)) + "";
+            });
+        }
+        arrays.describeArray = describeArray;
+    })(arrays = exports.arrays || (exports.arrays = {}));
 });
 define("js-helpers/random-string", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -263,8 +272,8 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/co
                 var logger = core_2.ConsoleUtils.GetLogger();
                 logger.debug("----");
                 logger.debug("Init", _this._className, "with", args.length, "args", args, JSON.stringify(args.map(function (x) { return typeof (x); })));
-                logger.debug("Args[" + args.length + "]: ", args);
-                logger.debug("$inject[" + _this._self$inject.length + "]: ", _this._self$inject);
+                logger.debug("Args[" + args.length + "]", args, obj_helpers_1.arrays.describeArray(args));
+                logger.debug("$inject[" + _this._self$inject.length + "]", _this._self$inject);
                 logger.debug("----");
             }
             _this._args = args;

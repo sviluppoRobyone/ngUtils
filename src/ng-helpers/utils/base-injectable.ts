@@ -1,6 +1,6 @@
 import * as angular from "angular";
 import { ConsoleUtils } from "../core";
-import { BaseObj } from "../../js-helpers/obj-helpers";
+import { BaseObj,arrays } from "../../js-helpers/obj-helpers";
 export default abstract class BaseInjectable extends BaseObj{
     public static $inject = ["$injector"];
 
@@ -29,8 +29,8 @@ export default abstract class BaseInjectable extends BaseObj{
             var logger= ConsoleUtils.GetLogger();
             logger.debug("----");
             logger.debug("Init",this._className,"with",args.length,"args",args,JSON.stringify(args.map(x=>typeof(x))));
-            logger.debug("Args["+args.length+"]: ",args);
-            logger.debug("$inject["+this._self$inject.length+"]: ",this._self$inject);
+            logger.debug("Args["+args.length+"]",args,arrays.describeArray(args));
+            logger.debug("$inject["+this._self$inject.length+"]",this._self$inject);
             logger.debug("----");
         }
 

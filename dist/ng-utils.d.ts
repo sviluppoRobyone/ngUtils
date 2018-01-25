@@ -20,6 +20,9 @@ declare module "js-helpers/obj-helpers" {
         protected readonly _className: any;
         protected readonly _constructor: any;
     }
+    export module arrays {
+        function describeArray(a: any[]): string[];
+    }
 }
 declare module "js-helpers/random-string" {
     export function randomStringV1(length: number): string;
