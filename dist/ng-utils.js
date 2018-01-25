@@ -152,32 +152,32 @@ define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/util
     }
     exports.default = register;
     exports.serviceName = nameGenerator.GetServiceName("debug");
-    var Detectors;
-    (function (Detectors) {
-        Detectors.DebugName = "DEBUG";
+    var DebugDetectors;
+    (function (DebugDetectors) {
+        DebugDetectors.DebugName = "DEBUG";
         function IsLocalhost() {
             return window.location.hostname == "localhost" || window.location.hostname == "127.0.0.1";
         }
-        Detectors.IsLocalhost = IsLocalhost;
+        DebugDetectors.IsLocalhost = IsLocalhost;
         function IsLocalDomain() {
             return window.location.hostname.endsWith(".local");
         }
-        Detectors.IsLocalDomain = IsLocalDomain;
+        DebugDetectors.IsLocalDomain = IsLocalDomain;
         function IsWindowDebugDefined() {
-            return Detectors.DebugName in window;
+            return DebugDetectors.DebugName in window;
         }
-        Detectors.IsWindowDebugDefined = IsWindowDebugDefined;
+        DebugDetectors.IsWindowDebugDefined = IsWindowDebugDefined;
         function GetWindowDebugValue() {
             if (!IsWindowDebugDefined())
-                throw "[" + Detectors.DebugName + "] must be defined in window: window." + Detectors.DebugName + "=true/false;";
-            return window[Detectors.DebugName];
+                throw "[" + DebugDetectors.DebugName + "] must be defined in window: window." + DebugDetectors.DebugName + "=true/false;";
+            return window[DebugDetectors.DebugName];
         }
-        Detectors.GetWindowDebugValue = GetWindowDebugValue;
+        DebugDetectors.GetWindowDebugValue = GetWindowDebugValue;
         function IsDebugEnabled() {
             return IsWindowDebugDefined() ? GetWindowDebugValue() : (IsLocalhost() || IsLocalDomain());
         }
-        Detectors.IsDebugEnabled = IsDebugEnabled;
-    })(Detectors = exports.Detectors || (exports.Detectors = {}));
+        DebugDetectors.IsDebugEnabled = IsDebugEnabled;
+    })(DebugDetectors = exports.DebugDetectors || (exports.DebugDetectors = {}));
     var Service = /** @class */ (function (_super) {
         __extends(Service, _super);
         function Service() {
@@ -216,7 +216,7 @@ define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/util
         };
         Object.defineProperty(Service.prototype, "updateDebugV1", {
             get: function () {
-                return Detectors.IsDebugEnabled();
+                return DebugDetectors.IsDebugEnabled();
             },
             enumerable: true,
             configurable: true
@@ -1044,13 +1044,15 @@ define("ng-helpers/http-error-to-modal/index", ["require", "exports", "ng-helper
     }
     exports.default = register;
 });
-define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/base-ctrl", "ng-helpers/utils/name-generator", "ng-helpers/core"], function (require, exports, base_ctrl_3, nameGenerator, core_7) {
+define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/base-ctrl", "ng-helpers/utils/name-generator", "ng-helpers/core", "ng-helpers/utils/module-exists"], function (require, exports, base_ctrl_3, nameGenerator, core_7, module_exists_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var directiveName = nameGenerator.GetDirectiveName("debugModal");
     var dataKey = directiveName + "debugData";
     function register(m) {
-        core_7.registerDirective(m, directiveName, directive);
+        module_exists_1.configureModuleIfExists(m, ["ui.bootstrap"], function () {
+            core_7.registerDirective(m, directiveName, directive);
+        });
     }
     exports.default = register;
     function directive() {
@@ -1113,6 +1115,168 @@ define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/
         ModalCtrl.$inject = base_ctrl_3.default.$inject.concat([dataKey]);
         return ModalCtrl;
     }(base_ctrl_3.default));
+});
+define("ng-helpers/formly/nullable-field-directive/ctrl", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Ctrl = /** @class */ (function () {
+        function Ctrl() {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            this.args = [];
+            this.fields = [
+                {
+                    key: "model",
+                    type: "input",
+                    templateOptions: {
+                        label: "",
+                        type: "" //settato dopo
+                    }, expressionProperties: {
+                        "templateOptions.disabled": function ($viewValue, $modelValue, scope) {
+                            return !!scope.model["isNull"];
+                        },
+                        "templateOptions.required": function ($viewValue, $modelValue, scope) {
+                            return !scope.model["isNull"];
+                        }
+                    }
+                },
+                {
+                    key: "isNull",
+                    type: "awesome-checkbox",
+                    templateOptions: {
+                        label: "Non impostato",
+                        onChange: function ($viewValue, $modelValue, scope) {
+                            if ($viewValue || $modelValue)
+                                scope.model["model"] = null;
+                        }
+                    }
+                }
+            ];
+            this.formModel = {
+                isNull: false,
+                model: null
+            };
+            this.args = args;
+            this.fields[0].templateOptions.type = this.$type;
+            this.fields[0].templateOptions.label = this.$label;
+            delete this.formModel.model;
+            var c = this;
+            Object.defineProperty(this.formModel, "model", {
+                get: function () {
+                    return c.$model;
+                },
+                set: function (v) {
+                    c.$model = v;
+                }
+            });
+            this.formModel.isNull = this.$model == null;
+        }
+        Object.defineProperty(Ctrl.prototype, "$scope", {
+            get: function () {
+                return this.args[Ctrl.$inject.indexOf("$scope")];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Ctrl.prototype, "$model", {
+            get: function () {
+                return this.$scope["model"];
+            },
+            set: function (v) {
+                this.$scope["model"] = v;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Ctrl.prototype, "$type", {
+            get: function () {
+                return this.$scope["type"] || "text";
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Ctrl.prototype, "$label", {
+            get: function () {
+                return this.$scope["label"] || "";
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Ctrl.$inject = ["$scope"];
+        return Ctrl;
+    }());
+    exports.Ctrl = Ctrl;
+});
+define("ng-helpers/formly/nullable-field-directive/directive", ["require", "exports", "ng-helpers/formly/nullable-field-directive/ctrl"], function (require, exports, ctrl_2) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.name = "nullableField";
+    function directive() {
+        return {
+            controller: ctrl_2.Ctrl,
+            controllerAs: "Ctrl",
+            restrict: "E",
+            //language=html
+            template: "<formly-form model=\"Ctrl.formModel\" fields=\"Ctrl.fields\"></formly-form>",
+            scope: {
+                model: "=",
+                type: "@",
+                label: "@"
+            }
+        };
+    }
+    exports.directive = directive;
+});
+define("ng-helpers/debug/debug-components", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core", "ng-helpers/utils/name-generator", "ng-helpers/formly/nullable-field-directive/directive", "ng-helpers/debug/debug-service"], function (require, exports, base_injectable_7, core_8, name_generator_1, directive_2, debug_service_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function register(m) {
+        ifDebug.register(m);
+    }
+    exports.default = register;
+    var ifDebug;
+    (function (ifDebug) {
+        ifDebug.directiveName = name_generator_1.GetDirectiveName("ifDebug");
+        function register(m) {
+            core_8.registerDirective(m, ifDebug.directiveName, directive_2.directive);
+        }
+        ifDebug.register = register;
+        function Directive() {
+            return {
+                restrict: "E",
+                controller: IfDebugCtrl,
+                controllerAs: "Ctrl",
+                transclude: true,
+                template: "<ng-transclude ng-if=\"Ctrl.Debug\"></ng-transclude>"
+            };
+        }
+        var IfDebugCtrl = /** @class */ (function (_super) {
+            __extends(IfDebugCtrl, _super);
+            function IfDebugCtrl() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            Object.defineProperty(IfDebugCtrl.prototype, "Debug", {
+                get: function () {
+                    return debug_service_1.DebugDetectors.IsDebugEnabled();
+                },
+                enumerable: true,
+                configurable: true
+            });
+            return IfDebugCtrl;
+        }(base_injectable_7.default));
+    })(ifDebug = exports.ifDebug || (exports.ifDebug = {}));
+});
+define("ng-helpers/debug/debug", ["require", "exports", "ng-helpers/debug/debug-service", "ng-helpers/debug/debug-modal", "ng-helpers/debug/debug-components"], function (require, exports, debug_service_2, debug_modal_1, debug_components_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function Register(m) {
+        debug_components_1.default(m);
+        debug_service_2.default(m);
+        debug_modal_1.default(m);
+    }
+    exports.default = Register;
 });
 define("ng-helpers/formly/datepicker", ["require", "exports", "ng-helpers/utils/module-exists", "angular"], function (require, exports, moduleExists, angular) {
     "use strict";
@@ -1272,119 +1436,6 @@ define("ng-helpers/formly/form-builder", ["require", "exports", "ng-helpers/util
         return Ctrl;
     }(base_ctrl_for_directive_1.default));
 });
-define("ng-helpers/formly/nullable-field-directive/ctrl", ["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var Ctrl = /** @class */ (function () {
-        function Ctrl() {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            this.args = [];
-            this.fields = [
-                {
-                    key: "model",
-                    type: "input",
-                    templateOptions: {
-                        label: "",
-                        type: "" //settato dopo
-                    }, expressionProperties: {
-                        "templateOptions.disabled": function ($viewValue, $modelValue, scope) {
-                            return !!scope.model["isNull"];
-                        },
-                        "templateOptions.required": function ($viewValue, $modelValue, scope) {
-                            return !scope.model["isNull"];
-                        }
-                    }
-                },
-                {
-                    key: "isNull",
-                    type: "awesome-checkbox",
-                    templateOptions: {
-                        label: "Non impostato",
-                        onChange: function ($viewValue, $modelValue, scope) {
-                            if ($viewValue || $modelValue)
-                                scope.model["model"] = null;
-                        }
-                    }
-                }
-            ];
-            this.formModel = {
-                isNull: false,
-                model: null
-            };
-            this.args = args;
-            this.fields[0].templateOptions.type = this.$type;
-            this.fields[0].templateOptions.label = this.$label;
-            delete this.formModel.model;
-            var c = this;
-            Object.defineProperty(this.formModel, "model", {
-                get: function () {
-                    return c.$model;
-                },
-                set: function (v) {
-                    c.$model = v;
-                }
-            });
-            this.formModel.isNull = this.$model == null;
-        }
-        Object.defineProperty(Ctrl.prototype, "$scope", {
-            get: function () {
-                return this.args[Ctrl.$inject.indexOf("$scope")];
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Ctrl.prototype, "$model", {
-            get: function () {
-                return this.$scope["model"];
-            },
-            set: function (v) {
-                this.$scope["model"] = v;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Ctrl.prototype, "$type", {
-            get: function () {
-                return this.$scope["type"] || "text";
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Ctrl.prototype, "$label", {
-            get: function () {
-                return this.$scope["label"] || "";
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Ctrl.$inject = ["$scope"];
-        return Ctrl;
-    }());
-    exports.Ctrl = Ctrl;
-});
-define("ng-helpers/formly/nullable-field-directive/directive", ["require", "exports", "ng-helpers/formly/nullable-field-directive/ctrl"], function (require, exports, ctrl_2) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.name = "nullableField";
-    function directive() {
-        return {
-            controller: ctrl_2.Ctrl,
-            controllerAs: "Ctrl",
-            restrict: "E",
-            //language=html
-            template: "<formly-form model=\"Ctrl.formModel\" fields=\"Ctrl.fields\"></formly-form>",
-            scope: {
-                model: "=",
-                type: "@",
-                label: "@"
-            }
-        };
-    }
-    exports.directive = directive;
-});
 define("ng-helpers/formly/nullable-field-directive/index", ["require", "exports", "ng-helpers/formly/nullable-field-directive/directive"], function (require, exports, d) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -1488,15 +1539,15 @@ define("polyfill/index", ["require", "exports", "polyfill/string-polyfill", "pol
     }
     exports.default = run;
 });
-define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug-service", "ng-helpers/debug/debug-modal", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/debug/debug-service"], function (require, exports, service_1, index_1, moduleExists, index_2, index_3, index_4, debug_service_1, debug_modal_1, file_viewer_1, index_5, async_loader_1, index_6, debug_service_2) {
+define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/debug/debug-service"], function (require, exports, service_1, index_1, moduleExists, index_2, index_3, index_4, debug_1, file_viewer_1, index_5, async_loader_1, index_6, debug_service_3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function init(m) {
         m.config(["$logProvider", function ($logProvider) {
-                $logProvider.debugEnabled(debug_service_2.Detectors.IsDebugEnabled());
+                $logProvider.debugEnabled(debug_service_3.DebugDetectors.IsDebugEnabled());
             }]);
         index_6.default();
-        debug_service_1.default(m);
+        debug_1.default(m);
         async_loader_1.default(m);
         service_1.default(m);
         index_1.default(m);
@@ -1509,7 +1560,6 @@ define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpe
         });
         moduleExists.configureModuleIfExists(m, ["ui.bootstrap"], function () {
             index_4.default(m);
-            debug_modal_1.default(m);
             file_viewer_1.default(m);
         });
     }
@@ -1554,7 +1604,7 @@ define("ng-helpers/formly/nullable-date", ["require", "exports"], function (requ
     }
     exports.default = NullableDate;
 });
-define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/service"], function (require, exports, base_injectable_7, ngUtilsService) {
+define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/service"], function (require, exports, base_injectable_8, ngUtilsService) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseService = /** @class */ (function (_super) {
@@ -1569,8 +1619,8 @@ define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils
             enumerable: true,
             configurable: true
         });
-        BaseService.$inject = base_injectable_7.default.$inject.concat([ngUtilsService.serviceName]);
+        BaseService.$inject = base_injectable_8.default.$inject.concat([ngUtilsService.serviceName]);
         return BaseService;
-    }(base_injectable_7.default));
+    }(base_injectable_8.default));
     exports.default = BaseService;
 });

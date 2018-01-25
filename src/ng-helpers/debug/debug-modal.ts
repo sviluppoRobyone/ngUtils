@@ -1,11 +1,16 @@
 import BaseCtrl from "../utils/base-ctrl";
 import * as nameGenerator from "../utils/name-generator";
 import { registerDirective } from "../core";
+import {  configureModuleIfExists } from "../utils/module-exists";
 
 const directiveName = nameGenerator.GetDirectiveName("debugModal");
 const dataKey = directiveName+"debugData";
 export default function register(m: ng.IModule) {
-    registerDirective(m,directiveName,directive);
+
+    configureModuleIfExists(m, ["ui.bootstrap"], () => {
+        registerDirective(m,directiveName,directive);
+    });
+  
 }
 
 function directive() {

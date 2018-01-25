@@ -5,13 +5,12 @@ import * as moduleExists from "./utils/module-exists";
 import faLoading from "./fa-loading/index";
 import promiseButton from "./promise-buttons/index";
 import HttpErrorToModal from "./http-error-to-modal/index";
-import debugService from "./debug/debug-service";
-import debugModal from "./debug/debug-modal";
+import debugReg from "./debug/debug";
 import fileViewer from "./file-viewer";
 import formly from "./formly/index";
 import asyncLoader from "./async-loader";
 import polyfill from  "../polyfill/index";
-import {Detectors as DebugDetectors} from "./debug/debug-service";
+import {DebugDetectors as DebugDetectors} from "./debug/debug-service";
 
 export default function init(m: ng.IModule) {
 
@@ -20,7 +19,7 @@ export default function init(m: ng.IModule) {
     }]);
     
     polyfill();
-    debugService(m);
+    debugReg(m);
     asyncLoader(m);
 
     
@@ -43,7 +42,7 @@ export default function init(m: ng.IModule) {
 
     moduleExists.configureModuleIfExists(m, ["ui.bootstrap"], () => {
         HttpErrorToModal(m);
-        debugModal(m);
+        
         fileViewer(m);
     });
 }

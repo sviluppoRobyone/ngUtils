@@ -10,7 +10,7 @@ export var serviceName=nameGenerator.GetServiceName("debug");
 export interface IDebugDetectorFunction{
     ():ng.IPromise<boolean>
 }
-export module Detectors{
+export module DebugDetectors{
     export const DebugName = "DEBUG";
     export function IsLocalhost(){
         return window.location.hostname == "localhost" || window.location.hostname == "127.0.0.1";
@@ -70,6 +70,6 @@ export class Service extends BaseInjectable{
     }
 
     get updateDebugV1(){        
-        return Detectors.IsDebugEnabled();        
+        return DebugDetectors.IsDebugEnabled();        
     }
 }

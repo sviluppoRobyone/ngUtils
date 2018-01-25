@@ -42,7 +42,7 @@ declare module "ng-helpers/debug/debug-service" {
     export interface IDebugDetectorFunction {
         (): ng.IPromise<boolean>;
     }
-    export module Detectors {
+    export module DebugDetectors {
         const DebugName = "DEBUG";
         function IsLocalhost(): boolean;
         function IsLocalDomain(): boolean;
@@ -224,19 +224,6 @@ declare module "ng-helpers/http-error-to-modal/index" {
 declare module "ng-helpers/debug/debug-modal" {
     export default function register(m: ng.IModule): void;
 }
-declare module "ng-helpers/formly/datepicker" {
-    export function Configure(app: ng.IModule): void;
-}
-declare module "ng-helpers/utils/base-ctrl-for-directive" {
-    import BaseCtrl from "ng-helpers/utils/base-ctrl";
-    export default abstract class BaseCtrlForDirective extends BaseCtrl {
-        static $inject: string[];
-        protected readonly $attrs: ng.IAttributes;
-    }
-}
-declare module "ng-helpers/formly/form-builder" {
-    export default function register(m: ng.IModule): void;
-}
 declare module "ng-helpers/formly/nullable-field-directive/ctrl" {
     export class Ctrl {
         static $inject: string[];
@@ -257,6 +244,29 @@ declare module "ng-helpers/formly/nullable-field-directive/directive" {
     import * as angular from "angular";
     export var name: string;
     export function directive(): angular.IDirective<angular.IScope>;
+}
+declare module "ng-helpers/debug/debug-components" {
+    export default function register(m: ng.IModule): void;
+    export module ifDebug {
+        var directiveName: any;
+        function register(m: ng.IModule): void;
+    }
+}
+declare module "ng-helpers/debug/debug" {
+    export default function Register(m: ng.IModule): void;
+}
+declare module "ng-helpers/formly/datepicker" {
+    export function Configure(app: ng.IModule): void;
+}
+declare module "ng-helpers/utils/base-ctrl-for-directive" {
+    import BaseCtrl from "ng-helpers/utils/base-ctrl";
+    export default abstract class BaseCtrlForDirective extends BaseCtrl {
+        static $inject: string[];
+        protected readonly $attrs: ng.IAttributes;
+    }
+}
+declare module "ng-helpers/formly/form-builder" {
+    export default function register(m: ng.IModule): void;
 }
 declare module "ng-helpers/formly/nullable-field-directive/index" {
     export function register(m: ng.IModule): void;
