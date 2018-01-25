@@ -15,38 +15,16 @@ declare module "js-helpers/json-helpers" {
         function DateReviver(key: string, value: any): any;
     }
 }
+declare module "js-helpers/obj-helpers" {
+    export class BaseObj {
+        readonly _className: any;
+    }
+}
 declare module "js-helpers/random-string" {
     export function randomStringV1(length: number): string;
 }
 declare module "js-helpers/string-helpers" {
     export function capitalizeFirstLetter(s: string): string;
-}
-declare module "ng-helpers/utils/base-injectable" {
-    import * as angular from "angular";
-    export default abstract class BaseInjectable {
-        static $inject: string[];
-        private _store;
-        private _args;
-        protected getFromInjector<T>(key: string): T;
-        constructor(...args: any[]);
-        protected readonly $injector: ng.auto.IInjectorService;
-        protected readonly $injectedArgs: any[];
-        protected readonly $rootScope: angular.IRootScopeService;
-        protected readonly $http: angular.IHttpService;
-        protected readonly $location: angular.ILocationService;
-        protected readonly $q: angular.IQService;
-        protected readonly $filter: angular.IFilterService;
-        protected readonly $timeout: angular.ITimeoutService;
-        protected readonly $cacheFactory: angular.ICacheFactoryService;
-        protected readonly $locale: angular.ILocaleService;
-        protected readonly $interval: angular.IIntervalService;
-        protected readonly $log: angular.ILogService;
-        protected readonly $sce: angular.ISCEService;
-        protected readonly $Upload: angular.angularFileUpload.IUploadService;
-        protected readonly $stateParams: angular.ui.IStateParamsService;
-        protected readonly $state: angular.ui.IStateService;
-        protected readonly $uibModal: angular.ui.bootstrap.IModalService;
-    }
 }
 declare module "ng-helpers/utils/name-generator" {
     export function GetServiceName(name: any): string;
@@ -88,6 +66,34 @@ declare module "ng-helpers/core" {
     export function registerFactory(m: ng.IModule, factoryName: string, factory: ng.Injectable<Function>): void;
     export module ConsoleUtils {
         function GetLogger(): angular.ILogService;
+    }
+}
+declare module "ng-helpers/utils/base-injectable" {
+    import * as angular from "angular";
+    import { BaseObj } from "js-helpers/obj-helpers";
+    export default abstract class BaseInjectable extends BaseObj {
+        static $inject: string[];
+        private _store;
+        private _args;
+        protected getFromInjector<T>(key: string): T;
+        constructor(...args: any[]);
+        protected readonly $injector: ng.auto.IInjectorService;
+        protected readonly $injectedArgs: any[];
+        protected readonly $rootScope: angular.IRootScopeService;
+        protected readonly $http: angular.IHttpService;
+        protected readonly $location: angular.ILocationService;
+        protected readonly $q: angular.IQService;
+        protected readonly $filter: angular.IFilterService;
+        protected readonly $timeout: angular.ITimeoutService;
+        protected readonly $cacheFactory: angular.ICacheFactoryService;
+        protected readonly $locale: angular.ILocaleService;
+        protected readonly $interval: angular.IIntervalService;
+        protected readonly $log: angular.ILogService;
+        protected readonly $sce: angular.ISCEService;
+        protected readonly $Upload: angular.angularFileUpload.IUploadService;
+        protected readonly $stateParams: angular.ui.IStateParamsService;
+        protected readonly $state: angular.ui.IStateService;
+        protected readonly $uibModal: angular.ui.bootstrap.IModalService;
     }
 }
 declare module "ng-helpers/file-viewer" {

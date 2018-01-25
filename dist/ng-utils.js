@@ -69,6 +69,23 @@ define("js-helpers/json-helpers", ["require", "exports"], function (require, exp
         JsonUtils.DateReviver = DateReviver;
     })(JsonUtils = exports.JsonUtils || (exports.JsonUtils = {}));
 });
+define("js-helpers/obj-helpers", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BaseObj = /** @class */ (function () {
+        function BaseObj() {
+        }
+        Object.defineProperty(BaseObj.prototype, "_className", {
+            get: function () {
+                return this.constructor.name;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return BaseObj;
+    }());
+    exports.BaseObj = BaseObj;
+});
 define("js-helpers/random-string", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -93,152 +110,6 @@ define("js-helpers/string-helpers", ["require", "exports"], function (require, e
         return s.charAt(0).toUpperCase() + s.slice(1);
     }
     exports.capitalizeFirstLetter = capitalizeFirstLetter;
-});
-define("ng-helpers/utils/base-injectable", ["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var BaseInjectable = /** @class */ (function () {
-        function BaseInjectable() {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            var _this = this;
-            this._store = {};
-            this._args = [];
-            this._args = args;
-            ["_store", "_args"].forEach(function (x) {
-                Object.defineProperty(_this, x, { enumerable: false });
-            });
-        }
-        BaseInjectable.prototype.getFromInjector = function (key) {
-            if (!this._store[key])
-                this._store[key] = this.$injector.get(key);
-            return this._store[key];
-        };
-        Object.defineProperty(BaseInjectable.prototype, "$injector", {
-            get: function () {
-                return this.$injectedArgs[BaseInjectable.$inject.indexOf("$injector")];
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$injectedArgs", {
-            get: function () {
-                return this._args;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$rootScope", {
-            get: function () {
-                return this.getFromInjector("$rootScope");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$http", {
-            get: function () {
-                return this.getFromInjector("$http");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$location", {
-            get: function () {
-                return this.getFromInjector("$location");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$q", {
-            get: function () {
-                return this.getFromInjector("$q");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$filter", {
-            get: function () {
-                return this.getFromInjector("$filter");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$timeout", {
-            get: function () {
-                return this.getFromInjector("$timeout");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$cacheFactory", {
-            get: function () {
-                return this.getFromInjector("$cacheFactory");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$locale", {
-            get: function () {
-                return this.getFromInjector("$locale");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$interval", {
-            get: function () {
-                return this.getFromInjector("$interval");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$log", {
-            get: function () {
-                return this.getFromInjector("$log");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$sce", {
-            get: function () {
-                return this.getFromInjector("$sce");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$Upload", {
-            get: function () {
-                return this.getFromInjector("Upload");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$stateParams", {
-            get: function () {
-                return this.getFromInjector("$stateParams");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$state", {
-            get: function () {
-                return this.getFromInjector("$state");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BaseInjectable.prototype, "$uibModal", {
-            get: function () {
-                return this.getFromInjector("$uibModal");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        BaseInjectable.$inject = ["$injector"];
-        return BaseInjectable;
-    }());
-    exports.default = BaseInjectable;
 });
 define("ng-helpers/utils/name-generator", ["require", "exports", "js-helpers/string-helpers"], function (require, exports, stringHelpers) {
     "use strict";
@@ -368,13 +239,162 @@ define("ng-helpers/core", ["require", "exports", "angular"], function (require, 
         ConsoleUtils.GetLogger = GetLogger;
     })(ConsoleUtils = exports.ConsoleUtils || (exports.ConsoleUtils = {}));
 });
-define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, base_injectable_2, core_2) {
+define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/core", "js-helpers/obj-helpers"], function (require, exports, core_2, obj_helpers_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BaseInjectable = /** @class */ (function (_super) {
+        __extends(BaseInjectable, _super);
+        function BaseInjectable() {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            var _this = _super.call(this) || this;
+            _this._store = {};
+            _this._args = [];
+            core_2.ConsoleUtils.GetLogger().debug("Init", _this._className, "with", args.length, "args", args, args.map(function (x) { return typeof (x); }));
+            _this._args = args;
+            ["_store", "_args"].forEach(function (x) {
+                Object.defineProperty(_this, x, { enumerable: false });
+            });
+            return _this;
+        }
+        BaseInjectable.prototype.getFromInjector = function (key) {
+            if (!this._store[key])
+                this._store[key] = this.$injector.get(key);
+            return this._store[key];
+        };
+        Object.defineProperty(BaseInjectable.prototype, "$injector", {
+            get: function () {
+                return this.$injectedArgs[BaseInjectable.$inject.indexOf("$injector")];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$injectedArgs", {
+            get: function () {
+                return this._args;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$rootScope", {
+            get: function () {
+                return this.getFromInjector("$rootScope");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$http", {
+            get: function () {
+                return this.getFromInjector("$http");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$location", {
+            get: function () {
+                return this.getFromInjector("$location");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$q", {
+            get: function () {
+                return this.getFromInjector("$q");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$filter", {
+            get: function () {
+                return this.getFromInjector("$filter");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$timeout", {
+            get: function () {
+                return this.getFromInjector("$timeout");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$cacheFactory", {
+            get: function () {
+                return this.getFromInjector("$cacheFactory");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$locale", {
+            get: function () {
+                return this.getFromInjector("$locale");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$interval", {
+            get: function () {
+                return this.getFromInjector("$interval");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$log", {
+            get: function () {
+                return this.getFromInjector("$log");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$sce", {
+            get: function () {
+                return this.getFromInjector("$sce");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$Upload", {
+            get: function () {
+                return this.getFromInjector("Upload");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$stateParams", {
+            get: function () {
+                return this.getFromInjector("$stateParams");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$state", {
+            get: function () {
+                return this.getFromInjector("$state");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BaseInjectable.prototype, "$uibModal", {
+            get: function () {
+                return this.getFromInjector("$uibModal");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        BaseInjectable.$inject = ["$injector"];
+        return BaseInjectable;
+    }(obj_helpers_1.BaseObj));
+    exports.default = BaseInjectable;
+});
+define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, base_injectable_2, core_3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var fileKey = "fileToView";
     exports.serviceName = "fileViewer";
     function register(m) {
-        core_2.registerService(m, exports.serviceName, fileViewerService);
+        core_3.registerService(m, exports.serviceName, fileViewerService);
     }
     exports.default = register;
     var fileViewerService = /** @class */ (function (_super) {
@@ -435,12 +455,12 @@ define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-i
         return ModalCtrl;
     }(base_injectable_2.default));
 });
-define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/file-viewer", "ng-helpers/utils/name-generator", "ng-helpers/debug/debug-service", "ng-helpers/async-loader", "ng-helpers/core"], function (require, exports, base_injectable_3, fv, nameGenerator, debugService, AsyncLoader, core_3) {
+define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/file-viewer", "ng-helpers/utils/name-generator", "ng-helpers/debug/debug-service", "ng-helpers/async-loader", "ng-helpers/core"], function (require, exports, base_injectable_3, fv, nameGenerator, debugService, AsyncLoader, core_4) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("$ngUtils");
     function register(m) {
-        core_3.registerService(m, exports.serviceName, Service);
+        core_4.registerService(m, exports.serviceName, Service);
     }
     exports.default = register;
     var Service = /** @class */ (function (_super) {
@@ -514,12 +534,12 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
     }(base_injectable_3.default));
     exports.Service = Service;
 });
-define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-generator", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, nameGenerator, base_injectable_4, core_4) {
+define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-generator", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, nameGenerator, base_injectable_4, core_5) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("AsyncLoader");
     function register(m) {
-        core_4.registerService(m, exports.serviceName, Service);
+        core_5.registerService(m, exports.serviceName, Service);
         directive.register(m);
     }
     exports.default = register;
@@ -632,7 +652,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
     (function (directive_1) {
         directive_1.directiveName = nameGenerator.GetDirectiveName("asyncLoader");
         function register(m) {
-            core_4.registerDirective(m, directive_1.directiveName, directive);
+            core_5.registerDirective(m, directive_1.directiveName, directive);
         }
         directive_1.register = register;
         var scopeLoadersKey = "loaders";
@@ -854,11 +874,11 @@ define("ng-helpers/fa-loading/directive", ["require", "exports", "ng-helpers/fa-
     }
     exports.directive = directive;
 });
-define("ng-helpers/fa-loading/index", ["require", "exports", "ng-helpers/fa-loading/directive", "jquery", "ng-helpers/fa-loading/themes", "ng-helpers/core"], function (require, exports, directive, $, themes_1, core_5) {
+define("ng-helpers/fa-loading/index", ["require", "exports", "ng-helpers/fa-loading/directive", "jquery", "ng-helpers/fa-loading/themes", "ng-helpers/core"], function (require, exports, directive, $, themes_1, core_6) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
-        core_5.registerDirective(m, directive.directiveName, directive.directive);
+        core_6.registerDirective(m, directive.directiveName, directive.directive);
         var spinners = ["circle-o-notch", "cog", "gear", "refresh", "spinner"];
         var sizes = [null, "lg", "2x", "3x", "4x", "5x"];
         var baseTmpl = $("<div/>");
@@ -875,7 +895,7 @@ define("ng-helpers/fa-loading/index", ["require", "exports", "ng-helpers/fa-load
                     i.addClass("fa-" + size);
                 var html = $("<div/>").append(div).html();
                 var dirName = directive.directiveName + (size || "") + "T" + (spinnerIndex + 1);
-                core_5.registerDirective(m, dirName, themes_1.baseTheme.DirectiveBuilder(html));
+                core_6.registerDirective(m, dirName, themes_1.baseTheme.DirectiveBuilder(html));
             });
         });
     }
@@ -984,13 +1004,13 @@ define("ng-helpers/http-error-to-modal/index", ["require", "exports", "ng-helper
     }
     exports.default = register;
 });
-define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/base-ctrl", "ng-helpers/utils/name-generator", "ng-helpers/core"], function (require, exports, base_ctrl_3, nameGenerator, core_6) {
+define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/base-ctrl", "ng-helpers/utils/name-generator", "ng-helpers/core"], function (require, exports, base_ctrl_3, nameGenerator, core_7) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var directiveName = nameGenerator.GetDirectiveName("debugModal");
     var dataKey = directiveName + "debugData";
     function register(m) {
-        core_6.registerDirective(m, directiveName, directive);
+        core_7.registerDirective(m, directiveName, directive);
     }
     exports.default = register;
     function directive() {

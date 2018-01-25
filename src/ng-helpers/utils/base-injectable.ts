@@ -1,5 +1,7 @@
 import * as angular from "angular";
-export default abstract class BaseInjectable{
+import { ConsoleUtils } from "../core";
+import { BaseObj } from "../../js-helpers/obj-helpers";
+export default abstract class BaseInjectable extends BaseObj{
     public static $inject = ["$injector"];
 
    
@@ -17,6 +19,8 @@ export default abstract class BaseInjectable{
     }
 
     public constructor(...args){
+        super();
+        ConsoleUtils.GetLogger().debug("Init",this._className,"with",args.length,"args",args,args.map(x=>typeof(x)));
         this._args = args;
         ["_store","_args"].forEach(x=>{
             Object.defineProperty(this,x,{enumerable:false});
