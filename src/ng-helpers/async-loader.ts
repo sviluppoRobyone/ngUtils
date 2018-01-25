@@ -18,12 +18,6 @@ export default function register(m:ng.IModule){
 export interface IGetDataFunction<T>{
     (resolve: ng.IQResolveReject<T>, reject: ng.IQResolveReject<any>):void;
 }
-export interface IAsyncLoaderConstructor<T>{
-    $q:ng.IQService;
-    $timeout:ng.ITimeoutService;
-  
-}
-
 export class Config<T>{
    
     public isLoading :boolean=false;
@@ -41,7 +35,7 @@ export class AsyncLoader<T> extends BaseInjectable {
    
     public static BuildFactoryFn(){
         var arr=(BaseInjectable.$inject as any[]).concat([(...args)=>{            
-            return new AsyncLoader<any>(...args);
+            return ()=>{ new AsyncLoader<any>(...args)};
         }]);
         return arr;
         

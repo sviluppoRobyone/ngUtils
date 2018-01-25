@@ -558,7 +558,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
                     for (var _i = 0; _i < arguments.length; _i++) {
                         args[_i] = arguments[_i];
                     }
-                    return new (AsyncLoader.bind.apply(AsyncLoader, [void 0].concat(args)))();
+                    return function () { new (AsyncLoader.bind.apply(AsyncLoader, [void 0].concat(args)))(); };
                 }]);
             return arr;
         };

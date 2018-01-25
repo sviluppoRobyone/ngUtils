@@ -126,10 +126,6 @@ declare module "ng-helpers/async-loader" {
     export interface IGetDataFunction<T> {
         (resolve: ng.IQResolveReject<T>, reject: ng.IQResolveReject<any>): void;
     }
-    export interface IAsyncLoaderConstructor<T> {
-        $q: ng.IQService;
-        $timeout: ng.ITimeoutService;
-    }
     export class Config<T> {
         isLoading: boolean;
         isSuccess: boolean;
