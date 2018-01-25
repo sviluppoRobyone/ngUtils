@@ -24,11 +24,12 @@ function directive() {
      
         template:
 
+        `<if-debug>
+            <button class="btn btn-xs" ng-click="Ctrl.open()"type="button">
+                <i class="fa fa-code"></i>
+            </button>
+        </if-debug>
         `
-    <button class="btn btn-xs" ng-click="Ctrl.open()" ng-if="Ctrl.showDebugButton" type="button">
-<i class="fa fa-code"></i>
-</button>
-`
     } as ng.IDirective;
 }
 
@@ -38,16 +39,11 @@ class debugModalCtrl extends BaseCtrl {
         return this.$scope["object"];
     }
 
-    private get showDebugButton() {
-        
-        return this.$ngUtils.$debugService.DebugStatus;
-    }
-
     open() {
       
         this.$uibModal.open({
             controllerAs: "Ctrl",
-            controller: ModalCtrl,
+            controller: DebugModalContentCtrl,
             size: "lg",
             resolve: {
                 [dataKey]: () => this.data
@@ -65,12 +61,12 @@ class debugModalCtrl extends BaseCtrl {
     }
 }
 
-class ModalCtrl extends BaseCtrl {
+class DebugModalContentCtrl extends BaseCtrl {
 
     public static $inject = BaseCtrl.$inject.concat([dataKey]);
 
     private get data() {
-        return this.$injectedArgs[ModalCtrl.$inject.indexOf(dataKey)];
+        return this.$injectedArgs[DebugModalContentCtrl.$inject.indexOf(dataKey)];
     }
 
 }

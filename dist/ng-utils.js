@@ -1063,7 +1063,7 @@ define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/
             controller: debugModalCtrl,
             controllerAs: "Ctrl",
             restrict: "E",
-            template: "\n    <button class=\"btn btn-xs\" ng-click=\"Ctrl.open()\" ng-if=\"Ctrl.showDebugButton\" type=\"button\">\n<i class=\"fa fa-code\"></i>\n</button>\n"
+            template: "<if-debug>\n            <button class=\"btn btn-xs\" ng-click=\"Ctrl.open()\"type=\"button\">\n                <i class=\"fa fa-code\"></i>\n            </button>\n        </if-debug>\n        "
         };
     }
     var debugModalCtrl = /** @class */ (function (_super) {
@@ -1078,18 +1078,11 @@ define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(debugModalCtrl.prototype, "showDebugButton", {
-            get: function () {
-                return this.$ngUtils.$debugService.DebugStatus;
-            },
-            enumerable: true,
-            configurable: true
-        });
         debugModalCtrl.prototype.open = function () {
             var _this = this;
             this.$uibModal.open({
                 controllerAs: "Ctrl",
-                controller: ModalCtrl,
+                controller: DebugModalContentCtrl,
                 size: "lg",
                 resolve: (_a = {},
                     _a[dataKey] = function () { return _this.data; },
@@ -1100,20 +1093,20 @@ define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/
         };
         return debugModalCtrl;
     }(base_ctrl_3.default));
-    var ModalCtrl = /** @class */ (function (_super) {
-        __extends(ModalCtrl, _super);
-        function ModalCtrl() {
+    var DebugModalContentCtrl = /** @class */ (function (_super) {
+        __extends(DebugModalContentCtrl, _super);
+        function DebugModalContentCtrl() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Object.defineProperty(ModalCtrl.prototype, "data", {
+        Object.defineProperty(DebugModalContentCtrl.prototype, "data", {
             get: function () {
-                return this.$injectedArgs[ModalCtrl.$inject.indexOf(dataKey)];
+                return this.$injectedArgs[DebugModalContentCtrl.$inject.indexOf(dataKey)];
             },
             enumerable: true,
             configurable: true
         });
-        ModalCtrl.$inject = base_ctrl_3.default.$inject.concat([dataKey]);
-        return ModalCtrl;
+        DebugModalContentCtrl.$inject = base_ctrl_3.default.$inject.concat([dataKey]);
+        return DebugModalContentCtrl;
     }(base_ctrl_3.default));
 });
 define("ng-helpers/debug/debug-components", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core", "ng-helpers/utils/name-generator", "ng-helpers/debug/debug-service"], function (require, exports, base_injectable_7, core_8, name_generator_1, debug_service_1) {
