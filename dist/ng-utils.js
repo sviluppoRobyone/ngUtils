@@ -1250,7 +1250,7 @@ define("ng-helpers/debug/debug-components", ["require", "exports", "ng-helpers/u
                 controllerAs: "Ctrl",
                 transclude: true,
                 scope: {},
-                template: "<ng-transclude ng-if=\"Ctrl.Debug\"></ng-transclude>"
+                template: "<ng-transclude ng-if=\"Ctrl.Debug\" class=\"if-debug\"></ng-transclude>"
             };
         }
         var IfDebugCtrl = /** @class */ (function (_super) {
@@ -1377,17 +1377,17 @@ define("ng-helpers/utils/base-ctrl-for-directive", ["require", "exports", "ng-he
     }(base_ctrl_4.default));
     exports.default = BaseCtrlForDirective;
 });
-define("ng-helpers/formly/form-builder", ["require", "exports", "ng-helpers/utils/base-ctrl-for-directive"], function (require, exports, base_ctrl_for_directive_1) {
+define("ng-helpers/formly/form-builder", ["require", "exports", "ng-helpers/utils/base-ctrl-for-directive", "ng-helpers/core"], function (require, exports, base_ctrl_for_directive_1, core_9) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
-        m.directive("formBuilder", directive);
+        core_9.registerDirective(m, "formBuilder", directive);
     }
     exports.default = register;
     function directive() {
         return {
             //language=
-            template: "\n<div class=\"form-builder\">\n<form name=\"f\" ng-submit=\"Ctrl.onSave()\" promise-btn>\n<fieldset>\n<legend>{{Ctrl.title}}</legend>\n<formly-form fields=\"Ctrl.fields\" model=\"Ctrl.model\"></formly-form>\n<ng-transclude></ng-transclude>\n<hr/>\n<button class=\"btn btn-primary\" ng-disabled=\"!f.$valid\">SALVA</button>\n</fieldset>\n</form>\n</div>\n",
+            template: "\n<div class=\"form-builder\">\n<form name=\"f\" ng-submit=\"Ctrl.onSave()\" promise-btn>\n<fieldset>\n<legend>{{Ctrl.title}}</legend>\n<formly-form fields=\"Ctrl.fields\" model=\"Ctrl.model\"></formly-form>\n<ng-transclude></ng-transclude>\n<hr/>\n<button class=\"btn btn-primary\" ng-disabled=\"!f.$valid\">\n<i class=\"fa {{Ctrl.SaveButtonIcon}}\" ></i>\n{{Ctrl.SaveButtonText}}\n</button>\n</fieldset>\n</form>\n</div>\n",
             controller: Ctrl,
             controllerAs: "Ctrl",
             transclude: true,
@@ -1427,6 +1427,20 @@ define("ng-helpers/formly/form-builder", ["require", "exports", "ng-helpers/util
         Object.defineProperty(Ctrl.prototype, "title", {
             get: function () {
                 return this.$attrs["title"] || null;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Ctrl.prototype, "SaveButtonText", {
+            get: function () {
+                return this.$attrs["saveButtonText"] || "Salva";
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Ctrl.prototype, "SaveButtonIcon", {
+            get: function () {
+                return this.$attrs["saveButtonIcon"] || "fa-save";
             },
             enumerable: true,
             configurable: true
