@@ -174,6 +174,7 @@ h1, h2, h3, h4, h5, h6 {
 .if-debug {
     position: relative;
     border:2px dashed #d5d5d5;
+    display:inline-block;
     &:hover {
         &:before {
             display: inherit;
@@ -182,7 +183,7 @@ h1, h2, h3, h4, h5, h6 {
 
     &:before {
         display: none;
-        content: "if debug";
+        content: "DEBUG";
         position: absolute;
         top: -14px;
         white-space: nowrap;
