@@ -224,27 +224,6 @@ declare module "ng-helpers/http-error-to-modal/index" {
 declare module "ng-helpers/debug/debug-modal" {
     export default function register(m: ng.IModule): void;
 }
-declare module "ng-helpers/formly/nullable-field-directive/ctrl" {
-    export class Ctrl {
-        static $inject: string[];
-        private args;
-        fields: AngularFormly.IFieldArray;
-        constructor(...args: any[]);
-        readonly $scope: ng.IScope;
-        $model: any;
-        readonly $type: any;
-        readonly $label: any;
-        formModel: {
-            isNull: boolean;
-            model: any;
-        };
-    }
-}
-declare module "ng-helpers/formly/nullable-field-directive/directive" {
-    import * as angular from "angular";
-    export var name: string;
-    export function directive(): angular.IDirective<angular.IScope>;
-}
 declare module "ng-helpers/debug/debug-components" {
     export default function register(m: ng.IModule): void;
     export module ifDebug {
@@ -268,8 +247,22 @@ declare module "ng-helpers/utils/base-ctrl-for-directive" {
 declare module "ng-helpers/formly/form-builder" {
     export default function register(m: ng.IModule): void;
 }
-declare module "ng-helpers/formly/nullable-field-directive/index" {
-    export function register(m: ng.IModule): void;
+declare module "ng-helpers/formly/nullable-field-directive" {
+    import BaseInjectable from "ng-helpers/utils/base-injectable";
+    export default function register(m: ng.IModule): void;
+    export class NullableFieldCtrl extends BaseInjectable {
+        static $inject: string[];
+        fields: AngularFormly.IFieldArray;
+        constructor(...args: any[]);
+        readonly $scope: ng.IScope;
+        $model: any;
+        readonly $type: any;
+        readonly $label: any;
+        formModel: {
+            isNull: boolean;
+            model: any;
+        };
+    }
 }
 declare module "ng-helpers/formly/index" {
     export default function Configure(m: ng.IModule): void;
@@ -295,9 +288,6 @@ declare module "polyfill/index" {
 }
 declare module "ng-helpers/init" {
     export default function init(m: ng.IModule): void;
-}
-declare module "ng-helpers/formly/nullable-date" {
-    export default function NullableDate(key: string, label: string): AngularFormly.IFieldArray;
 }
 declare module "ng-helpers/utils/base-service" {
     import BaseInjectable from "ng-helpers/utils/base-injectable";

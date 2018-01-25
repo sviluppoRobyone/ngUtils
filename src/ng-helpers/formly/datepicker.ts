@@ -91,7 +91,7 @@ export function Configure(app:ng.IModule){
                         }
                     }
                 },
-                controller: ["$scope", function ($scope) {
+                controller: ["$scope", $scope=> {
                     $scope.datepicker = {};
     
                     $scope.datepicker.opened = false;

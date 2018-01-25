@@ -2,7 +2,6 @@ import BaseInjectable from "../utils/base-injectable";
 import * as angular from "angular";
 import { registerDirective } from "../core";
 import { GetDirectiveName } from "../utils/name-generator";
-import { directive } from "../formly/nullable-field-directive/directive";
 import { DebugDetectors } from "./debug-service";
 
 export default function register(m:ng.IModule){
@@ -13,7 +12,7 @@ export module ifDebug{
 
     export var directiveName=GetDirectiveName("ifDebug");
     export function register(m:ng.IModule){
-        registerDirective(m,directiveName,directive);
+        registerDirective(m,directiveName,Directive);
     }
 
     function Directive(){
