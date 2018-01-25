@@ -518,9 +518,9 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("AsyncLoader");
-    exports.factoryName = nameGenerator.GetFactoryName("AsyncLoader");
+    exports.factoryNameBuilder = nameGenerator.GetServiceName("AsyncLoaderBuilder");
     function register(m) {
-        core_4.registerFactory(m, exports.factoryName, AsyncLoader.BuildFactoryFn());
+        core_4.registerService(m, exports.factoryNameBuilder, AsyncLoader);
         core_4.registerService(m, exports.serviceName, Service);
         directive.register(m);
     }
@@ -552,18 +552,6 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
             });
             return _this;
         }
-        AsyncLoader.BuildFactoryFn = function () {
-            var arr = base_injectable_4.default.$inject.concat([function () {
-                    var args = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        args[_i] = arguments[_i];
-                    }
-                    var l = core_4.ConsoleUtils.GetLogger();
-                    l.debug(exports.factoryName, args);
-                    return function () { new (AsyncLoader.bind.apply(AsyncLoader, [void 0].concat(args)))(); };
-                }]);
-            return arr;
-        };
         Object.defineProperty(AsyncLoader.prototype, "IsLoading", {
             get: function () {
                 return this.config.isLoading;
@@ -634,20 +622,11 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
         function Service() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Object.defineProperty(Service.prototype, "factory", {
-            get: function () {
-                return this.$injectedArgs[Service.$inject.indexOf(exports.factoryName)];
-            },
-            enumerable: true,
-            configurable: true
-        });
         Service.prototype.Create = function (f) {
-            this.$log.debug(Service.$inject, this.$injectedArgs);
-            var loader = this.factory();
+            var loader = new (AsyncLoader.bind.apply(AsyncLoader, [void 0].concat(this.$injectedArgs)))();
             loader.SetDataFunction(f);
             return loader;
         };
-        Service.$inject = base_injectable_4.default.$inject.concat([exports.factoryName]);
         return Service;
     }(base_injectable_4.default));
     exports.Service = Service;

@@ -7,9 +7,9 @@ import { registerService, registerDirective, registerFactory, ConsoleUtils } fro
 
 
 export var serviceName = nameGenerator.GetServiceName("AsyncLoader");
-export var factoryName=nameGenerator.GetFactoryName("AsyncLoader");
+export var factoryNameBuilder=nameGenerator.GetServiceName("AsyncLoaderBuilder");
 export default function register(m:ng.IModule){
-    registerFactory(m,factoryName,AsyncLoader.BuildFactoryFn());
+    registerService(m,factoryNameBuilder,AsyncLoader);
     registerService(m,serviceName,Service);
     
     directive.register(m);
@@ -32,23 +32,8 @@ interface AsyncLoaderFactory{
 }
 export class AsyncLoader<T> extends BaseInjectable {
 
-   
-    public static BuildFactoryFn(){
-        var arr=(BaseInjectable.$inject as any[]).concat([(...args)=>{
-            
-            var l=ConsoleUtils.GetLogger();
-            l.debug(factoryName,args);
-            return <T>()=>{new AsyncLoader<T>(...args)};
-        }]);
-        return arr;
-        
-        
-    }
-
     private internalData :T=null;
-    private config: Config<T>=new Config<T>();
-
-    
+    private config: Config<T>=new Config<T>();    
    
    
     public get IsLoading(){
@@ -69,6 +54,7 @@ export class AsyncLoader<T> extends BaseInjectable {
     public get Data(){
         return this.internalData;
     }
+
     SetDataFunction(fn:IGetDataFunction<T>){
         this.config.GetDataFn=fn;
     }
@@ -121,19 +107,13 @@ export class AsyncLoader<T> extends BaseInjectable {
 }
 
 export class Service extends BaseInjectable{
-    public static $inject = BaseInjectable.$inject.concat([factoryName]);
+  
 
-    private get factory():AsyncLoaderFactory{
-        return this.$injectedArgs[Service.$inject.indexOf(factoryName)];
-    }
-
+   
     public Create<T>(f:IGetDataFunction<T>) :AsyncLoader<T>{
 
        
-        this.$log.debug(Service.$inject,this.$injectedArgs);
-        var loader= this.factory<T>();
-
-      
+       var loader=new AsyncLoader<T>(...this.$injectedArgs);
     
 
        loader.SetDataFunction(f);

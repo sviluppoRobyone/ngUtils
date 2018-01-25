@@ -121,7 +121,7 @@ declare module "ng-helpers/async-loader" {
     import * as angular from "angular";
     import BaseInjectable from "ng-helpers/utils/base-injectable";
     export var serviceName: string;
-    export var factoryName: string;
+    export var factoryNameBuilder: string;
     export default function register(m: ng.IModule): void;
     export interface IGetDataFunction<T> {
         (resolve: ng.IQResolveReject<T>, reject: ng.IQResolveReject<any>): void;
@@ -135,7 +135,6 @@ declare module "ng-helpers/async-loader" {
         Fn: IGetDataFunction<T>;
     }
     export class AsyncLoader<T> extends BaseInjectable {
-        static BuildFactoryFn(): any[];
         private internalData;
         private config;
         readonly IsLoading: boolean;
@@ -147,8 +146,6 @@ declare module "ng-helpers/async-loader" {
         Update(): angular.IPromise<{}>;
     }
     export class Service extends BaseInjectable {
-        static $inject: string[];
-        private readonly factory;
         Create<T>(f: IGetDataFunction<T>): AsyncLoader<T>;
     }
 }
