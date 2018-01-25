@@ -11,18 +11,18 @@ export interface IDirectiveFn{
 
 export function registerDirective(m:ng.IModule,directiveName:string,directive:IDirectiveFn){
     var $log=ConsoleUtils.GetLogger();
-    $log.debug("Registering directive",directiveName,"inside module",m.name);
+    $log.debug("Registering directive",directiveName,"inside module",m.name,directive);
     m.directive(directiveName,directive);
 }
 
 export function registerService(m:ng.IModule,serviceName:string,service:ng.Injectable<Function>){
     var $log=ConsoleUtils.GetLogger();
-    $log.debug("Registering service",serviceName,"inside module",m.name);
+    $log.debug("Registering service",serviceName,"inside module",m.name,service);
     m.service(serviceName,service);
 }
 export function registerFactory(m:ng.IModule,factoryName:string,factory:ng.Injectable<Function>){
     var $log=ConsoleUtils.GetLogger();
-    $log.debug("Registering factory",factoryName,"inside module",m.name);
+    $log.debug("Registering factory",factoryName,"inside module",m.name,factory);
     m.factory(factoryName,factory);
 }
 export module ConsoleUtils{

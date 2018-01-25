@@ -343,19 +343,19 @@ define("ng-helpers/core", ["require", "exports", "angular"], function (require, 
     Object.defineProperty(exports, "__esModule", { value: true });
     function registerDirective(m, directiveName, directive) {
         var $log = ConsoleUtils.GetLogger();
-        $log.debug("Registering directive", directiveName, "inside module", m.name);
+        $log.debug("Registering directive", directiveName, "inside module", m.name, directive);
         m.directive(directiveName, directive);
     }
     exports.registerDirective = registerDirective;
     function registerService(m, serviceName, service) {
         var $log = ConsoleUtils.GetLogger();
-        $log.debug("Registering service", serviceName, "inside module", m.name);
+        $log.debug("Registering service", serviceName, "inside module", m.name, service);
         m.service(serviceName, service);
     }
     exports.registerService = registerService;
     function registerFactory(m, factoryName, factory) {
         var $log = ConsoleUtils.GetLogger();
-        $log.debug("Registering factory", factoryName, "inside module", m.name);
+        $log.debug("Registering factory", factoryName, "inside module", m.name, factory);
         m.factory(factoryName, factory);
     }
     exports.registerFactory = registerFactory;
