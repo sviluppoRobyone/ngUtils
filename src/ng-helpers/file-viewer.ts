@@ -26,7 +26,8 @@ import { registerService } from "./core";
                     return this.$uibModal.open({
                         controllerAs: "Ctrl",
                         controller: ModalCtrl,
-                        size: "lg",
+                        
+                        size: "file",
                         resolve: {
                             [configKey]: () => config
                         },

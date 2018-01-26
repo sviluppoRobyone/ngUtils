@@ -447,7 +447,7 @@ define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-i
             return this.$uibModal.open({
                 controllerAs: "Ctrl",
                 controller: ModalCtrl,
-                size: "lg",
+                size: "file",
                 resolve: (_a = {},
                     _a[configKey] = function () { return config; },
                     _a),
