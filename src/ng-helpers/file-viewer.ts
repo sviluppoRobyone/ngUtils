@@ -5,7 +5,7 @@ import { registerService } from "./core";
 
 
     
-            const fileKey = "fileToView";
+            const configKey = "fileToView";
             export const serviceName = "fileViewer";
 
             export default function register(m: ng.IModule) {
@@ -13,28 +13,31 @@ import { registerService } from "./core";
                
 
             }
-
+            export interface fileViewerConfig{
+                Blob:Blob,
+                Title:string,
+                FileName:string,
+                MimeType:string
+            }
             export class fileViewerService extends BaseInjectable {
-                get $uibModal(){
-                    return this.getFromInjector<angular.ui.bootstrap.IModalService>("$uibModal");
-                }
-                viewFile(file: File) {
+               
+                viewFile(config:fileViewerConfig) {
 
                     return this.$uibModal.open({
                         controllerAs: "Ctrl",
                         controller: ModalCtrl,
                         size: "lg",
                         resolve: {
-                            [fileKey]: () => file
+                            [configKey]: () => config
                         },
                         template:
                         `
                         <div class="modal-header">
-                            <h3>Titolo</h3>
+                            <h3>{{Ctrl.config.Title}}</h3>
                         </div>
                         <div class="modal-body">
                             <div class="embed-responsive embed-responsive-4by3">
-                              <iframe class="embed-responsive-item" ng-src="{{Ctrl.dataUri|url}}"></iframe>
+                              <iframe class="embed-responsive-item" ng-if="Ctrl.dataUri" ng-src="{{Ctrl.dataUri|url}}"></iframe>
                             </div>
                             
                         </div>
@@ -45,11 +48,12 @@ import { registerService } from "./core";
 
             class ModalCtrl extends BaseInjectable {
 
-                public static $inject = BaseInjectable.$inject.concat([fileKey]);
-
-                get file():File {
-                    return this.$injectedArgs[ModalCtrl.$inject.indexOf(fileKey)];
+                public static $inject = BaseInjectable.$inject.concat([configKey]);
+                
+                private get config():fileViewerConfig {
+                    return this.$injectedArgs[ModalCtrl.$inject.indexOf(configKey)];
                 }
+
                 dataUri: string=null;
                 constructor(...args) {
                     super(...args);
@@ -58,11 +62,12 @@ import { registerService } from "./core";
                 }
 
                 buildDataUri() {
+                    var f=new File([this.config.Blob],this.config.FileName,{type:this.config.MimeType});
                     var reader = new FileReader();
                     reader.onload=() => {
                         this.dataUri = reader.result;
                     };
-                    reader.readAsDataURL(this.file);
+                    reader.readAsDataURL(f);
 
                 }
             }

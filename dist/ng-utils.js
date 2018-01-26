@@ -432,7 +432,7 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/co
 define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, base_injectable_2, core_3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var fileKey = "fileToView";
+    var configKey = "fileToView";
     exports.serviceName = "fileViewer";
     function register(m) {
         core_3.registerService(m, exports.serviceName, fileViewerService);
@@ -443,22 +443,15 @@ define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-i
         function fileViewerService() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Object.defineProperty(fileViewerService.prototype, "$uibModal", {
-            get: function () {
-                return this.getFromInjector("$uibModal");
-            },
-            enumerable: true,
-            configurable: true
-        });
-        fileViewerService.prototype.viewFile = function (file) {
+        fileViewerService.prototype.viewFile = function (config) {
             return this.$uibModal.open({
                 controllerAs: "Ctrl",
                 controller: ModalCtrl,
                 size: "lg",
                 resolve: (_a = {},
-                    _a[fileKey] = function () { return file; },
+                    _a[configKey] = function () { return config; },
                     _a),
-                template: "\n                        <div class=\"modal-header\">\n                            <h3>Titolo</h3>\n                        </div>\n                        <div class=\"modal-body\">\n                            <div class=\"embed-responsive embed-responsive-4by3\">\n                              <iframe class=\"embed-responsive-item\" ng-src=\"{{Ctrl.dataUri|url}}\"></iframe>\n                            </div>\n                            \n                        </div>\n                        "
+                template: "\n                        <div class=\"modal-header\">\n                            <h3>{{Ctrl.config.Title}}</h3>\n                        </div>\n                        <div class=\"modal-body\">\n                            <div class=\"embed-responsive embed-responsive-4by3\">\n                              <iframe class=\"embed-responsive-item\" ng-if=\"Ctrl.dataUri\" ng-src=\"{{Ctrl.dataUri|url}}\"></iframe>\n                            </div>\n                            \n                        </div>\n                        "
             });
             var _a;
         };
@@ -477,22 +470,23 @@ define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-i
             _this.buildDataUri();
             return _this;
         }
-        Object.defineProperty(ModalCtrl.prototype, "file", {
+        Object.defineProperty(ModalCtrl.prototype, "config", {
             get: function () {
-                return this.$injectedArgs[ModalCtrl.$inject.indexOf(fileKey)];
+                return this.$injectedArgs[ModalCtrl.$inject.indexOf(configKey)];
             },
             enumerable: true,
             configurable: true
         });
         ModalCtrl.prototype.buildDataUri = function () {
             var _this = this;
+            var f = new File([this.config.Blob], this.config.FileName, { type: this.config.MimeType });
             var reader = new FileReader();
             reader.onload = function () {
                 _this.dataUri = reader.result;
             };
-            reader.readAsDataURL(this.file);
+            reader.readAsDataURL(f);
         };
-        ModalCtrl.$inject = base_injectable_2.default.$inject.concat([fileKey]);
+        ModalCtrl.$inject = base_injectable_2.default.$inject.concat([configKey]);
         return ModalCtrl;
     }(base_injectable_2.default));
 });

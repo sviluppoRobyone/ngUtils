@@ -106,9 +106,14 @@ declare module "ng-helpers/file-viewer" {
     import BaseInjectable from "ng-helpers/utils/base-injectable";
     export const serviceName = "fileViewer";
     export default function register(m: ng.IModule): void;
+    export interface fileViewerConfig {
+        Blob: Blob;
+        Title: string;
+        FileName: string;
+        MimeType: string;
+    }
     export class fileViewerService extends BaseInjectable {
-        readonly $uibModal: angular.ui.bootstrap.IModalService;
-        viewFile(file: File): angular.ui.bootstrap.IModalInstanceService;
+        viewFile(config: fileViewerConfig): angular.ui.bootstrap.IModalInstanceService;
     }
 }
 declare module "ng-helpers/service" {
