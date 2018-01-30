@@ -509,7 +509,7 @@ define("ng-helpers/events", ["require", "exports", "ng-helpers/utils/base-inject
         };
         EventsService.prototype.on = function (e, f) {
             var _this = this;
-            this.$rootScope.$on(e + "", function (ae) {
+            this.$rootScope.$on(e, function (ae) {
                 var args = [];
                 for (var _i = 1; _i < arguments.length; _i++) {
                     args[_i - 1] = arguments[_i];

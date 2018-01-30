@@ -19,7 +19,7 @@ export class EventsService extends BaseInjectable
     }
 
     public on(e: string, f: IEventFunction) {
-        this.$rootScope.$on(e + "", (ae,...args) => {
+        this.$rootScope.$on(e, (ae,...args) => {
             this.$log.debug("Detect event", e);
             f(ae,...args);
         });
