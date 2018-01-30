@@ -490,7 +490,42 @@ define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-i
         return ModalCtrl;
     }(base_injectable_2.default));
 });
-define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/file-viewer", "ng-helpers/utils/name-generator", "ng-helpers/debug/debug-service", "ng-helpers/async-loader", "ng-helpers/core"], function (require, exports, base_injectable_3, fv, nameGenerator, debugService, AsyncLoader, core_4) {
+define("ng-helpers/events", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/utils/name-generator"], function (require, exports, base_injectable_3, name_generator_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.serviceName = name_generator_1.GetServiceName("events");
+    function register(m) {
+        m.service(exports.serviceName, EventsService);
+    }
+    exports.register = register;
+    var IEventType;
+    (function (IEventType) {
+    })(IEventType = exports.IEventType || (exports.IEventType = {}));
+    var EventsService = /** @class */ (function (_super) {
+        __extends(EventsService, _super);
+        function EventsService() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        EventsService.prototype.emit = function (e) {
+            this.$log.debug("Emit event", e);
+            this.$rootScope.$broadcast(e + "");
+        };
+        EventsService.prototype.on = function (e, f) {
+            var _this = this;
+            this.$rootScope.$on(e + "", function (ae) {
+                var args = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    args[_i - 1] = arguments[_i];
+                }
+                _this.$log.debug("Detect event", e);
+                f.apply(void 0, [ae].concat(args));
+            });
+        };
+        return EventsService;
+    }(base_injectable_3.default));
+    exports.EventsService = EventsService;
+});
+define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/file-viewer", "ng-helpers/utils/name-generator", "ng-helpers/debug/debug-service", "ng-helpers/async-loader", "ng-helpers/core", "ng-helpers/events"], function (require, exports, base_injectable_4, fv, nameGenerator, debugService, AsyncLoader, core_4, events) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("$ngUtils");
@@ -503,7 +538,14 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
         function Service() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Object.defineProperty(Service.prototype, "$debugService", {
+        Object.defineProperty(Service.prototype, "$events", {
+            get: function () {
+                return this.$injectedArgs[Service.$inject.indexOf(events.serviceName)];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Service.prototype, "$debug", {
             get: function () {
                 return this.$injectedArgs[Service.$inject.indexOf(debugService.serviceName)];
             },
@@ -564,12 +606,17 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
             });
             return q.promise;
         };
-        Service.$inject = base_injectable_3.default.$inject.concat([debugService.serviceName, AsyncLoader.serviceName, fv.serviceName]);
+        Service.$inject = base_injectable_4.default.$inject.concat([
+            debugService.serviceName,
+            AsyncLoader.serviceName,
+            fv.serviceName,
+            events.serviceName
+        ]);
         return Service;
-    }(base_injectable_3.default));
+    }(base_injectable_4.default));
     exports.Service = Service;
 });
-define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-generator", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, nameGenerator, base_injectable_4, core_5) {
+define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-generator", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, nameGenerator, base_injectable_5, core_5) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("AsyncLoader");
@@ -667,7 +714,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
             });
         };
         return AsyncLoader;
-    }(base_injectable_4.default));
+    }(base_injectable_5.default));
     exports.AsyncLoader = AsyncLoader;
     var AsyncLoaderService = /** @class */ (function (_super) {
         __extends(AsyncLoaderService, _super);
@@ -680,7 +727,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
             return loader;
         };
         return AsyncLoaderService;
-    }(base_injectable_4.default));
+    }(base_injectable_5.default));
     exports.AsyncLoaderService = AsyncLoaderService;
     var directive;
     (function (directive_1) {
@@ -752,9 +799,9 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
                 enumerable: true,
                 configurable: true
             });
-            AsyncLoaderDirectiveCtrl.$inject = base_injectable_4.default.$inject.concat(["$scope"]);
+            AsyncLoaderDirectiveCtrl.$inject = base_injectable_5.default.$inject.concat(["$scope"]);
             return AsyncLoaderDirectiveCtrl;
-        }(base_injectable_4.default));
+        }(base_injectable_5.default));
     })(directive || (directive = {}));
 });
 define("ng-helpers/filters/index", ["require", "exports"], function (require, exports) {
@@ -840,7 +887,7 @@ define("ng-helpers/fa-loading/themes", ["require", "exports", "ng-helpers/fa-loa
         baseTheme.DirectiveBuilder = DirectiveBuilder;
     })(baseTheme = exports.baseTheme || (exports.baseTheme = {}));
 });
-define("ng-helpers/utils/base-ctrl", ["require", "exports", "ng-helpers/service", "ng-helpers/utils/base-injectable"], function (require, exports, ngUtils, base_injectable_5) {
+define("ng-helpers/utils/base-ctrl", ["require", "exports", "ng-helpers/service", "ng-helpers/utils/base-injectable"], function (require, exports, ngUtils, base_injectable_6) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseCtrl = /** @class */ (function (_super) {
@@ -862,9 +909,9 @@ define("ng-helpers/utils/base-ctrl", ["require", "exports", "ng-helpers/service"
             enumerable: true,
             configurable: true
         });
-        BaseCtrl.$inject = base_injectable_5.default.$inject.concat(["$scope", ngUtils.serviceName]);
+        BaseCtrl.$inject = base_injectable_6.default.$inject.concat(["$scope", ngUtils.serviceName]);
         return BaseCtrl;
-    }(base_injectable_5.default));
+    }(base_injectable_6.default));
     exports.default = BaseCtrl;
 });
 define("ng-helpers/fa-loading/ctrl", ["require", "exports", "ng-helpers/utils/base-ctrl"], function (require, exports, base_ctrl_1) {
@@ -974,7 +1021,7 @@ define("ng-helpers/http-error-to-modal/modal-ctrl", ["require", "exports", "ng-h
     }(base_ctrl_2.default));
     exports.Ctrl = Ctrl;
 });
-define("ng-helpers/http-error-to-modal/interceptor", ["require", "exports", "ng-helpers/http-error-to-modal/modal-ctrl", "ng-helpers/utils/base-injectable"], function (require, exports, ModalController, base_injectable_6) {
+define("ng-helpers/http-error-to-modal/interceptor", ["require", "exports", "ng-helpers/http-error-to-modal/modal-ctrl", "ng-helpers/utils/base-injectable"], function (require, exports, ModalController, base_injectable_7) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Interceptor = /** @class */ (function (_super) {
@@ -1012,7 +1059,7 @@ define("ng-helpers/http-error-to-modal/interceptor", ["require", "exports", "ng-
             return _this;
         }
         return Interceptor;
-    }(base_injectable_6.default));
+    }(base_injectable_7.default));
     exports.Interceptor = Interceptor;
 });
 define("ng-helpers/http-error-to-modal/index", ["require", "exports", "ng-helpers/http-error-to-modal/interceptor"], function (require, exports, interceptor_1) {
@@ -1103,7 +1150,7 @@ define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/
         return DebugModalContentCtrl;
     }(base_ctrl_3.default));
 });
-define("ng-helpers/debug/debug-components", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core", "ng-helpers/utils/name-generator", "ng-helpers/debug/debug-service"], function (require, exports, base_injectable_7, core_8, name_generator_1, debug_service_1) {
+define("ng-helpers/debug/debug-components", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core", "ng-helpers/utils/name-generator", "ng-helpers/debug/debug-service"], function (require, exports, base_injectable_8, core_8, name_generator_2, debug_service_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
@@ -1112,7 +1159,7 @@ define("ng-helpers/debug/debug-components", ["require", "exports", "ng-helpers/u
     exports.default = register;
     var ifDebug;
     (function (ifDebug) {
-        ifDebug.directiveName = name_generator_1.GetDirectiveName("ifDebug");
+        ifDebug.directiveName = name_generator_2.GetDirectiveName("ifDebug");
         function register(m) {
             core_8.registerDirective(m, ifDebug.directiveName, Directive);
         }
@@ -1140,7 +1187,7 @@ define("ng-helpers/debug/debug-components", ["require", "exports", "ng-helpers/u
                 configurable: true
             });
             return IfDebugCtrl;
-        }(base_injectable_7.default));
+        }(base_injectable_8.default));
     })(ifDebug = exports.ifDebug || (exports.ifDebug = {}));
 });
 define("ng-helpers/debug/debug", ["require", "exports", "ng-helpers/debug/debug-service", "ng-helpers/debug/debug-modal", "ng-helpers/debug/debug-components"], function (require, exports, debug_service_2, debug_modal_1, debug_components_1) {
@@ -1325,7 +1372,7 @@ define("ng-helpers/formly/form-builder", ["require", "exports", "ng-helpers/util
         return Ctrl;
     }(base_ctrl_for_directive_1.default));
 });
-define("ng-helpers/formly/nullable-field-directive", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, base_injectable_8, core_10) {
+define("ng-helpers/formly/nullable-field-directive", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, base_injectable_9, core_10) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var directiveName = "nullableField";
@@ -1433,9 +1480,9 @@ define("ng-helpers/formly/nullable-field-directive", ["require", "exports", "ng-
             enumerable: true,
             configurable: true
         });
-        NullableFieldCtrl.$inject = base_injectable_8.default.$inject.concat(["$scope"]);
+        NullableFieldCtrl.$inject = base_injectable_9.default.$inject.concat(["$scope"]);
         return NullableFieldCtrl;
-    }(base_injectable_8.default));
+    }(base_injectable_9.default));
     exports.NullableFieldCtrl = NullableFieldCtrl;
 });
 define("ng-helpers/formly/index", ["require", "exports", "ng-helpers/formly/datepicker", "ng-helpers/formly/form-builder", "ng-helpers/formly/nullable-field-directive"], function (require, exports, dpConfig, form_builder_1, nullable_field_directive_1) {
@@ -1533,7 +1580,7 @@ define("polyfill/index", ["require", "exports", "polyfill/string-polyfill", "pol
     }
     exports.default = run;
 });
-define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/debug/debug-service"], function (require, exports, service_1, index_1, moduleExists, index_2, index_3, index_4, debug_1, file_viewer_1, index_5, async_loader_1, index_6, debug_service_3) {
+define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/debug/debug-service", "ng-helpers/events"], function (require, exports, service_1, index_1, moduleExists, index_2, index_3, index_4, debug_1, file_viewer_1, index_5, async_loader_1, index_6, debug_service_3, events) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function init(m) {
@@ -1543,6 +1590,7 @@ define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpe
         index_6.default();
         debug_1.default(m);
         async_loader_1.default(m);
+        events.register(m);
         service_1.default(m);
         index_1.default(m);
         index_2.default(m);
@@ -1559,7 +1607,7 @@ define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpe
     }
     exports.default = init;
 });
-define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/service"], function (require, exports, base_injectable_9, ngUtilsService) {
+define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/service"], function (require, exports, base_injectable_10, ngUtilsService) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseService = /** @class */ (function (_super) {
@@ -1574,8 +1622,8 @@ define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils
             enumerable: true,
             configurable: true
         });
-        BaseService.$inject = base_injectable_9.default.$inject.concat([ngUtilsService.serviceName]);
+        BaseService.$inject = base_injectable_10.default.$inject.concat([ngUtilsService.serviceName]);
         return BaseService;
-    }(base_injectable_9.default));
+    }(base_injectable_10.default));
     exports.default = BaseService;
 });

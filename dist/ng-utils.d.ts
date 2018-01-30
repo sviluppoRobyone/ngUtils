@@ -116,6 +116,20 @@ declare module "ng-helpers/file-viewer" {
         viewFile(config: fileViewerConfig): angular.ui.bootstrap.IModalInstanceService;
     }
 }
+declare module "ng-helpers/events" {
+    import BaseInjectable from "ng-helpers/utils/base-injectable";
+    export var serviceName: string;
+    export function register(m: ng.IModule): void;
+    export enum IEventType {
+    }
+    export interface IEventFunction {
+        (event: ng.IAngularEvent, ...args: any[]): void;
+    }
+    export class EventsService extends BaseInjectable {
+        emit<T extends IEventType>(e: T): void;
+        on<T extends IEventType>(e: T, f: IEventFunction): void;
+    }
+}
 declare module "ng-helpers/service" {
     import * as angular from "angular";
     import BaseInjectable from "ng-helpers/utils/base-injectable";
@@ -123,10 +137,12 @@ declare module "ng-helpers/service" {
     import * as debugService from "ng-helpers/debug/debug-service";
     export var serviceName: string;
     import * as AsyncLoader from "ng-helpers/async-loader";
+    import * as events from "ng-helpers/events";
     export default function register(m: ng.IModule): void;
     export class Service extends BaseInjectable {
         static $inject: string[];
-        readonly $debugService: debugService.Service;
+        readonly $events: events.EventsService;
+        readonly $debug: debugService.Service;
         readonly $fileViewer: fv.fileViewerService;
         readonly $asyncLoader: AsyncLoader.AsyncLoaderService;
         manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function): angular.IPromise<{}>;
