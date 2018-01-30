@@ -120,14 +120,12 @@ declare module "ng-helpers/events" {
     import BaseInjectable from "ng-helpers/utils/base-injectable";
     export var serviceName: string;
     export function register(m: ng.IModule): void;
-    export enum IEventType {
-    }
     export interface IEventFunction {
         (event: ng.IAngularEvent, ...args: any[]): void;
     }
     export class EventsService extends BaseInjectable {
-        emit<T extends IEventType>(e: T): void;
-        on<T extends IEventType>(e: T, f: IEventFunction): void;
+        emit(e: string): void;
+        on(e: string, f: IEventFunction): void;
     }
 }
 declare module "ng-helpers/service" {

@@ -498,9 +498,6 @@ define("ng-helpers/events", ["require", "exports", "ng-helpers/utils/base-inject
         m.service(exports.serviceName, EventsService);
     }
     exports.register = register;
-    var IEventType;
-    (function (IEventType) {
-    })(IEventType = exports.IEventType || (exports.IEventType = {}));
     var EventsService = /** @class */ (function (_super) {
         __extends(EventsService, _super);
         function EventsService() {
