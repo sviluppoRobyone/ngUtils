@@ -159,6 +159,7 @@ declare module "ng-helpers/async-loader" {
         isLoading: boolean;
         isSuccess: boolean;
         isFailed: boolean;
+        dafaultValue: T;
         successCount: number;
         GetDataFn: IGetDataFunction<T>;
     }
@@ -169,12 +170,13 @@ declare module "ng-helpers/async-loader" {
         readonly IsSuccess: boolean;
         readonly IsFailed: boolean;
         readonly Data: T;
-        SetDataFunction(fn: IGetDataFunction<T>): void;
+        SetDataFunction(fn: IGetDataFunction<T>, defaultValue?: T): void;
         constructor(...args: any[]);
+        private assignValue(data);
         Update(): angular.IPromise<{}>;
     }
     export class AsyncLoaderService extends BaseInjectable {
-        Create<T>(f: IGetDataFunction<T>): AsyncLoader<T>;
+        Create<T>(f: IGetDataFunction<T>, initValue?: T): AsyncLoader<T>;
     }
 }
 declare module "ng-helpers/filters/index" {

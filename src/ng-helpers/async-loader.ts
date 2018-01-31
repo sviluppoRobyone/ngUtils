@@ -23,6 +23,7 @@ export class Config<T>{
     public isLoading :boolean=false;
     public isSuccess: boolean=false;
     public isFailed: boolean=false;
+    public dafaultValue:T=null;
     public successCount:number=0;
     public GetDataFn:IGetDataFunction<T> =null;
 }
@@ -54,8 +55,12 @@ export class AsyncLoader<T> extends BaseInjectable {
         return this.internalData;
     }
 
-    SetDataFunction(fn:IGetDataFunction<T>){
+    SetDataFunction(fn:IGetDataFunction<T>,defaultValue:T=null){
         this.config.GetDataFn=fn;
+        this.config.dafaultValue=defaultValue;  
+        if (this.config.dafaultValue!=null){
+            this.internalData=this.config.dafaultValue;
+        }    
     }
     constructor(...args){
         super(...args);
@@ -66,7 +71,17 @@ export class AsyncLoader<T> extends BaseInjectable {
         });
     }
 
-   
+    private assignValue(data:T){
+        if (data instanceof Array && this.internalData instanceof Array)
+        {
+            this.internalData.splice(0,this.internalData.length);
+            this.internalData.push(...data);
+        }
+        else{
+            this.internalData=data;
+        }
+
+    }
     Update(){
         return this.$q((ok,ko)=>{
             
@@ -76,9 +91,9 @@ export class AsyncLoader<T> extends BaseInjectable {
                 this.config.isFailed=false;
             }).then(()=>{
                 this.$q<T>(this.config.GetDataFn).then(data=>{ 
-
-                    this.internalData=data;
-
+                    
+                    this.assignValue(data);
+                    
                     this.$timeout(()=>{
                         this.config.successCount++;
                         this.config.isLoading=false;
@@ -89,7 +104,7 @@ export class AsyncLoader<T> extends BaseInjectable {
                     });
                     
                 }).catch(()=>{
-                    this.internalData=null;
+                    this.internalData=this.config.dafaultValue;
                     this.$timeout(()=>{
                         this.config.isLoading=false;
                         this.config.isSuccess=false;
@@ -108,13 +123,11 @@ export class AsyncLoader<T> extends BaseInjectable {
 export class AsyncLoaderService extends BaseInjectable{
 
    
-    public Create<T>(f:IGetDataFunction<T>) :AsyncLoader<T>{
-
+    public Create<T>(f:IGetDataFunction<T>,initValue:T=null) :AsyncLoader<T>{
        
-       var loader=new AsyncLoader<T>(...this.$injectedArgs);
-    
+       var loader=new AsyncLoader<T>(...this.$injectedArgs);    
 
-       loader.SetDataFunction(f);
+       loader.SetDataFunction(f,initValue);
        return loader;
     }
 }

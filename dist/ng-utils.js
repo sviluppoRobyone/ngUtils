@@ -627,6 +627,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
             this.isLoading = false;
             this.isSuccess = false;
             this.isFailed = false;
+            this.dafaultValue = null;
             this.successCount = 0;
             this.GetDataFn = null;
         }
@@ -676,8 +677,23 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
             enumerable: true,
             configurable: true
         });
-        AsyncLoader.prototype.SetDataFunction = function (fn) {
+        AsyncLoader.prototype.SetDataFunction = function (fn, defaultValue) {
+            if (defaultValue === void 0) { defaultValue = null; }
             this.config.GetDataFn = fn;
+            this.config.dafaultValue = defaultValue;
+            if (this.config.dafaultValue != null) {
+                this.internalData = this.config.dafaultValue;
+            }
+        };
+        AsyncLoader.prototype.assignValue = function (data) {
+            if (data instanceof Array && this.internalData instanceof Array) {
+                this.internalData.splice(0, this.internalData.length);
+                (_a = this.internalData).push.apply(_a, data);
+            }
+            else {
+                this.internalData = data;
+            }
+            var _a;
         };
         AsyncLoader.prototype.Update = function () {
             var _this = this;
@@ -688,7 +704,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
                     _this.config.isFailed = false;
                 }).then(function () {
                     _this.$q(_this.config.GetDataFn).then(function (data) {
-                        _this.internalData = data;
+                        _this.assignValue(data);
                         _this.$timeout(function () {
                             _this.config.successCount++;
                             _this.config.isLoading = false;
@@ -698,7 +714,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
                             ok();
                         });
                     }).catch(function () {
-                        _this.internalData = null;
+                        _this.internalData = _this.config.dafaultValue;
                         _this.$timeout(function () {
                             _this.config.isLoading = false;
                             _this.config.isSuccess = false;
@@ -718,9 +734,10 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
         function AsyncLoaderService() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        AsyncLoaderService.prototype.Create = function (f) {
+        AsyncLoaderService.prototype.Create = function (f, initValue) {
+            if (initValue === void 0) { initValue = null; }
             var loader = new (AsyncLoader.bind.apply(AsyncLoader, [void 0].concat(this.$injectedArgs)))();
-            loader.SetDataFunction(f);
+            loader.SetDataFunction(f, initValue);
             return loader;
         };
         return AsyncLoaderService;
