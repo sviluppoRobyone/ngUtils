@@ -1562,8 +1562,28 @@ define("polyfill/array-polyfill", ["require", "exports"], function (require, exp
     Object.defineProperty(exports, "__esModule", { value: true });
     function run() {
         polyfill_FIND();
+        custom_ClearAndSet();
+        custom_Clear();
     }
     exports.default = run;
+    function custom_ClearAndSet() {
+        Array.prototype.clearAndSet = function (newData) {
+            if (!(newData instanceof Array)) {
+                throw new TypeError("newData must be an array");
+            }
+            var arr = this;
+            arr.clear();
+            arr.push.apply(arr, newData);
+            return arr;
+        };
+    }
+    function custom_Clear() {
+        Array.prototype.clear = function () {
+            var list = this;
+            list.splice(0, list.length);
+            return list;
+        };
+    }
     function polyfill_FIND() {
         if (!Array.prototype.find) {
             Array.prototype.find = function (predicate) {

@@ -2,8 +2,30 @@
 
 export default function run(){
    polyfill_FIND();
+   custom_ClearAndSet();
+   custom_Clear();
 }
 
+function custom_ClearAndSet(){
+    Array.prototype.clearAndSet=function(newData){
+        if (!(newData instanceof Array)) {
+            throw new TypeError("newData must be an array");
+        }
+        var arr= this as any[];
+        arr.clear();
+        arr.push(...newData);
+
+        return arr;
+        
+    }
+}
+function custom_Clear(){
+    Array.prototype.clear=function(){
+        var list = this as any[];
+        list.splice(0,list.length);
+        return list;
+    };
+}
 function polyfill_FIND(){
     if (!Array.prototype.find) {
         Array.prototype.find = function (predicate) {
@@ -30,5 +52,7 @@ function polyfill_FIND(){
 declare global{
     interface Array<T> {
         find(predicate: (search: T) => boolean): T;
+        clearAndSet(arr:T[]):T[];
+        clear():T[];
     }
 }

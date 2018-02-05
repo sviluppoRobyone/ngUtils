@@ -301,6 +301,8 @@ declare module "polyfill/array-polyfill" {
     global  {
         interface Array<T> {
             find(predicate: (search: T) => boolean): T;
+            clearAndSet(arr: T[]): T[];
+            clear(): T[];
         }
     }
 }
