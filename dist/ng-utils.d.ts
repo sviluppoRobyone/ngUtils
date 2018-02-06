@@ -312,6 +312,21 @@ declare module "polyfill/index" {
 declare module "ng-helpers/init" {
     export default function init(m: ng.IModule): void;
 }
+declare module "ng-helpers/show-property" {
+    import BaseCtrlForDirective from "ng-helpers/utils/base-ctrl-for-directive";
+    import * as angular from "angular";
+    export var directiveName: any;
+    export default function register(m: ng.IModule): void;
+    export function directive(): angular.IDirective<angular.IScope>;
+    export class ShowPropertyCtrl extends BaseCtrlForDirective {
+        private readonly Object;
+        private readonly PropertyName;
+        private readonly PropertyValue;
+        private readonly Ready;
+        private readonly IsDefined;
+        private readonly Type;
+    }
+}
 declare module "ng-helpers/utils/base-service" {
     import BaseInjectable from "ng-helpers/utils/base-injectable";
     import * as ngUtilsService from "ng-helpers/service";

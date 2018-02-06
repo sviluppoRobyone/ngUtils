@@ -1641,6 +1641,83 @@ define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpe
     }
     exports.default = init;
 });
+define("ng-helpers/show-property", ["require", "exports", "ng-helpers/utils/base-ctrl-for-directive", "ng-helpers/utils/name-generator", "ng-helpers/core"], function (require, exports, base_ctrl_for_directive_2, name_generator_3, core_11) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.directiveName = name_generator_3.GetDirectiveName("showProperty");
+    function register(m) {
+        core_11.registerDirective(m, exports.directiveName, directive);
+    }
+    exports.default = register;
+    function directive() {
+        return {
+            scope: {
+                object: "="
+            },
+            controllerAs: "Ctrl",
+            controller: ShowPropertyCtrl,
+            //language=html
+            template: "\n<!--\n       <debug-modal object=\"Ctrl.Object\"></debug-modal>\n<debug-modal object=\"Ctrl.PropertyName\"></debug-modal>\n<pre>{{Ctrl.Ready}}</pre>\n<pre>{{Ctrl.IsDefined}}</pre>\n-->\n         <span ng-if=\"!Ctrl.Ready\">\n            <i class=\"fa fa-spin fa-circle-o-notch\"></i>\n         </span>\n        <span ng-if=\"Ctrl.Ready\">\n        <span ng-if=\"Ctrl.IsDefined\" ng-switch=\"Ctrl.Type\">\n     \n            <span ng-switch-when=\"null\" >ND</span>\n\n            <span ng-switch-when=\"string\" >{{Ctrl.PropertyValue}}</span>\n\n            <span ng-switch-when=\"number\" >{{Ctrl.PropertyValue}}</span>\n\n            <span ng-switch-when=\"date\" >{{Ctrl.PropertyValue|date}}</span>\n\n            <span ng-switch-when=\"boolean\" >\n                {{Ctrl.PropertyValue?\"SI\":\"NO\"}}\n            </span>\n            <span ng-switch-when=\"object\" >\n                <code>[object]</code>\n               <debug-modal object=\"Ctrl.PropertyValue\"></debug-modal>\n            </span>\n                      <span ng-switch-default>It's something else</span>\n        </span>\n        <span ng-if=\"!Ctrl.IsDefined\" >\n        [{{Ctrl.PropertyName}}] is not defined\n        </span>\n\n        </span>\n         \n"
+        };
+    }
+    exports.directive = directive;
+    var ShowPropertyCtrl = /** @class */ (function (_super) {
+        __extends(ShowPropertyCtrl, _super);
+        function ShowPropertyCtrl() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(ShowPropertyCtrl.prototype, "Object", {
+            get: function () {
+                return this.$scope["object"];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ShowPropertyCtrl.prototype, "PropertyName", {
+            get: function () {
+                return this.$attrs["propertyName"];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ShowPropertyCtrl.prototype, "PropertyValue", {
+            get: function () {
+                return this.Object[this.PropertyName];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ShowPropertyCtrl.prototype, "Ready", {
+            get: function () {
+                return [this.Object, this.PropertyName].every(function (x) { return typeof x != "undefined" && x != null; });
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ShowPropertyCtrl.prototype, "IsDefined", {
+            get: function () {
+                return this.Ready && !!this.Object[this.PropertyName];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ShowPropertyCtrl.prototype, "Type", {
+            get: function () {
+                if (!this.IsDefined)
+                    return "null";
+                if (this.PropertyValue instanceof Array)
+                    return "array";
+                if (this.PropertyValue instanceof Date)
+                    return "date";
+                return typeof (this.PropertyValue);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return ShowPropertyCtrl;
+    }(base_ctrl_for_directive_2.default));
+    exports.ShowPropertyCtrl = ShowPropertyCtrl;
+});
 define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/service"], function (require, exports, base_injectable_10, ngUtilsService) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
