@@ -164,7 +164,7 @@ define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/util
         }
         DebugDetectors.IsLocalDomain = IsLocalDomain;
         function IsWindowDebugDefined() {
-            return DebugDetectors.DebugName in window;
+            return typeof window[DebugDetectors.DebugName] !== "undefined";
         }
         DebugDetectors.IsWindowDebugDefined = IsWindowDebugDefined;
         function GetWindowDebugValue() {
@@ -1614,33 +1614,6 @@ define("polyfill/index", ["require", "exports", "polyfill/string-polyfill", "pol
     }
     exports.default = run;
 });
-define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/debug/debug-service", "ng-helpers/events"], function (require, exports, service_1, index_1, moduleExists, index_2, index_3, index_4, debug_1, file_viewer_1, index_5, async_loader_1, index_6, debug_service_3, events) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    function init(m) {
-        m.config(["$logProvider", function ($logProvider) {
-                $logProvider.debugEnabled(debug_service_3.DebugDetectors.IsDebugEnabled());
-            }]);
-        index_6.default();
-        debug_1.default(m);
-        async_loader_1.default(m);
-        events.register(m);
-        service_1.default(m);
-        index_1.default(m);
-        index_2.default(m);
-        moduleExists.configureModuleIfExists(m, ["formly"], function () {
-            index_5.default(m);
-        });
-        moduleExists.configureModuleIfExists(m, ["angularPromiseButtons"], function () {
-            index_3.default(m);
-        });
-        moduleExists.configureModuleIfExists(m, ["ui.bootstrap"], function () {
-            index_4.default(m);
-            file_viewer_1.default(m);
-        });
-    }
-    exports.default = init;
-});
 define("ng-helpers/show-property", ["require", "exports", "ng-helpers/utils/base-ctrl-for-directive", "ng-helpers/utils/name-generator", "ng-helpers/core"], function (require, exports, base_ctrl_for_directive_2, name_generator_3, core_11) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -1717,6 +1690,34 @@ define("ng-helpers/show-property", ["require", "exports", "ng-helpers/utils/base
         return ShowPropertyCtrl;
     }(base_ctrl_for_directive_2.default));
     exports.ShowPropertyCtrl = ShowPropertyCtrl;
+});
+define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/debug/debug-service", "ng-helpers/events", "ng-helpers/show-property"], function (require, exports, service_1, index_1, moduleExists, index_2, index_3, index_4, debug_1, file_viewer_1, index_5, async_loader_1, index_6, debug_service_3, events, show_property_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function init(m) {
+        m.config(["$logProvider", function ($logProvider) {
+                $logProvider.debugEnabled(debug_service_3.DebugDetectors.IsDebugEnabled());
+            }]);
+        index_6.default();
+        debug_1.default(m);
+        async_loader_1.default(m);
+        events.register(m);
+        service_1.default(m);
+        show_property_1.default(m);
+        index_1.default(m);
+        index_2.default(m);
+        moduleExists.configureModuleIfExists(m, ["formly"], function () {
+            index_5.default(m);
+        });
+        moduleExists.configureModuleIfExists(m, ["angularPromiseButtons"], function () {
+            index_3.default(m);
+        });
+        moduleExists.configureModuleIfExists(m, ["ui.bootstrap"], function () {
+            index_4.default(m);
+            file_viewer_1.default(m);
+        });
+    }
+    exports.default = init;
 });
 define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/service"], function (require, exports, base_injectable_10, ngUtilsService) {
     "use strict";

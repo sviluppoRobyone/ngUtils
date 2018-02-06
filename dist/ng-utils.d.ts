@@ -309,9 +309,6 @@ declare module "polyfill/array-polyfill" {
 declare module "polyfill/index" {
     export default function run(): void;
 }
-declare module "ng-helpers/init" {
-    export default function init(m: ng.IModule): void;
-}
 declare module "ng-helpers/show-property" {
     import BaseCtrlForDirective from "ng-helpers/utils/base-ctrl-for-directive";
     import * as angular from "angular";
@@ -326,6 +323,9 @@ declare module "ng-helpers/show-property" {
         private readonly IsDefined;
         private readonly Type;
     }
+}
+declare module "ng-helpers/init" {
+    export default function init(m: ng.IModule): void;
 }
 declare module "ng-helpers/utils/base-service" {
     import BaseInjectable from "ng-helpers/utils/base-injectable";

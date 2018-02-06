@@ -19,7 +19,7 @@ export module DebugDetectors{
         return window.location.hostname.endsWith(".local");
     }
     export function IsWindowDebugDefined(){
-        return DebugName in window;
+        return typeof window[DebugName]!=="undefined";
     }
 
     export function GetWindowDebugValue(){
