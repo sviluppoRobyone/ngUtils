@@ -7,29 +7,36 @@ export default function run(){
    describe();
 }
 function toJSON(){
-    Array.prototype.toJSON=function(){
-        return JSON.stringify(this);
+    if (!Array.prototype.toJSON) {
+
+        Array.prototype.toJSON=function(){
+            return JSON.stringify(this);
+        }
     }
 }
 function describe(){
-    Array.prototype.describe=function(){
-        return this.map(x=>{
-            return (typeof (x) ===typeof ({}) ? x.constructor.name:typeof(x))+"";
-        });
+    if (!Array.prototype.describe) {
+        Array.prototype.describe=function(){
+            return this.map(x=>{
+                return (typeof (x) ===typeof ({}) ? x.constructor.name:typeof(x))+"";
+            });
+        }
     }
 }
 function custom_ClearAndSet(){
-    Array.prototype.clearAndSet=function(newData){
-        if (!(newData instanceof Array)) {
-            throw new TypeError("newData must be an array");
-        }
-        var arr= this as any[];
-        arr.clear();
-        arr.push(...newData);
+    if (!Array.prototype.clearAndSet) {
+        Array.prototype.clearAndSet=function(newData){
+            if (!(newData instanceof Array)) {
+                throw new TypeError("newData must be an array");
+            }
+            var arr= this as any[];
+            arr.clear();
+            arr.push(...newData);
 
-        return arr;
-        
-    };
+            return arr;
+            
+        };
+    }
 }
 function custom_Clear(){
     Array.prototype.clear=function(){

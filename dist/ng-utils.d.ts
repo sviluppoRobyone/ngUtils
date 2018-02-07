@@ -97,6 +97,30 @@ declare module "ng-helpers/file-viewer" {
         viewFile(config: fileViewerConfig): angular.ui.bootstrap.IModalInstanceService;
     }
 }
+declare module "polyfill/string-polyfill" {
+    export default function run(): void;
+    global  {
+        interface String {
+            endsWith(search: string, len?: number): boolean;
+            capitalize(): string;
+        }
+    }
+}
+declare module "polyfill/array-polyfill" {
+    export default function run(): void;
+    global  {
+        interface Array<T> {
+            find(predicate: (search: T) => boolean): T;
+            clearAndSet(arr: T[]): T[];
+            clear(): T[];
+            describe(): T[];
+            toJSON(): string;
+        }
+    }
+}
+declare module "polyfill/index" {
+    export default function run(): void;
+}
 declare module "ng-helpers/utils/name-generator" {
     export function GetServiceName(name: any): string;
     export function GetFactoryName(name: any): string;
@@ -276,30 +300,6 @@ declare module "ng-helpers/formly/nullable-field-directive" {
 }
 declare module "ng-helpers/formly/index" {
     export default function Configure(m: ng.IModule): void;
-}
-declare module "polyfill/string-polyfill" {
-    export default function run(): void;
-    global  {
-        interface String {
-            endsWith(search: string, len?: number): boolean;
-            capitalize(): string;
-        }
-    }
-}
-declare module "polyfill/array-polyfill" {
-    export default function run(): void;
-    global  {
-        interface Array<T> {
-            find(predicate: (search: T) => boolean): T;
-            clearAndSet(arr: T[]): T[];
-            clear(): T[];
-            describe(): T[];
-            toJSON(): string;
-        }
-    }
-}
-declare module "polyfill/index" {
-    export default function run(): void;
 }
 declare module "ng-helpers/show-property" {
     import BaseCtrlForDirective from "ng-helpers/utils/base-ctrl-for-directive";
