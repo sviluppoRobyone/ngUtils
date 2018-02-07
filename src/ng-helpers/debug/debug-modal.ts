@@ -54,7 +54,7 @@ class debugModalCtrl extends BaseCtrlForDirective {
             template:
                 `
             <div class="modal-header">
-                <h3>Debug Modal</h3>
+                <h3>Debug Modal <code>${this.DebuggedVariable}</code></h3>
             </div>
             <div class="modal-body">
                <pre>{{Ctrl.data|json}}</pre>
@@ -71,5 +71,6 @@ class DebugModalContentCtrl extends BaseCtrl {
     private get data() {
         return this.$injectedArgs[DebugModalContentCtrl.$inject.indexOf(dataKey)];
     }
+
 
 }

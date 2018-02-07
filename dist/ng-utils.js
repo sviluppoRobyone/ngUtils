@@ -1193,7 +1193,7 @@ define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/
                 resolve: (_a = {},
                     _a[dataKey] = function () { return _this.data; },
                     _a),
-                template: "\n            <div class=\"modal-header\">\n                <h3>Debug Modal</h3>\n            </div>\n            <div class=\"modal-body\">\n               <pre>{{Ctrl.data|json}}</pre>\n            </div>\n            "
+                template: "\n            <div class=\"modal-header\">\n                <h3>Debug Modal <code>" + this.DebuggedVariable + "</code></h3>\n            </div>\n            <div class=\"modal-body\">\n               <pre>{{Ctrl.data|json}}</pre>\n            </div>\n            "
             });
             var _a;
         };
