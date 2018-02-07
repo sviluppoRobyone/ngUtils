@@ -3,7 +3,22 @@
 /// <reference types="angular-ui-router" />
 /// <reference types="angular-ui-bootstrap" />
 /// <reference types="angular-formly" />
-declare module "ng-utils";declare module "js-helpers/file-helpers" {
+declare module "ng-utils";declare module "js-helpers/debug-detectors" {
+    export const DebugName = "DEBUG";
+    export function IsLocalhost(): boolean;
+    export function IsLocalDomain(): boolean;
+    export function IsWindowDebugDefined(): boolean;
+    export function GetWindowDebugValue(): any;
+    export function IsDebugEnabled(): any;
+    export var status: {
+        readonly IsLocalhost: boolean;
+        readonly IsLocalDomain: boolean;
+        readonly IsWindowDebugDefined: boolean;
+        readonly GetWindowDebugValue: any;
+        readonly IsDebugEnabled: any;
+    };
+}
+declare module "js-helpers/file-helpers" {
     export function base64ToBlob(base64encodedString: string, myme: string): Blob;
     export function blobToBase64(blob: Blob, cb: {
         (base64String: string): void;
@@ -30,54 +45,10 @@ declare module "js-helpers/random-string" {
 declare module "js-helpers/string-helpers" {
     export function capitalizeFirstLetter(s: string): string;
 }
-declare module "ng-helpers/utils/name-generator" {
-    export function GetServiceName(name: any): string;
-    export function GetFactoryName(name: any): string;
-    export function GetDirectiveName(name: any): any;
-}
-declare module "ng-helpers/debug/debug-service" {
-    import BaseInjectable from "ng-helpers/utils/base-injectable";
-    export default function register(m: ng.IModule): void;
-    export var serviceName: string;
-    export interface IDebugDetectorFunction {
-        (): ng.IPromise<boolean>;
-    }
-    export module DebugDetectors {
-        const DebugName = "DEBUG";
-        function IsLocalhost(): boolean;
-        function IsLocalDomain(): boolean;
-        function IsWindowDebugDefined(): boolean;
-        function GetWindowDebugValue(): any;
-        function IsDebugEnabled(): any;
-        var status: {
-            readonly IsLocalhost: boolean;
-            readonly IsLocalDomain: boolean;
-            readonly IsWindowDebugDefined: boolean;
-            readonly GetWindowDebugValue: any;
-            readonly IsDebugEnabled: any;
-        };
-    }
-    export class Service extends BaseInjectable {
-        DebugStatus: boolean;
-        private Updater;
-        constructor(...args: any[]);
-        private UpdateStatus();
-        private init();
-        SetDebugUpdater(f: IDebugDetectorFunction): void;
-        readonly updateDebugV1: any;
-    }
-}
-declare module "ng-helpers/core" {
+declare module "ng-helpers/log" {
     import * as angular from "angular";
-    export interface IDirectiveFn {
-        (): ng.IDirective;
-    }
-    export function registerDirective(m: ng.IModule, directiveName: string, directive: IDirectiveFn): void;
-    export function registerService(m: ng.IModule, serviceName: string, service: ng.Injectable<Function>): void;
-    export function registerFactory(m: ng.IModule, factoryName: string, factory: ng.Injectable<Function>): void;
-    export module ConsoleUtils {
-        function GetLogger(): angular.ILogService;
-    }
+    export default function configure(m: ng.IModule): void;
+    export function GetLogger(): angular.ILogService;
 }
 declare module "ng-helpers/utils/base-injectable" {
     import * as angular from "angular";
@@ -108,6 +79,14 @@ declare module "ng-helpers/utils/base-injectable" {
         protected readonly $uibModal: angular.ui.bootstrap.IModalService;
     }
 }
+declare module "ng-helpers/core" {
+    export interface IDirectiveFn {
+        (): ng.IDirective;
+    }
+    export function registerDirective(m: ng.IModule, directiveName: string, directive: IDirectiveFn): void;
+    export function registerService(m: ng.IModule, serviceName: string, service: ng.Injectable<Function>): void;
+    export function registerFactory(m: ng.IModule, factoryName: string, factory: ng.Injectable<Function>): void;
+}
 declare module "ng-helpers/file-viewer" {
     import * as angular from "angular";
     import BaseInjectable from "ng-helpers/utils/base-injectable";
@@ -122,6 +101,11 @@ declare module "ng-helpers/file-viewer" {
     export class fileViewerService extends BaseInjectable {
         viewFile(config: fileViewerConfig): angular.ui.bootstrap.IModalInstanceService;
     }
+}
+declare module "ng-helpers/utils/name-generator" {
+    export function GetServiceName(name: any): string;
+    export function GetFactoryName(name: any): string;
+    export function GetDirectiveName(name: any): any;
 }
 declare module "ng-helpers/events" {
     import BaseInjectable from "ng-helpers/utils/base-injectable";
@@ -139,19 +123,35 @@ declare module "ng-helpers/service" {
     import * as angular from "angular";
     import BaseInjectable from "ng-helpers/utils/base-injectable";
     import * as fv from "ng-helpers/file-viewer";
-    import * as debugService from "ng-helpers/debug/debug-service";
-    export var serviceName: string;
     import * as AsyncLoader from "ng-helpers/async-loader";
     import * as events from "ng-helpers/events";
+    export var serviceName: string;
     export default function register(m: ng.IModule): void;
     export class Service extends BaseInjectable {
         static $inject: string[];
         readonly $events: events.EventsService;
-        readonly $debug: debugService.Service;
         readonly $fileViewer: fv.fileViewerService;
         readonly $asyncLoader: AsyncLoader.AsyncLoaderService;
         manageAjaxLoading(before: Function, ajax: (ok: ng.IQResolveReject<any>, ko: ng.IQResolveReject<any>) => void, after: Function): angular.IPromise<{}>;
         onScopeDispose($scope: ng.IScope): angular.IPromise<{}>;
+    }
+}
+declare module "ng-helpers/utils/base-ctrl" {
+    import * as angular from "angular";
+    import * as ngUtils from "ng-helpers/service";
+    import BaseInjectable from "ng-helpers/utils/base-injectable";
+    export default abstract class BaseCtrl extends BaseInjectable implements ng.IController {
+        static $inject: string[];
+        protected readonly $scope: angular.IScope;
+        protected readonly $ngUtils: ngUtils.Service;
+    }
+}
+declare module "ng-helpers/utils/base-ctrl-for-directive" {
+    import BaseCtrl from "ng-helpers/utils/base-ctrl";
+    export default abstract class BaseCtrlForDirective extends BaseCtrl {
+        static $inject: string[];
+        protected readonly $attrs: ng.IAttributes;
+        protected readonly $element: JQuery;
     }
 }
 declare module "ng-helpers/async-loader" {
@@ -202,16 +202,6 @@ declare module "ng-helpers/fa-loading/themes" {
         function DirectiveBuilder(loadingTemplate: string): () => angular.IDirective<angular.IScope>;
     }
 }
-declare module "ng-helpers/utils/base-ctrl" {
-    import * as angular from "angular";
-    import * as ngUtils from "ng-helpers/service";
-    import BaseInjectable from "ng-helpers/utils/base-injectable";
-    export default abstract class BaseCtrl extends BaseInjectable implements ng.IController {
-        static $inject: string[];
-        protected readonly $scope: angular.IScope;
-        protected readonly $ngUtils: ngUtils.Service;
-    }
-}
 declare module "ng-helpers/fa-loading/ctrl" {
     import BaseCtrl from "ng-helpers/utils/base-ctrl";
     export class Ctrl extends BaseCtrl {
@@ -249,20 +239,16 @@ declare module "ng-helpers/http-error-to-modal/interceptor" {
 declare module "ng-helpers/http-error-to-modal/index" {
     export default function register(m: ng.IModule): void;
 }
-declare module "ng-helpers/utils/base-ctrl-for-directive" {
-    import BaseCtrl from "ng-helpers/utils/base-ctrl";
-    export default abstract class BaseCtrlForDirective extends BaseCtrl {
-        static $inject: string[];
-        protected readonly $attrs: ng.IAttributes;
-        protected readonly $element: JQuery;
-    }
-}
 declare module "ng-helpers/debug/debug-modal" {
     export default function register(m: ng.IModule): void;
 }
 declare module "ng-helpers/debug/debug-components" {
     export default function register(m: ng.IModule): void;
     export module ifDebug {
+        var directiveName: any;
+        function register(m: ng.IModule): void;
+    }
+    export module ifNotDebug {
         var directiveName: any;
         function register(m: ng.IModule): void;
     }

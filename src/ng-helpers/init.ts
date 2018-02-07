@@ -10,16 +10,16 @@ import fileViewer from "./file-viewer";
 import formly from "./formly/index";
 import asyncLoader from "./async-loader";
 import polyfill from  "../polyfill/index";
-import {DebugDetectors as DebugDetectors} from "./debug/debug-service";
 import * as events from "./events";
 import showPropertyDirective from "./show-property";
+import configureLog from "./log";
+
 export default function init(m: ng.IModule) {
 
-    m.config(["$logProvider",($logProvider:ng.ILogProvider)=>{
-        $logProvider.debugEnabled(DebugDetectors.IsDebugEnabled())
-    }]);
+
     
     polyfill();
+    configureLog(m);
     debugReg(m);
     asyncLoader(m);
     events.register(m);

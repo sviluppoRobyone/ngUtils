@@ -3,7 +3,8 @@ import * as bj from "./utils/base-injectable";
 import * as ngUtils from "./service";
 import * as nameGenerator from "./utils/name-generator";
 import  BaseInjectable  from "./utils/base-injectable";
-import { registerService, registerDirective, registerFactory, ConsoleUtils } from "./core";
+import { registerService, registerDirective, registerFactory } from "./core";
+import BaseCtrlForDirective from "./utils/base-ctrl-for-directive";
 
 
 export var serviceName = nameGenerator.GetServiceName("AsyncLoader");
@@ -162,19 +163,14 @@ module directive{
         } as ng.IDirective;
     }
 
-    class AsyncLoaderDirectiveCtrl extends BaseInjectable {
-        public static $inject=BaseInjectable.$inject.concat(["$scope"]);
-        protected get $scope():ng.IScope{
-            return this.$injectedArgs[AsyncLoaderDirectiveCtrl.$inject.indexOf("$scope")];
-        }
+    class AsyncLoaderDirectiveCtrl extends BaseCtrlForDirective {
+      
         protected get loaders():any[]{
           return this.$scope[scopeLoadersKey] && this.$scope[scopeLoadersKey] instanceof Array? this.$scope[scopeLoadersKey]:[this.$scope[scopeLoadersKey]];
            
         }
         public get AsyncLoaders():AsyncLoader<any>[]{
-
-            return this.loaders.filter(x=> x instanceof AsyncLoader);
-           
+            return this.loaders.filter(x=> x instanceof AsyncLoader);           
         }
         
         public get IsLoading(){

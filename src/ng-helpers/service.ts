@@ -2,18 +2,17 @@ import * as angular from "angular";
 import BaseInjectable from "./utils/base-injectable";
 import * as fv from "./file-viewer";
 import * as nameGenerator from "./utils/name-generator";
-import * as debugService from "./debug/debug-service";
-export var serviceName=nameGenerator.GetServiceName("$ngUtils");
 import * as AsyncLoader from "./async-loader";
 import { registerService } from "./core";
 import * as events from "./events";
 
+export var serviceName=nameGenerator.GetServiceName("$ngUtils");
 export default function register(m:ng.IModule){
     registerService(m,serviceName,Service);
 }
 export class Service extends BaseInjectable {
     public static $inject= BaseInjectable.$inject.concat([
-        debugService.serviceName,
+       
         AsyncLoader.serviceName,
         fv.serviceName,
         events.serviceName
@@ -22,11 +21,8 @@ export class Service extends BaseInjectable {
     
     public get $events():events.EventsService{
         return this.$injectedArgs[Service.$inject.indexOf(events.serviceName)];
-    }
-   
-    public get $debug():debugService.Service{
-        return this.$injectedArgs[Service.$inject.indexOf(debugService.serviceName)];
-    }
+    }   
+  
     public get $fileViewer():fv.fileViewerService{        
         return this.$injectedArgs[Service.$inject.indexOf(fv.serviceName)];
     }
