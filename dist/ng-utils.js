@@ -209,12 +209,12 @@ define("polyfill/array-polyfill", ["require", "exports"], function (require, exp
         custom_ClearAndSet();
         custom_Clear();
         describe();
-        toJSON();
+        asJSON();
     }
     exports.default = run;
-    function toJSON() {
-        if (!Array.prototype.toJSON) {
-            Array.prototype.toJSON = function () {
+    function asJSON() {
+        if (!Array.prototype.asJSON) {
+            Array.prototype.asJSON = function () {
                 return JSON.stringify(this);
             };
         }
@@ -314,7 +314,7 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "js-helpers/ob
         BaseInjectable.prototype.checkInit = function () {
             var _this = this;
             this.$log.debug(this._className, "Init");
-            this.$log.debug(this._className, "Args[" + this._args.length + "]", this._args, this._args.describe().toJSON());
+            this.$log.debug(this._className, "Args[" + this._args.length + "]", this._args, this._args.describe().asJSON());
             if (this._self$inject) {
                 this.$log.debug(this._className, "$inject[" + this._self$inject.length + "]", this._self$inject);
                 if (this._args.length != this._self$inject.length) {
@@ -981,7 +981,7 @@ define("ng-helpers/utils/module-exists", ["require", "exports", "ng-helpers/log"
         }
         else {
             $log.debug("NgUtils: module configuration " +
-                moduleNames.toJSON() +
+                moduleNames.asJSON() +
                 " skipped");
         }
     }

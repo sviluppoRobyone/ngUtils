@@ -5,12 +5,12 @@ export default function run(){
    custom_ClearAndSet();
    custom_Clear();
    describe();
-   toJSON();
+   asJSON();
 }
-function toJSON(){
-    if (!Array.prototype.toJSON) {
+function asJSON(){
+    if (!Array.prototype.asJSON) {
 
-        Array.prototype.toJSON=function(){
+        Array.prototype.asJSON=function(){
             return JSON.stringify(this);
         }
     }
@@ -75,6 +75,6 @@ declare global{
         clearAndSet(arr:T[]):T[];
         clear():T[];
         describe():T[];
-        toJSON():string
+        asJSON():string
     }
 }

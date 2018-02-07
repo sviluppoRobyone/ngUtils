@@ -28,7 +28,7 @@ export function configureModuleIfExists(
   } else {
     $log.debug(
       "NgUtils: module configuration " +
-        moduleNames.toJSON() +
+        moduleNames.asJSON() +
         " skipped"
     );
   }

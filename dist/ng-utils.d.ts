@@ -61,7 +61,7 @@ declare module "polyfill/array-polyfill" {
             clearAndSet(arr: T[]): T[];
             clear(): T[];
             describe(): T[];
-            toJSON(): string;
+            asJSON(): string;
         }
     }
 }
