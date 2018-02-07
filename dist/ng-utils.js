@@ -278,7 +278,7 @@ define("polyfill/index", ["require", "exports", "polyfill/string-polyfill", "pol
     }
     exports.default = run;
 });
-define("ng-helpers/utils/base-injectable", ["require", "exports", "js-helpers/obj-helpers", "polyfill/index"], function (require, exports, obj_helpers_1, index_1) {
+define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/log", "js-helpers/obj-helpers", "polyfill/index"], function (require, exports, log_1, obj_helpers_1, index_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     index_1.default();
@@ -307,6 +307,8 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "js-helpers/ob
             configurable: true
         });
         BaseInjectable.prototype.getFromInjector = function (key) {
+            if (typeof key !== typeof "" || !key)
+                log_1.GetLogger().error(this._className, "Error injecting not a string or null", key);
             if (!this._store[key])
                 this._store[key] = this.$injector.get(key);
             return this._store[key];
@@ -453,23 +455,23 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "js-helpers/ob
     }(obj_helpers_1.default));
     exports.default = BaseInjectable;
 });
-define("ng-helpers/core", ["require", "exports", "ng-helpers/log"], function (require, exports, log_1) {
+define("ng-helpers/core", ["require", "exports", "ng-helpers/log"], function (require, exports, log_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function registerDirective(m, directiveName, directive) {
-        var $log = log_1.GetLogger();
+        var $log = log_2.GetLogger();
         $log.debug("Registering directive", directiveName, "inside module", m.name, directive);
         m.directive(directiveName, directive);
     }
     exports.registerDirective = registerDirective;
     function registerService(m, serviceName, service) {
-        var $log = log_1.GetLogger();
+        var $log = log_2.GetLogger();
         $log.debug("Registering service", serviceName, "inside module", m.name, service);
         m.service(serviceName, service);
     }
     exports.registerService = registerService;
     function registerFactory(m, factoryName, factory) {
-        var $log = log_1.GetLogger();
+        var $log = log_2.GetLogger();
         $log.debug("Registering factory", factoryName, "inside module", m.name, factory);
         m.factory(factoryName, factory);
     }
@@ -961,7 +963,7 @@ define("ng-helpers/filters/index", ["require", "exports"], function (require, ex
     }
     exports.default = RegisterAllFilters;
 });
-define("ng-helpers/utils/module-exists", ["require", "exports", "ng-helpers/log"], function (require, exports, log_2) {
+define("ng-helpers/utils/module-exists", ["require", "exports", "ng-helpers/log"], function (require, exports, log_3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function moduleExists(m, names) {
@@ -969,7 +971,7 @@ define("ng-helpers/utils/module-exists", ["require", "exports", "ng-helpers/log"
     }
     exports.moduleExists = moduleExists;
     function configureModuleIfExists(m, moduleNames, fn) {
-        var $log = log_2.GetLogger();
+        var $log = log_3.GetLogger();
         if (moduleExists(m, moduleNames)) {
             try {
                 fn();
@@ -1708,12 +1710,12 @@ define("ng-helpers/show-property", ["require", "exports", "ng-helpers/utils/base
     }(base_ctrl_for_directive_4.default));
     exports.ShowPropertyCtrl = ShowPropertyCtrl;
 });
-define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/events", "ng-helpers/show-property", "ng-helpers/log"], function (require, exports, service_1, index_3, moduleExists, index_4, index_5, index_6, debug_1, file_viewer_1, index_7, async_loader_1, index_8, events, show_property_1, log_3) {
+define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/events", "ng-helpers/show-property", "ng-helpers/log"], function (require, exports, service_1, index_3, moduleExists, index_4, index_5, index_6, debug_1, file_viewer_1, index_7, async_loader_1, index_8, events, show_property_1, log_4) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function init(m) {
         index_8.default();
-        log_3.default(m);
+        log_4.default(m);
         debug_1.default(m);
         async_loader_1.default(m);
         events.register(m);

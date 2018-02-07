@@ -18,6 +18,9 @@ export default abstract class BaseInjectable extends BaseObj{
 
    
     protected getFromInjector<T>(key: string) {
+        if (typeof key !==typeof "" || !key)
+            GetLogger().error(this._className,"Error injecting not a string or null",key);
+            
         if (!this._store[key])
             this._store[key] = this.$injector.get<T>(key);
 
