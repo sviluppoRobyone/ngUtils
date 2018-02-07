@@ -176,12 +176,14 @@ define("ng-helpers/log", ["require", "exports", "angular", "js-helpers/debug-det
     Object.defineProperty(exports, "__esModule", { value: true });
     function configure(m) {
         m.config(["$logProvider", function ($logProvider) {
-                $logProvider.debugEnabled(debug_detectors_1.IsDebugEnabled());
+                var ide = debug_detectors_1.IsDebugEnabled();
+                GetLogger().info("Set debug", ide);
+                $logProvider.debugEnabled(ide);
             }]);
     }
     exports.default = configure;
     function GetLogger() {
-        var $log = angular.injector(['ng']).get('$log');
+        var $log = angular.injector(["ng"]).get("$log");
         return $log;
     }
     exports.GetLogger = GetLogger;
