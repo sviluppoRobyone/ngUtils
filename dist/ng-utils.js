@@ -121,7 +121,7 @@ define("js-helpers/obj-helpers", ["require", "exports"], function (require, expo
         }
         Object.defineProperty(BaseObj.prototype, "_className", {
             get: function () {
-                return this.constructor.name;
+                return this._constructor.name;
             },
             enumerable: true,
             configurable: true
@@ -135,16 +135,7 @@ define("js-helpers/obj-helpers", ["require", "exports"], function (require, expo
         });
         return BaseObj;
     }());
-    exports.BaseObj = BaseObj;
-    var arrays;
-    (function (arrays) {
-        function describeArray(a) {
-            return a.map(function (x) {
-                return (typeof (x) === typeof ({}) ? x.constructor.name : typeof (x)) + "";
-            });
-        }
-        arrays.describeArray = describeArray;
-    })(arrays = exports.arrays || (exports.arrays = {}));
+    exports.default = BaseObj;
 });
 define("js-helpers/random-string", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -162,14 +153,6 @@ define("js-helpers/random-string", ["require", "exports"], function (require, ex
             s += randomSeed();
         return s.length > length ? s.substring(0, length) : s;
     }
-});
-define("js-helpers/string-helpers", ["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    function capitalizeFirstLetter(s) {
-        return s.charAt(0).toUpperCase() + s.slice(1);
-    }
-    exports.capitalizeFirstLetter = capitalizeFirstLetter;
 });
 define("ng-helpers/log", ["require", "exports", "angular", "js-helpers/debug-detectors"], function (require, exports, angular, debug_detectors_1) {
     "use strict";
@@ -190,7 +173,7 @@ define("ng-helpers/log", ["require", "exports", "angular", "js-helpers/debug-det
     }
     exports.GetLogger = GetLogger;
 });
-define("ng-helpers/utils/base-injectable", ["require", "exports", "js-helpers/obj-helpers", "ng-helpers/log"], function (require, exports, obj_helpers_1, log_1) {
+define("ng-helpers/utils/base-injectable", ["require", "exports", "js-helpers/obj-helpers"], function (require, exports, obj_helpers_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseInjectable = /** @class */ (function (_super) {
@@ -203,29 +186,11 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "js-helpers/ob
             var _this = _super.call(this) || this;
             _this._store = {};
             _this._args = [];
-            {
-                var logger = log_1.GetLogger();
-                logger.debug("----");
-                logger.debug("Init", _this._className);
-                logger.debug("Args[" + args.length + "]", args, JSON.stringify(obj_helpers_1.arrays.describeArray(args)));
-                if (_this._self$inject) {
-                    logger.debug("$inject[" + _this._self$inject.length + "]", _this._self$inject);
-                    if (args.length != _this._self$inject.length) {
-                        logger.error("Incongruenza dipendenze");
-                    }
-                    _this._self$inject.filter(function (x, index) { return !args[index]; }).forEach(function (x, index) {
-                        logger.error("La dipendenza", x, "non è stata soddisfatta", args[index]);
-                    });
-                }
-                else {
-                    logger.debug("No $inject array detected");
-                }
-                logger.debug("----");
-            }
             _this._args = args;
             ["_store", "_args"].forEach(function (x) {
                 Object.defineProperty(_this, x, { enumerable: false });
             });
+            _this.checkInit();
             return _this;
         }
         Object.defineProperty(BaseInjectable.prototype, "_self$inject", {
@@ -239,6 +204,24 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "js-helpers/ob
             if (!this._store[key])
                 this._store[key] = this.$injector.get(key);
             return this._store[key];
+        };
+        BaseInjectable.prototype.checkInit = function () {
+            var _this = this;
+            this.$log.debug(this._className, "Init");
+            this.$log.debug(this._className, "Args[" + this._args.length + "]", this._args, this._args.describe().toJSON());
+            if (this._self$inject) {
+                this.$log.debug(this._className, "$inject[" + this._self$inject.length + "]", this._self$inject);
+                if (this._args.length != this._self$inject.length) {
+                    this.$log.error(this._className, "Incongruenza dipendenze", "Richieste: ", this._self$inject.length, "Passate: ", this._args.length);
+                }
+                this._self$inject.filter(function (x, index) { return !_this._args[index]; }).forEach(function (x, index) {
+                    _this.$log.error(_this._className, "La dipendenza", x, "non è stata soddisfatta", _this._args[index]);
+                });
+            }
+            else {
+                this.$log.debug(this._className, "No $inject array detected");
+            }
+            this.$log.debug(this._className, "----");
         };
         Object.defineProperty(BaseInjectable.prototype, "$injector", {
             get: function () {
@@ -361,26 +344,26 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "js-helpers/ob
         });
         BaseInjectable.$inject = ["$injector"];
         return BaseInjectable;
-    }(obj_helpers_1.BaseObj));
+    }(obj_helpers_1.default));
     exports.default = BaseInjectable;
 });
-define("ng-helpers/core", ["require", "exports", "ng-helpers/log"], function (require, exports, log_2) {
+define("ng-helpers/core", ["require", "exports", "ng-helpers/log"], function (require, exports, log_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function registerDirective(m, directiveName, directive) {
-        var $log = log_2.GetLogger();
+        var $log = log_1.GetLogger();
         $log.debug("Registering directive", directiveName, "inside module", m.name, directive);
         m.directive(directiveName, directive);
     }
     exports.registerDirective = registerDirective;
     function registerService(m, serviceName, service) {
-        var $log = log_2.GetLogger();
+        var $log = log_1.GetLogger();
         $log.debug("Registering service", serviceName, "inside module", m.name, service);
         m.service(serviceName, service);
     }
     exports.registerService = registerService;
     function registerFactory(m, factoryName, factory) {
-        var $log = log_2.GetLogger();
+        var $log = log_1.GetLogger();
         $log.debug("Registering factory", factoryName, "inside module", m.name, factory);
         m.factory(factoryName, factory);
     }
@@ -447,16 +430,16 @@ define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-i
         return ModalCtrl;
     }(base_injectable_1.default));
 });
-define("ng-helpers/utils/name-generator", ["require", "exports", "js-helpers/string-helpers"], function (require, exports, stringHelpers) {
+define("ng-helpers/utils/name-generator", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var prefix = "$ngu";
     function GetServiceName(name) {
-        return prefix + stringHelpers.capitalizeFirstLetter(name) + "Service";
+        return prefix + name.capitalize() + "Service";
     }
     exports.GetServiceName = GetServiceName;
     function GetFactoryName(name) {
-        return prefix + stringHelpers.capitalizeFirstLetter(name) + "Factory";
+        return prefix + name.capitalize() + "Factory";
     }
     exports.GetFactoryName = GetFactoryName;
     function GetDirectiveName(name) {
@@ -871,7 +854,7 @@ define("ng-helpers/filters/index", ["require", "exports"], function (require, ex
     }
     exports.default = RegisterAllFilters;
 });
-define("ng-helpers/utils/module-exists", ["require", "exports"], function (require, exports) {
+define("ng-helpers/utils/module-exists", ["require", "exports", "ng-helpers/log"], function (require, exports, log_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function moduleExists(m, names) {
@@ -879,18 +862,19 @@ define("ng-helpers/utils/module-exists", ["require", "exports"], function (requi
     }
     exports.moduleExists = moduleExists;
     function configureModuleIfExists(m, moduleNames, fn) {
+        var $log = log_2.GetLogger();
         if (moduleExists(m, moduleNames)) {
             try {
                 fn();
             }
             catch (e) {
-                console.error("NgUtils: error configuring module " + JSON.stringify(moduleNames));
-                console.error(e);
+                $log.error("NgUtils: error configuring module " + JSON.stringify(moduleNames));
+                $log.error(e);
             }
         }
         else {
-            console.info("NgUtils: module configuration " +
-                JSON.stringify(moduleNames) +
+            $log.debug("NgUtils: module configuration " +
+                moduleNames.toJSON() +
                 " skipped");
         }
     }
@@ -1546,6 +1530,7 @@ define("polyfill/string-polyfill", ["require", "exports"], function (require, ex
     Object.defineProperty(exports, "__esModule", { value: true });
     function run() {
         polifyll_ENDSWITH();
+        capitalize();
     }
     exports.default = run;
     function polifyll_ENDSWITH() {
@@ -1559,6 +1544,13 @@ define("polyfill/string-polyfill", ["require", "exports"], function (require, ex
             };
         }
     }
+    function capitalize() {
+        if (!String.prototype.capitalize) {
+            String.prototype.capitalize = function () {
+                return this.charAt(0).toUpperCase() + this.slice(1);
+            };
+        }
+    }
 });
 define("polyfill/array-polyfill", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -1567,8 +1559,21 @@ define("polyfill/array-polyfill", ["require", "exports"], function (require, exp
         polyfill_FIND();
         custom_ClearAndSet();
         custom_Clear();
+        describe();
     }
     exports.default = run;
+    function toJSON() {
+        Array.prototype.toJSON = function () {
+            return JSON.stringify(this);
+        };
+    }
+    function describe() {
+        Array.prototype.describe = function () {
+            return this.map(function (x) {
+                return (typeof (x) === typeof ({}) ? x.constructor.name : typeof (x)) + "";
+            });
+        };
+    }
     function custom_ClearAndSet() {
         Array.prototype.clearAndSet = function (newData) {
             if (!(newData instanceof Array)) {

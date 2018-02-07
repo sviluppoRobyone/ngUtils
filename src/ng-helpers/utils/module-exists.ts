@@ -1,4 +1,5 @@
 import * as angular from "angular";
+import { GetLogger } from "../log";
 
 export function moduleExists(m: ng.IModule, names: string[]) {
   return names.every(x=>m.requires.some(y=>y==x));
@@ -8,19 +9,26 @@ export function configureModuleIfExists(
   moduleNames: string[],
   fn: Function
 ) {
+
+  var $log=GetLogger();
   if (moduleExists(m, moduleNames)) {
     try {
+
+
+
       fn();
     } catch (e) {
-      console.error(
+
+      
+      $log.error(
         "NgUtils: error configuring module " + JSON.stringify(moduleNames)
       );
-      console.error(e);
+      $log.error(e);
     }
   } else {
-    console.info(
+    $log.debug(
       "NgUtils: module configuration " +
-        JSON.stringify(moduleNames) +
+        moduleNames.toJSON() +
         " skipped"
     );
   }

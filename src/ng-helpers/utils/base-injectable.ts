@@ -1,6 +1,6 @@
 import * as angular from "angular";
-import { BaseObj,arrays } from "../../js-helpers/obj-helpers";
 import { GetLogger } from "../log";
+import BaseObj from "../../js-helpers/obj-helpers";
 export default abstract class BaseInjectable extends BaseObj{
     public static $inject = ["$injector"];
 
@@ -21,36 +21,36 @@ export default abstract class BaseInjectable extends BaseObj{
         return this._store[key] as T;
 
     }
-
+    private checkInit(){
+        
+        this.$log.debug(this._className,"Init");
+        this.$log.debug(this._className,"Args["+this._args.length+"]",this._args,this._args.describe().toJSON());
+        if (this._self$inject)
+        {
+            this.$log.debug(this._className,"$inject["+this._self$inject.length+"]",this._self$inject);
+            if (this._args.length!=this._self$inject.length){
+                this.$log.error(this._className,"Incongruenza dipendenze","Richieste: ",this._self$inject.length,"Passate: ",this._args.length);
+            }
+            this._self$inject.filter((x,index)=>!this._args[index]).forEach((x,index)=>{
+                this.$log.error(this._className,"La dipendenza",x,"non è stata soddisfatta",this._args[index]);
+            });
+        }
+        else
+        {
+            this.$log.debug(this._className,"No $inject array detected");
+        }
+        this.$log.debug(this._className,"----");
+    }
     public constructor(...args){
         super();
-
-        {
-            var logger= GetLogger();
-            logger.debug("----");
-            logger.debug("Init",this._className);
-            logger.debug("Args["+args.length+"]",args,JSON.stringify(arrays.describeArray(args)));
-            if (this._self$inject)
-            {
-                logger.debug("$inject["+this._self$inject.length+"]",this._self$inject);
-                if (args.length!=this._self$inject.length){
-                    logger.error("Incongruenza dipendenze");
-                }
-                this._self$inject.filter((x,index)=>!args[index]).forEach((x,index)=>{
-                    logger.error("La dipendenza",x,"non è stata soddisfatta",args[index]);
-                });
-            }
-            else
-            {
-                    logger.debug("No $inject array detected");
-            }
-            logger.debug("----");
-        }
-
         this._args = args;
+       
+       
         ["_store","_args"].forEach(x=>{
             Object.defineProperty(this,x,{enumerable:false});
         });
+
+        this.checkInit();
     }
 
   

@@ -1,11 +1,10 @@
 
-import * as stringHelpers from "../../js-helpers/string-helpers";
 const  prefix="$ngu";
 export function GetServiceName(name){
-    return prefix+stringHelpers.capitalizeFirstLetter(name)+"Service";
+    return prefix+name.capitalize()+"Service";
 }
 export function GetFactoryName(name){
-    return prefix+stringHelpers.capitalizeFirstLetter(name)+"Factory";
+    return prefix+name.capitalize()+"Factory";
 }
 export function GetDirectiveName(name){
     return name;

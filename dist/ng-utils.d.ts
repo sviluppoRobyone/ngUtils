@@ -31,19 +31,13 @@ declare module "js-helpers/json-helpers" {
     }
 }
 declare module "js-helpers/obj-helpers" {
-    export class BaseObj {
-        protected readonly _className: any;
+    export default class BaseObj {
+        protected readonly _className: string;
         protected readonly _constructor: any;
-    }
-    export module arrays {
-        function describeArray(a: any[]): string[];
     }
 }
 declare module "js-helpers/random-string" {
     export function randomStringV1(length: number): string;
-}
-declare module "js-helpers/string-helpers" {
-    export function capitalizeFirstLetter(s: string): string;
 }
 declare module "ng-helpers/log" {
     import * as angular from "angular";
@@ -52,13 +46,14 @@ declare module "ng-helpers/log" {
 }
 declare module "ng-helpers/utils/base-injectable" {
     import * as angular from "angular";
-    import { BaseObj } from "js-helpers/obj-helpers";
+    import BaseObj from "js-helpers/obj-helpers";
     export default abstract class BaseInjectable extends BaseObj {
         static $inject: string[];
         private readonly _self$inject;
         private _store;
         private _args;
         protected getFromInjector<T>(key: string): T;
+        private checkInit();
         constructor(...args: any[]);
         protected readonly $injector: ng.auto.IInjectorService;
         protected readonly $injectedArgs: any[];
@@ -287,6 +282,7 @@ declare module "polyfill/string-polyfill" {
     global  {
         interface String {
             endsWith(search: string, len?: number): boolean;
+            capitalize(): string;
         }
     }
 }
@@ -297,6 +293,8 @@ declare module "polyfill/array-polyfill" {
             find(predicate: (search: T) => boolean): T;
             clearAndSet(arr: T[]): T[];
             clear(): T[];
+            describe(): T[];
+            toJSON(): string;
         }
     }
 }

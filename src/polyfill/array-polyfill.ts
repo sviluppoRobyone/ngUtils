@@ -4,8 +4,20 @@ export default function run(){
    polyfill_FIND();
    custom_ClearAndSet();
    custom_Clear();
+   describe();
 }
-
+function toJSON(){
+    Array.prototype.toJSON=function(){
+        return JSON.stringify(this);
+    }
+}
+function describe(){
+    Array.prototype.describe=function(){
+        return this.map(x=>{
+            return (typeof (x) ===typeof ({}) ? x.constructor.name:typeof(x))+"";
+        });
+    }
+}
 function custom_ClearAndSet(){
     Array.prototype.clearAndSet=function(newData){
         if (!(newData instanceof Array)) {
@@ -17,7 +29,7 @@ function custom_ClearAndSet(){
 
         return arr;
         
-    }
+    };
 }
 function custom_Clear(){
     Array.prototype.clear=function(){
@@ -54,5 +66,7 @@ declare global{
         find(predicate: (search: T) => boolean): T;
         clearAndSet(arr:T[]):T[];
         clear():T[];
+        describe():T[];
+        toJSON():string
     }
 }
