@@ -177,6 +177,23 @@ define("ng-helpers/debug/debug-service", ["require", "exports", "ng-helpers/util
             return IsWindowDebugDefined() ? GetWindowDebugValue() : (IsLocalhost() || IsLocalDomain());
         }
         DebugDetectors.IsDebugEnabled = IsDebugEnabled;
+        DebugDetectors.status = {
+            get IsLocalhost() {
+                return DebugDetectors.IsLocalhost();
+            },
+            get IsLocalDomain() {
+                return DebugDetectors.IsLocalDomain();
+            },
+            get IsWindowDebugDefined() {
+                return DebugDetectors.IsWindowDebugDefined();
+            },
+            get GetWindowDebugValue() {
+                return DebugDetectors.IsWindowDebugDefined() ? window[DebugDetectors.DebugName] : null;
+            },
+            get IsDebugEnabled() {
+                return DebugDetectors.IsDebugEnabled();
+            }
+        };
     })(DebugDetectors = exports.DebugDetectors || (exports.DebugDetectors = {}));
     var Service = /** @class */ (function (_super) {
         __extends(Service, _super);

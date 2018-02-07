@@ -49,6 +49,13 @@ declare module "ng-helpers/debug/debug-service" {
         function IsWindowDebugDefined(): boolean;
         function GetWindowDebugValue(): any;
         function IsDebugEnabled(): any;
+        var status: {
+            readonly IsLocalhost: boolean;
+            readonly IsLocalDomain: boolean;
+            readonly IsWindowDebugDefined: boolean;
+            readonly GetWindowDebugValue: any;
+            readonly IsDebugEnabled: any;
+        };
     }
     export class Service extends BaseInjectable {
         DebugStatus: boolean;

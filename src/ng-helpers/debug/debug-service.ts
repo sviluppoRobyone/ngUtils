@@ -32,6 +32,25 @@ export module DebugDetectors{
         return IsWindowDebugDefined()?GetWindowDebugValue():(IsLocalhost() || IsLocalDomain());
     }
 
+    export var status ={
+        get IsLocalhost(){
+            return DebugDetectors.IsLocalhost();
+        },
+        get IsLocalDomain(){
+            return DebugDetectors.IsLocalDomain();
+        },
+        get IsWindowDebugDefined(){
+            return DebugDetectors.IsWindowDebugDefined();
+        },
+        get GetWindowDebugValue(){
+            return DebugDetectors.IsWindowDebugDefined()? window[DebugName]:null;
+        },
+
+        get IsDebugEnabled(){
+            return DebugDetectors.IsDebugEnabled();
+        }
+
+    }
 
 }
 export class Service extends BaseInjectable{
