@@ -18,6 +18,7 @@ export module ifDebug{
     function Directive(){
         return {
             restrict:"E",
+            replace:true,
             controller:IfDebugCtrl,
             controllerAs:"Ctrl",
             transclude:true,
