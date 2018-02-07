@@ -249,6 +249,14 @@ declare module "ng-helpers/http-error-to-modal/interceptor" {
 declare module "ng-helpers/http-error-to-modal/index" {
     export default function register(m: ng.IModule): void;
 }
+declare module "ng-helpers/utils/base-ctrl-for-directive" {
+    import BaseCtrl from "ng-helpers/utils/base-ctrl";
+    export default abstract class BaseCtrlForDirective extends BaseCtrl {
+        static $inject: string[];
+        protected readonly $attrs: ng.IAttributes;
+        protected readonly $element: JQuery;
+    }
+}
 declare module "ng-helpers/debug/debug-modal" {
     export default function register(m: ng.IModule): void;
 }
@@ -264,13 +272,6 @@ declare module "ng-helpers/debug/debug" {
 }
 declare module "ng-helpers/formly/datepicker" {
     export function Configure(app: ng.IModule): void;
-}
-declare module "ng-helpers/utils/base-ctrl-for-directive" {
-    import BaseCtrl from "ng-helpers/utils/base-ctrl";
-    export default abstract class BaseCtrlForDirective extends BaseCtrl {
-        static $inject: string[];
-        protected readonly $attrs: ng.IAttributes;
-    }
 }
 declare module "ng-helpers/formly/form-builder" {
     export default function register(m: ng.IModule): void;

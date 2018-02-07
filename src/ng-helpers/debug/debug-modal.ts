@@ -1,7 +1,8 @@
-import BaseCtrl from "../utils/base-ctrl";
 import * as nameGenerator from "../utils/name-generator";
 import { registerDirective } from "../core";
 import {  configureModuleIfExists } from "../utils/module-exists";
+import BaseCtrlForDirective from "../utils/base-ctrl-for-directive";
+import BaseCtrl from "../utils/base-ctrl";
 
 const directiveName = nameGenerator.GetDirectiveName("debugModal");
 const dataKey = directiveName+"debugData";
@@ -33,12 +34,14 @@ function directive() {
     } as ng.IDirective;
 }
 
-class debugModalCtrl extends BaseCtrl {
+class debugModalCtrl extends BaseCtrlForDirective {
 
     private get data() {
         return this.$scope["object"];
     }
-
+    private get DebuggedVariable():string{
+        return this.$element.attr("object");
+    }
     open() {
       
         this.$uibModal.open({
