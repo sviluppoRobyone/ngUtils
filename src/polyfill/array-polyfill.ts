@@ -5,6 +5,7 @@ export default function run(){
    custom_ClearAndSet();
    custom_Clear();
    describe();
+   toJSON();
 }
 function toJSON(){
     if (!Array.prototype.toJSON) {

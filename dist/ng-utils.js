@@ -209,6 +209,7 @@ define("polyfill/array-polyfill", ["require", "exports"], function (require, exp
         custom_ClearAndSet();
         custom_Clear();
         describe();
+        toJSON();
     }
     exports.default = run;
     function toJSON() {
