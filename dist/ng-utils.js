@@ -544,11 +544,11 @@ define("ng-helpers/utils/name-generator", ["require", "exports", "polyfill/index
     var prefix = "$ngu";
     index_2.default();
     function GetServiceName(name) {
-        return prefix + name.capitalize() + "Service";
+        return prefix + (name.capitalize()) + "Service";
     }
     exports.GetServiceName = GetServiceName;
     function GetFactoryName(name) {
-        return prefix + name.capitalize() + "Factory";
+        return prefix + (name.capitalize()) + "Factory";
     }
     exports.GetFactoryName = GetFactoryName;
     function GetDirectiveName(name) {
