@@ -1,11 +1,13 @@
 
 import * as angular from "angular";
-import { IsDebugEnabled } from "../js-helpers/debug-detectors";
+import { IsDebugEnabled,status } from "../js-helpers/debug-detectors";
 
 export default function configure(m:ng.IModule){
     m.config(["$logProvider",($logProvider:ng.ILogProvider)=>{
         var ide=IsDebugEnabled();
-        GetLogger().info("Set debug",ide);
+        var $log=GetLogger();
+        $log.debug("Enviroment debug",JSON.stringify(status));
+        GetLogger().info("Set debug",ide?"enabled":"disabled");
         $logProvider.debugEnabled(ide);
     }]);
 }

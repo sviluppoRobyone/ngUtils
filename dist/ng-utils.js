@@ -177,7 +177,9 @@ define("ng-helpers/log", ["require", "exports", "angular", "js-helpers/debug-det
     function configure(m) {
         m.config(["$logProvider", function ($logProvider) {
                 var ide = debug_detectors_1.IsDebugEnabled();
-                GetLogger().info("Set debug", ide);
+                var $log = GetLogger();
+                $log.debug("Enviroment debug", JSON.stringify(debug_detectors_1.status));
+                GetLogger().info("Set debug", ide ? "enabled" : "disabled");
                 $logProvider.debugEnabled(ide);
             }]);
     }
