@@ -1181,7 +1181,6 @@ define("ng-helpers/debug/debug-components", ["require", "exports", "ng-helpers/u
         function Directive() {
             return {
                 restrict: "E",
-                replace: true,
                 controller: IfDebugCtrl,
                 controllerAs: "Ctrl",
                 transclude: true,
