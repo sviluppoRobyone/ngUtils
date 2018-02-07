@@ -6,7 +6,7 @@ import * as AsyncLoader from "./async-loader";
 import { registerService } from "./core";
 import * as events from "./events";
 
-export var serviceName=nameGenerator.GetServiceName("$ngUtils");
+export var serviceName=nameGenerator.GetServiceName("ngUtils");
 export default function register(m:ng.IModule){
     registerService(m,serviceName,Service);
 }

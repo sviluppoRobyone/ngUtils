@@ -458,24 +458,17 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/lo
 define("ng-helpers/core", ["require", "exports", "ng-helpers/log"], function (require, exports, log_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    var $log = log_2.GetLogger();
     function registerDirective(m, directiveName, directive) {
-        var $log = log_2.GetLogger();
         $log.debug("Registering directive", directiveName, "inside module", m.name, directive);
         m.directive(directiveName, directive);
     }
     exports.registerDirective = registerDirective;
     function registerService(m, serviceName, service) {
-        var $log = log_2.GetLogger();
-        $log.debug("Registering service", serviceName, "inside module", m.name, service);
+        $log.debug("Registering service", serviceName, "inside module", m.name, service, service["$inject"] || "No $inject found");
         m.service(serviceName, service);
     }
     exports.registerService = registerService;
-    function registerFactory(m, factoryName, factory) {
-        var $log = log_2.GetLogger();
-        $log.debug("Registering factory", factoryName, "inside module", m.name, factory);
-        m.factory(factoryName, factory);
-    }
-    exports.registerFactory = registerFactory;
 });
 define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, base_injectable_1, core_1) {
     "use strict";
@@ -591,7 +584,7 @@ define("ng-helpers/events", ["require", "exports", "ng-helpers/utils/base-inject
 define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/file-viewer", "ng-helpers/utils/name-generator", "ng-helpers/async-loader", "ng-helpers/core", "ng-helpers/events"], function (require, exports, base_injectable_3, fv, nameGenerator, AsyncLoader, core_2, events) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.serviceName = nameGenerator.GetServiceName("$ngUtils");
+    exports.serviceName = nameGenerator.GetServiceName("ngUtils");
     function register(m) {
         core_2.registerService(m, exports.serviceName, Service);
     }
