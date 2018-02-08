@@ -32,8 +32,14 @@ declare module "js-helpers/json-helpers" {
 }
 declare module "js-helpers/obj-helpers" {
     export default class BaseObj {
-        protected readonly _className: string;
-        protected readonly _constructor: any;
+        _objInfo: ObjInfo;
+        constructor();
+    }
+    export class ObjInfo {
+        private obj;
+        constructor(obj: any);
+        readonly Constructor: any;
+        readonly ClassName: any;
     }
 }
 declare module "js-helpers/random-string" {

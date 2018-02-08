@@ -8,7 +8,7 @@ export default abstract class BaseInjectable extends BaseObj{
     public static $inject = ["$injector"];
 
     private get _self$inject():string[]{
-        return this._constructor.$inject;
+        return this._objInfo.Constructor.$inject;
     }
 
    
@@ -19,7 +19,7 @@ export default abstract class BaseInjectable extends BaseObj{
    
     protected getFromInjector<T>(key: string) {
         if (typeof key !==typeof "" || !key)
-            GetLogger().error(this._className,"Error injecting not a string or null",key);
+            GetLogger().error(this._objInfo.ClassName,"Error injecting not a string or null",key);
             
         if (!this._store[key])
             this._store[key] = this.$injector.get<T>(key);
@@ -29,23 +29,23 @@ export default abstract class BaseInjectable extends BaseObj{
     }
     private checkInit(){
         
-        this.$log.debug(this._className,"Init");
-        this.$log.debug(this._className,"Args["+this._args.length+"]",this._args,this._args.describe().asJSON());
+        this.$log.debug(this._objInfo.ClassName,"Init");
+        this.$log.debug(this._objInfo.ClassName,"Args["+this._args.length+"]",this._args,this._args.describe().asJSON());
         if (this._self$inject)
         {
-            this.$log.debug(this._className,"$inject["+this._self$inject.length+"]",this._self$inject);
+            this.$log.debug(this._objInfo.ClassName,"$inject["+this._self$inject.length+"]",this._self$inject);
             if (this._args.length!=this._self$inject.length){
-                this.$log.error(this._className,"Incongruenza dipendenze","Richieste: ",this._self$inject.length,"Passate: ",this._args.length);
+                this.$log.error(this._objInfo.ClassName,"Incongruenza dipendenze","Richieste: ",this._self$inject.length,"Passate: ",this._args.length);
             }
             this._self$inject.filter((x,index)=>!this._args[index]).forEach((x,index)=>{
-                this.$log.error(this._className,"La dipendenza",x,"non è stata soddisfatta",this._args[index]);
+                this.$log.error(this._objInfo.ClassName,"La dipendenza",x,"non è stata soddisfatta",this._args[index]);
             });
         }
         else
         {
-            this.$log.debug(this._className,"No $inject array detected");
+            this.$log.debug(this._objInfo.ClassName,"No $inject array detected");
         }
-        this.$log.debug(this._className,"----");
+       
     }
     public constructor(...args){
         super();

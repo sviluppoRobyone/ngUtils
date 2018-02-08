@@ -1,8 +1,22 @@
 export default class BaseObj{
-    protected get _className():string{
-        return this._constructor.name;
-    } 
-    protected get _constructor():any{
-        return (<any>this).constructor;
-    }     
+  
+    public _objInfo:ObjInfo=null;
+    public constructor(){
+        this._objInfo=new ObjInfo(this);
+        Object.defineProperty(this,"_objInfo",{enumerable:false});
+    }
+}
+
+export class ObjInfo{
+    private obj:any=null;
+
+    constructor(obj:any){
+        this.obj=obj;
+    }
+    get Constructor(){
+        return this.obj.constructor;
+    }
+    get ClassName(){
+        return this.obj.constructor.name;
+    }
 }
