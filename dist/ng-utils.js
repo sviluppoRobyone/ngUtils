@@ -385,8 +385,9 @@ define("ng-helpers/core", ["require", "exports", "ng-helpers/log"], function (re
     }
     exports.registerDirective = registerDirective;
     function registerService(m, serviceName, service) {
-        CheckInject(service);
-        $log.debug("Registering service", serviceName, "inside module", m.name, service, service["$inject"] || "No $inject found");
+        var s = service;
+        CheckInject(s);
+        $log.debug("Registering service", s, "inside module", m.name, s, service["$inject"] || "No $inject found", s._objInfo.ClassName);
         m.service(serviceName, service);
     }
     exports.registerService = registerService;

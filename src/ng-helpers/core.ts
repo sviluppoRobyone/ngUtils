@@ -34,10 +34,10 @@ export function registerDirective(m:ng.IModule,directiveName:string,directive:ID
 
 export function registerService<T extends BaseInjectable|BaseObj|any>(m:ng.IModule,serviceName:string,service:T){
    
-  
-   CheckInject((service as any) as BaseObj);
+  var s=(service as any) as BaseObj;
+   CheckInject(s);
    
-    $log.debug("Registering service",serviceName,"inside module",m.name,service,service["$inject"]||"No $inject found");
+    $log.debug("Registering service",s,"inside module",m.name,s,service["$inject"]||"No $inject found",s._objInfo.ClassName);
     m.service(serviceName,service as any);
 }
 
