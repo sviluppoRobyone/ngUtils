@@ -128,7 +128,6 @@ declare module "ng-helpers/file-viewer" {
 }
 declare module "ng-helpers/utils/name-generator" {
     export function GetServiceName(name: any): string;
-    export function GetFactoryName(name: any): string;
     export function GetDirectiveName(name: any): any;
 }
 declare module "ng-helpers/events" {

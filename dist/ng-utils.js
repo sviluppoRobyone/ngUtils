@@ -552,19 +552,18 @@ define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-i
         return ModalCtrl;
     }(base_injectable_1.default));
 });
-define("ng-helpers/utils/name-generator", ["require", "exports", "polyfill/index"], function (require, exports, index_2) {
+define("ng-helpers/utils/name-generator", ["require", "exports", "polyfill/index", "ng-helpers/log"], function (require, exports, index_2, log_3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var prefix = "$ngu";
     index_2.default();
+    var $log = log_3.GetLogger();
     function GetServiceName(name) {
-        return prefix + (name.capitalize()) + "Service";
+        var n = prefix + (name.capitalize()) + "Service";
+        $log.debug("Generating service name from", name, "to", n);
+        return n;
     }
     exports.GetServiceName = GetServiceName;
-    function GetFactoryName(name) {
-        return prefix + (name.capitalize()) + "Factory";
-    }
-    exports.GetFactoryName = GetFactoryName;
     function GetDirectiveName(name) {
         return name;
     }
@@ -977,7 +976,7 @@ define("ng-helpers/filters/index", ["require", "exports"], function (require, ex
     }
     exports.default = RegisterAllFilters;
 });
-define("ng-helpers/utils/module-exists", ["require", "exports", "ng-helpers/log"], function (require, exports, log_3) {
+define("ng-helpers/utils/module-exists", ["require", "exports", "ng-helpers/log"], function (require, exports, log_4) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function moduleExists(m, names) {
@@ -985,7 +984,7 @@ define("ng-helpers/utils/module-exists", ["require", "exports", "ng-helpers/log"
     }
     exports.moduleExists = moduleExists;
     function configureModuleIfExists(m, moduleNames, fn) {
-        var $log = log_3.GetLogger();
+        var $log = log_4.GetLogger();
         if (moduleExists(m, moduleNames)) {
             try {
                 fn();
@@ -1724,12 +1723,12 @@ define("ng-helpers/show-property", ["require", "exports", "ng-helpers/utils/base
     }(base_ctrl_for_directive_4.default));
     exports.ShowPropertyCtrl = ShowPropertyCtrl;
 });
-define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/events", "ng-helpers/show-property", "ng-helpers/log"], function (require, exports, service_1, index_3, moduleExists, index_4, index_5, index_6, debug_1, file_viewer_1, index_7, async_loader_1, index_8, events, show_property_1, log_4) {
+define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/events", "ng-helpers/show-property", "ng-helpers/log"], function (require, exports, service_1, index_3, moduleExists, index_4, index_5, index_6, debug_1, file_viewer_1, index_7, async_loader_1, index_8, events, show_property_1, log_5) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function init(m) {
         index_8.default();
-        log_4.default(m);
+        log_5.default(m);
         debug_1.default(m);
         async_loader_1.default(m);
         events.register(m);
