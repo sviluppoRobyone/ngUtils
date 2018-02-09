@@ -479,7 +479,7 @@ define("ng-helpers/core", ["require", "exports", "ng-helpers/log"], function (re
                 $log.warn(obj._objInfo.ClassName, "Injecting some wrong value", getInject());
             }
             else {
-                $log.info(obj._objInfo.ClassName, "Check inject passed");
+                $log.debug(obj._objInfo.ClassName, "Check inject passed");
             }
         }
     }
@@ -501,7 +501,7 @@ define("ng-helpers/core", ["require", "exports", "ng-helpers/log"], function (re
             arrays[_i] = arguments[_i];
         }
         var MyNewArray = [].concat.apply([], arrays);
-        $log.debug("Concatenating ", arrays, "in", MyNewArray);
+        $log.debug("Concatenating", arrays, "in", MyNewArray);
         return MyNewArray;
     }
     exports.ConcatenaInject = ConcatenaInject;

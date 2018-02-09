@@ -20,7 +20,7 @@ function CheckInject(obj:any){
         $log.warn(obj._objInfo.ClassName,"Injecting some wrong value",getInject());
     }
     else{
-        $log.info(obj._objInfo.ClassName,"Check inject passed");
+        $log.debug(obj._objInfo.ClassName,"Check inject passed");
     }
 }
 }
@@ -43,6 +43,6 @@ export function registerService(m:ng.IModule,serviceName:string,service:ng.Injec
 export function ConcatenaInject(...arrays){
      var MyNewArray=[].concat(...arrays);
 
-   $log.debug("Concatenating ",arrays,"in",MyNewArray);
+   $log.debug("Concatenating",arrays,"in",MyNewArray);
    return MyNewArray;
 }
