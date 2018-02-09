@@ -36,3 +36,12 @@ export function registerService(m:ng.IModule,serviceName:string,service:ng.Injec
     $log.debug("Registering service",serviceName,"inside module",m.name,service,service["$inject"]||"No $inject found");
     m.service(serviceName,service);
 }
+
+export function ConcatenaInject(...arrays){
+    var a=[];
+
+   var MyNewArray=a.concat(...arrays);
+
+   $log.debug("Concatenating ",arrays,"in",MyNewArray);
+   return MyNewArray;
+}

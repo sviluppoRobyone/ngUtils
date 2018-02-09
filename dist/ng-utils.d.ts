@@ -110,6 +110,7 @@ declare module "ng-helpers/core" {
     }
     export function registerDirective(m: ng.IModule, directiveName: string, directive: IDirectiveFn): void;
     export function registerService(m: ng.IModule, serviceName: string, service: ng.Injectable<Function>): void;
+    export function ConcatenaInject(...arrays: any[]): any[];
 }
 declare module "ng-helpers/file-viewer" {
     import * as angular from "angular";
