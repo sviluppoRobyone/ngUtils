@@ -1,4 +1,4 @@
-export default class BaseObj{
+export default abstract class BaseObj{
   
     public _objInfo:ObjInfo=null;
     public constructor(){

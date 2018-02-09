@@ -319,6 +319,9 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/lo
             enumerable: true,
             configurable: true
         });
+        BaseInjectable.prototype.GetInjected = function (name) {
+            return this.$injectedArgs[this._self$inject.indexOf(name)];
+        };
         BaseInjectable.prototype.getFromInjector = function (key) {
             if (typeof key !== typeof "" || !key)
                 log_1.GetLogger().error(this._objInfo.ClassName, "Error injecting not a string or null", key);
@@ -345,7 +348,7 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/lo
         };
         Object.defineProperty(BaseInjectable.prototype, "$injector", {
             get: function () {
-                return this.$injectedArgs[BaseInjectable.$inject.indexOf("$injector")];
+                return this.GetInjected("$injector");
             },
             enumerable: true,
             configurable: true
@@ -574,7 +577,7 @@ define("ng-helpers/utils/name-generator", ["require", "exports", "polyfill/index
     index_2.default();
     var $log = log_3.GetLogger();
     function GetServiceName(name) {
-        var n = prefix + (name) + "Service";
+        var n = prefix + (name.capitalize()) + "Service";
         $log.debug("Generating service name from", name, "to", n);
         return n;
     }
@@ -621,37 +624,37 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("ngUtils");
     function register(m) {
-        core_2.registerService(m, exports.serviceName, Service);
+        core_2.registerService(m, exports.serviceName, NgUtilsService);
     }
     exports.default = register;
-    var Service = /** @class */ (function (_super) {
-        __extends(Service, _super);
-        function Service() {
+    var NgUtilsService = /** @class */ (function (_super) {
+        __extends(NgUtilsService, _super);
+        function NgUtilsService() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Object.defineProperty(Service.prototype, "$events", {
+        Object.defineProperty(NgUtilsService.prototype, "$events", {
             get: function () {
-                return this.$injectedArgs[Service.$inject.indexOf(events.serviceName)];
+                return this.$injectedArgs[NgUtilsService.$inject.indexOf(events.serviceName)];
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Service.prototype, "$fileViewer", {
+        Object.defineProperty(NgUtilsService.prototype, "$fileViewer", {
             get: function () {
-                return this.$injectedArgs[Service.$inject.indexOf(fv.serviceName)];
+                return this.$injectedArgs[NgUtilsService.$inject.indexOf(fv.serviceName)];
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Service.prototype, "$asyncLoader", {
+        Object.defineProperty(NgUtilsService.prototype, "$asyncLoader", {
             get: function () {
-                return this.$injectedArgs[Service.$inject.indexOf(AsyncLoader.serviceName)];
+                return this.$injectedArgs[NgUtilsService.$inject.indexOf(AsyncLoader.serviceName)];
             },
             enumerable: true,
             configurable: true
         });
         ///@deprecated
-        Service.prototype.manageAjaxLoading = function (before, ajax, after) {
+        NgUtilsService.prototype.manageAjaxLoading = function (before, ajax, after) {
             var _this = this;
             var qBefore = this.$q.defer();
             var qAjax = this.$q.defer();
@@ -683,21 +686,17 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
                 doBefore();
             });
         };
-        Service.prototype.onScopeDispose = function ($scope) {
+        NgUtilsService.prototype.onScopeDispose = function ($scope) {
             var q = this.$q.defer();
             $scope.$on("$destroy", function () {
                 q.resolve();
             });
             return q.promise;
         };
-        Service.$inject = base_injectable_3.default.$inject.concat([
-            AsyncLoader.serviceName,
-            fv.serviceName,
-            events.serviceName
-        ]);
-        return Service;
+        NgUtilsService.$inject = core_2.ConcatenaInject(base_injectable_3.default.$inject, AsyncLoader.serviceName, fv.serviceName, events.serviceName);
+        return NgUtilsService;
     }(base_injectable_3.default));
-    exports.Service = Service;
+    exports.NgUtilsService = NgUtilsService;
 });
 define("ng-helpers/utils/base-ctrl", ["require", "exports", "ng-helpers/service", "ng-helpers/utils/base-injectable", "ng-helpers/log", "ng-helpers/core"], function (require, exports, ngUtils, base_injectable_4, log_4, core_3) {
     "use strict";
@@ -710,14 +709,14 @@ define("ng-helpers/utils/base-ctrl", ["require", "exports", "ng-helpers/service"
         }
         Object.defineProperty(BaseCtrl.prototype, "$scope", {
             get: function () {
-                return this.$injectedArgs[BaseCtrl.$inject.indexOf("$scope")];
+                return this.GetInjected("$scope");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(BaseCtrl.prototype, "$ngUtils", {
             get: function () {
-                return this.$injectedArgs[BaseCtrl.$inject.indexOf(ngUtils.serviceName)];
+                return this.GetInjected(ngUtils.serviceName);
             },
             enumerable: true,
             configurable: true
@@ -1766,7 +1765,7 @@ define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpe
     }
     exports.default = init;
 });
-define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/service"], function (require, exports, base_injectable_9, ngUtilsService) {
+define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/service", "ng-helpers/core"], function (require, exports, base_injectable_9, ngUtilsService, core_11) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseService = /** @class */ (function (_super) {
@@ -1776,12 +1775,12 @@ define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils
         }
         Object.defineProperty(BaseService.prototype, "$ngUtils", {
             get: function () {
-                return this.$injectedArgs[BaseService.$inject.indexOf(ngUtilsService.serviceName)];
+                return this.GetInjected(ngUtilsService.serviceName);
             },
             enumerable: true,
             configurable: true
         });
-        BaseService.$inject = base_injectable_9.default.$inject.concat(ngUtilsService.serviceName);
+        BaseService.$inject = core_11.ConcatenaInject(base_injectable_9.default.$inject, ngUtilsService.serviceName);
         return BaseService;
     }(base_injectable_9.default));
     exports.default = BaseService;

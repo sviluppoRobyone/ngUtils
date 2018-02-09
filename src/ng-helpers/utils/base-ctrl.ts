@@ -10,12 +10,12 @@ export default abstract class BaseCtrl extends BaseInjectable implements ng.ICon
 
 
     protected get $scope(): angular.IScope {
-        return this.$injectedArgs[BaseCtrl.$inject.indexOf("$scope")];
+        return this.GetInjected("$scope");
     }
 
   
-    protected get $ngUtils(): ngUtils.Service {
-        return this.$injectedArgs[BaseCtrl.$inject.indexOf(ngUtils.serviceName)];
+    protected get $ngUtils(): ngUtils.NgUtilsService {
+        return this.GetInjected(ngUtils.serviceName);
     }
 
 

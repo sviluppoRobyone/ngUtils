@@ -31,7 +31,7 @@ declare module "js-helpers/json-helpers" {
     }
 }
 declare module "js-helpers/obj-helpers" {
-    export default class BaseObj {
+    export default abstract class BaseObj {
         _objInfo: ObjInfo;
         constructor();
     }
@@ -79,7 +79,8 @@ declare module "ng-helpers/utils/base-injectable" {
     import BaseObj from "js-helpers/obj-helpers";
     export default abstract class BaseInjectable extends BaseObj {
         static $inject: string[];
-        private readonly _self$inject;
+        protected readonly _self$inject: string[];
+        protected GetInjected<T>(name: string): any;
         private _store;
         private _args;
         protected getFromInjector<T>(key: string): T;
@@ -105,11 +106,13 @@ declare module "ng-helpers/utils/base-injectable" {
     }
 }
 declare module "ng-helpers/core" {
+    import BaseInjectable from "ng-helpers/utils/base-injectable";
+    import BaseObj from "js-helpers/obj-helpers";
     export interface IDirectiveFn {
         (): ng.IDirective;
     }
     export function registerDirective(m: ng.IModule, directiveName: string, directive: IDirectiveFn): void;
-    export function registerService(m: ng.IModule, serviceName: string, service: ng.Injectable<Function>): void;
+    export function registerService<T extends BaseInjectable | BaseObj | any>(m: ng.IModule, serviceName: string, service: T): void;
     export function ConcatenaInject(...arrays: any[]): any[];
 }
 declare module "ng-helpers/file-viewer" {
@@ -151,8 +154,8 @@ declare module "ng-helpers/service" {
     import * as events from "ng-helpers/events";
     export var serviceName: string;
     export default function register(m: ng.IModule): void;
-    export class Service extends BaseInjectable {
-        static $inject: string[];
+    export class NgUtilsService extends BaseInjectable {
+        static $inject: any[];
         readonly $events: events.EventsService;
         readonly $fileViewer: fv.fileViewerService;
         readonly $asyncLoader: AsyncLoader.AsyncLoaderService;
@@ -167,7 +170,7 @@ declare module "ng-helpers/utils/base-ctrl" {
     export default abstract class BaseCtrl extends BaseInjectable implements ng.IController {
         static $inject: string[];
         protected readonly $scope: angular.IScope;
-        protected readonly $ngUtils: ngUtils.Service;
+        protected readonly $ngUtils: ngUtils.NgUtilsService;
     }
 }
 declare module "ng-helpers/utils/base-ctrl-for-directive" {
@@ -329,6 +332,6 @@ declare module "ng-helpers/utils/base-service" {
     import * as ngUtilsService from "ng-helpers/service";
     export default abstract class BaseService extends BaseInjectable {
         static $inject: string[];
-        protected readonly $ngUtils: ngUtilsService.Service;
+        protected readonly $ngUtils: ngUtilsService.NgUtilsService;
     }
 }

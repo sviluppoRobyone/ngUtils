@@ -7,12 +7,15 @@ poly();
 export default abstract class BaseInjectable extends BaseObj{
     public static $inject :string[] = ["$injector"];
 
-    private get _self$inject():string[]{
+    protected get _self$inject():string[]{
         return this._objInfo.Constructor.$inject;
     }
 
+    protected GetInjected<T>(name:string) {
+        return this.$injectedArgs[this._self$inject.indexOf(name)];
+    }
    
-    private _store : any= {};
+    private _store : any = {};
   
     private _args : any[]=[];
 
@@ -61,7 +64,7 @@ export default abstract class BaseInjectable extends BaseObj{
 
   
     protected get $injector(): ng.auto.IInjectorService {        
-        return this.$injectedArgs[BaseInjectable.$inject.indexOf("$injector")];
+        return this.GetInjected("$injector");
     }
     
    

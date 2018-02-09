@@ -1,14 +1,15 @@
 import * as angular from "angular";
 import  BaseInjectable  from "./utils/base-injectable";
 import { GetLogger } from "./log";
+import BaseObj from "../js-helpers/obj-helpers";
 
 
 
 export interface IDirectiveFn{
     ():ng.IDirective
 }
-function CheckInject(obj:any){
-    if (obj["$inject"])
+function CheckInject(obj:BaseObj){
+    if (obj["$inject"] )
     {
  
     var getInject=()=>{
@@ -31,13 +32,13 @@ export function registerDirective(m:ng.IModule,directiveName:string,directive:ID
     m.directive(directiveName,directive);
 }
 
-export function registerService(m:ng.IModule,serviceName:string,service:ng.Injectable<Function>){
+export function registerService<T extends BaseInjectable|BaseObj|any>(m:ng.IModule,serviceName:string,service:T){
    
   
-   CheckInject(service);
+   CheckInject((service as any) as BaseObj);
    
     $log.debug("Registering service",serviceName,"inside module",m.name,service,service["$inject"]||"No $inject found");
-    m.service(serviceName,service);
+    m.service(serviceName,service as any);
 }
 
 export function ConcatenaInject(...arrays){
