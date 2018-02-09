@@ -561,7 +561,7 @@ define("ng-helpers/utils/name-generator", ["require", "exports", "polyfill/index
     index_2.default();
     var $log = log_3.GetLogger();
     function GetServiceName(name) {
-        var n = prefix + (name.capitalize()) + "Service";
+        var n = prefix + (name) + "Service";
         $log.debug("Generating service name from", name, "to", n);
         return n;
     }

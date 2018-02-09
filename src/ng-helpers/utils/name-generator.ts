@@ -6,7 +6,7 @@ import { GetLogger } from "../log";
 poly();
 var $log= GetLogger();
 export function GetServiceName(name){
-  var n=prefix+(name.capitalize())+"Service";
+  var n=prefix+(name)+"Service";
     $log.debug("Generating service name from",name,"to",n);
   return n;
 }
