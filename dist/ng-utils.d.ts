@@ -38,7 +38,7 @@ declare module "js-helpers/obj-helpers" {
     export class ObjInfo {
         private obj;
         constructor(obj: any);
-        readonly Constructor: any;
+        readonly ObjConstructor: any;
         readonly ClassName: any;
     }
 }

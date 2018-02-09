@@ -130,7 +130,7 @@ define("js-helpers/obj-helpers", ["require", "exports"], function (require, expo
             this.obj = null;
             this.obj = obj;
         }
-        Object.defineProperty(ObjInfo.prototype, "Constructor", {
+        Object.defineProperty(ObjInfo.prototype, "ObjConstructor", {
             get: function () {
                 return this.obj.constructor;
             },
@@ -206,7 +206,7 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/lo
         }
         Object.defineProperty(BaseInjectable.prototype, "_self$inject", {
             get: function () {
-                return this._objInfo.Constructor.$inject;
+                return this._objInfo.ObjConstructor.$inject;
             },
             enumerable: true,
             configurable: true

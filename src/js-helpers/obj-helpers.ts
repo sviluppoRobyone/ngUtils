@@ -13,7 +13,7 @@ export class ObjInfo{
     constructor(obj:any){
         this.obj=obj;
     }
-    public get Constructor(){
+    public get ObjConstructor(){
         return this.obj.constructor;
     }
     public get ClassName(){

@@ -6,7 +6,7 @@ export default abstract class BaseInjectable extends BaseObj{
     public static $inject :string[] = ["$injector"];
 
     protected get _self$inject():string[]{
-        return this._objInfo.Constructor.$inject;
+        return this._objInfo.ObjConstructor.$inject;
     }
 
     protected GetInjected<T>(name:string) {
