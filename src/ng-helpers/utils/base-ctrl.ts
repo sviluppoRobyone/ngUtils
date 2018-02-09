@@ -3,7 +3,7 @@ import * as ngUtils from "../service";
 import BaseInjectable from "./base-injectable";
 import * as fv from "../file-viewer";
 import { GetLogger } from "../log";
-GetLogger().debug("BASECTRL",ngUtils);
+GetLogger().debug("BASECTRL",ngUtils,BaseInjectable.$inject);
 export default abstract class BaseCtrl extends BaseInjectable implements ng.IController {
     public static $inject: string[] = BaseInjectable.$inject.concat("$scope", ngUtils.serviceName);
 

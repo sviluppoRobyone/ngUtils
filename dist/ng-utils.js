@@ -689,7 +689,7 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
 define("ng-helpers/utils/base-ctrl", ["require", "exports", "ng-helpers/service", "ng-helpers/utils/base-injectable", "ng-helpers/log"], function (require, exports, ngUtils, base_injectable_4, log_4) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    log_4.GetLogger().debug("BASECTRL", ngUtils);
+    log_4.GetLogger().debug("BASECTRL", ngUtils, base_injectable_4.default.$inject);
     var BaseCtrl = /** @class */ (function (_super) {
         __extends(BaseCtrl, _super);
         function BaseCtrl() {
