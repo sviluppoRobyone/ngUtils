@@ -20,3 +20,4 @@ export default abstract class BaseCtrl extends BaseInjectable implements ng.ICon
 
     
 }
+GetLogger().debug("BASECTRL 2",BaseCtrl);

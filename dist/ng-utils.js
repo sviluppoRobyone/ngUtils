@@ -713,6 +713,7 @@ define("ng-helpers/utils/base-ctrl", ["require", "exports", "ng-helpers/service"
         return BaseCtrl;
     }(base_injectable_4.default));
     exports.default = BaseCtrl;
+    log_4.GetLogger().debug("BASECTRL 2", BaseCtrl);
 });
 define("ng-helpers/utils/base-ctrl-for-directive", ["require", "exports", "ng-helpers/utils/base-ctrl"], function (require, exports, base_ctrl_1) {
     "use strict";
