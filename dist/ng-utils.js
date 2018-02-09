@@ -709,7 +709,7 @@ define("ng-helpers/utils/base-ctrl", ["require", "exports", "ng-helpers/service"
             enumerable: true,
             configurable: true
         });
-        BaseCtrl.$inject = base_injectable_4.default.$inject.concat(["$scope", ngUtils.serviceName]);
+        BaseCtrl.$inject = base_injectable_4.default.$inject.concat("$scope", ngUtils.serviceName);
         return BaseCtrl;
     }(base_injectable_4.default));
     exports.default = BaseCtrl;
@@ -737,7 +737,7 @@ define("ng-helpers/utils/base-ctrl-for-directive", ["require", "exports", "ng-he
             enumerable: true,
             configurable: true
         });
-        BaseCtrlForDirective.$inject = base_ctrl_1.default.$inject.concat(["$attrs", "$element"]);
+        BaseCtrlForDirective.$inject = base_ctrl_1.default.$inject.concat("$attrs", "$element");
         return BaseCtrlForDirective;
     }(base_ctrl_1.default));
     exports.default = BaseCtrlForDirective;
@@ -1768,7 +1768,7 @@ define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils
             enumerable: true,
             configurable: true
         });
-        BaseService.$inject = base_injectable_9.default.$inject.concat([ngUtilsService.serviceName]);
+        BaseService.$inject = base_injectable_9.default.$inject.concat(ngUtilsService.serviceName);
         return BaseService;
     }(base_injectable_9.default));
     exports.default = BaseService;
