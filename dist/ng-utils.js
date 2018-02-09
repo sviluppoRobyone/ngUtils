@@ -478,6 +478,9 @@ define("ng-helpers/core", ["require", "exports", "ng-helpers/log"], function (re
             if (getInject().some(function (x) { return (typeof x != typeof ""); })) {
                 $log.warn(obj._objInfo.ClassName, "Injecting some wrong value", getInject());
             }
+            else {
+                $log.info(obj._objInfo.ClassName, "Check inject passed");
+            }
         }
     }
     var $log = log_2.GetLogger();
@@ -497,8 +500,7 @@ define("ng-helpers/core", ["require", "exports", "ng-helpers/log"], function (re
         for (var _i = 0; _i < arguments.length; _i++) {
             arrays[_i] = arguments[_i];
         }
-        var a = [];
-        var MyNewArray = a.concat.apply(a, arrays);
+        var MyNewArray = [].concat.apply([], arrays);
         $log.debug("Concatenating ", arrays, "in", MyNewArray);
         return MyNewArray;
     }

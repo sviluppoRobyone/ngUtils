@@ -19,6 +19,9 @@ function CheckInject(obj:any){
     if (getInject().some(x=>(typeof x != typeof ""))){
         $log.warn(obj._objInfo.ClassName,"Injecting some wrong value",getInject());
     }
+    else{
+        $log.info(obj._objInfo.ClassName,"Check inject passed");
+    }
 }
 }
 var $log=GetLogger();
@@ -38,9 +41,7 @@ export function registerService(m:ng.IModule,serviceName:string,service:ng.Injec
 }
 
 export function ConcatenaInject(...arrays){
-    var a=[];
-
-   var MyNewArray=a.concat(...arrays);
+     var MyNewArray=[].concat(...arrays);
 
    $log.debug("Concatenating ",arrays,"in",MyNewArray);
    return MyNewArray;

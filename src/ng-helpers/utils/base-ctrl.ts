@@ -6,7 +6,7 @@ import { GetLogger } from "../log";
 import { ConcatenaInject } from "../core";
 GetLogger().debug("BASECTRL",ngUtils,ngUtils.serviceName,BaseInjectable.$inject);
 export default abstract class BaseCtrl extends BaseInjectable implements ng.IController {
-    public static $inject: string[] =ConcatenaInject(BaseInjectable.$inject,"$scope", ngUtils.serviceName);
+    public static $inject: string[] = ConcatenaInject(BaseInjectable.$inject,"$scope", ngUtils.serviceName);
 
 
     protected get $scope(): angular.IScope {
