@@ -234,7 +234,7 @@ define("polyfill/array-polyfill", ["require", "exports"], function (require, exp
         if (!Array.prototype.describe) {
             Array.prototype.describe = function () {
                 return this.map(function (x) {
-                    return (typeof (x) === typeof ({}) ? x.constructor.name : typeof (x)) + "";
+                    return (typeof x === typeof {} ? x.constructor.name : typeof x) + "";
                 });
             };
         }
@@ -253,11 +253,13 @@ define("polyfill/array-polyfill", ["require", "exports"], function (require, exp
         }
     }
     function custom_Clear() {
-        Array.prototype.clear = function () {
-            var list = this;
-            list.splice(0, list.length);
-            return list;
-        };
+        if (!Array.prototype.clear) {
+            Array.prototype.clear = function () {
+                var list = this;
+                list.splice(0, list.length);
+                return list;
+            };
+        }
     }
     function polyfill_FIND() {
         if (!Array.prototype.find) {
