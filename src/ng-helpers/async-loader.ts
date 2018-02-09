@@ -1,5 +1,4 @@
 import * as angular from "angular";
-import * as bj from "./utils/base-injectable";
 import * as ngUtils from "./service";
 import * as nameGenerator from "./utils/name-generator";
 import  BaseInjectable  from "./utils/base-injectable";

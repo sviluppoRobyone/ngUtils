@@ -30,6 +30,7 @@ export default abstract class BaseInjectable extends BaseObj{
         return this._store[key] as T;
 
     }
+
     private checkInit(){
         
         this.$log.debug(this._objInfo.ClassName,"Init");
@@ -50,6 +51,7 @@ export default abstract class BaseInjectable extends BaseObj{
         }
        
     }
+    
     public constructor(...args){
         super();
         this._args = args;
