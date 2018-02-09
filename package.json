@@ -29,7 +29,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/angular": "^1.6.39",
+    "@types/angular": "^1.6.42",
     "@types/angular-formly": "^7.2.33",
     "@types/angular-ui-bootstrap": "^0.13.46",
     "@types/angular-ui-router": "^1.1.36",
@@ -44,7 +44,7 @@
   "homepage": "https://github.com/sviluppoRobyone/ngUtils#readme",
   "devDependencies": {
     "del-cli": "^1.1.0",
-    "uglify-js": "^3.3.8"
+    "uglify-js": "^3.3.10"
   },
   "description": ""
 }

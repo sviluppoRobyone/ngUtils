@@ -5,7 +5,7 @@ import BaseObj from "../../js-helpers/obj-helpers";
 import poly from "../../polyfill/index";
 poly();
 export default abstract class BaseInjectable extends BaseObj{
-    public static $inject = ["$injector"];
+    public static $inject :string[] = ["$injector"];
 
     private get _self$inject():string[]{
         return this._objInfo.Constructor.$inject;
@@ -30,15 +30,15 @@ export default abstract class BaseInjectable extends BaseObj{
     private checkInit(){
         
         this.$log.debug(this._objInfo.ClassName,"Init");
-        this.$log.debug(this._objInfo.ClassName,"Args["+this._args.length+"]",this._args,this._args.describe().asJSON());
+        this.$log.debug(this._objInfo.ClassName,"Args["+this.$injectedArgs.length+"]",this.$injectedArgs,this.$injectedArgs.describe().asJSON());
         if (this._self$inject)
         {
             this.$log.debug(this._objInfo.ClassName,"$inject["+this._self$inject.length+"]",this._self$inject);
-            if (this._args.length!=this._self$inject.length){
-                this.$log.error(this._objInfo.ClassName,"Incongruenza dipendenze","Richieste: ",this._self$inject.length,"Passate: ",this._args.length);
+            if (this.$injectedArgs.length!=this._self$inject.length){
+                this.$log.error(this._objInfo.ClassName,"Incongruenza dipendenze","Richieste: ",this._self$inject.length,"Passate: ",this.$injectedArgs.length);
             }
-            this._self$inject.filter((x,index)=>!this._args[index]).forEach((x,index)=>{
-                this.$log.error(this._objInfo.ClassName,"La dipendenza",x,"non è stata soddisfatta",this._args[index]);
+            this._self$inject.filter((x,index)=>!this.$injectedArgs[index]).forEach((x,index)=>{
+                this.$log.error(this._objInfo.ClassName,"La dipendenza",x,"non è stata soddisfatta",this.$injectedArgs[index]);
             });
         }
         else

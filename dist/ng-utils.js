@@ -329,14 +329,14 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/lo
         BaseInjectable.prototype.checkInit = function () {
             var _this = this;
             this.$log.debug(this._objInfo.ClassName, "Init");
-            this.$log.debug(this._objInfo.ClassName, "Args[" + this._args.length + "]", this._args, this._args.describe().asJSON());
+            this.$log.debug(this._objInfo.ClassName, "Args[" + this.$injectedArgs.length + "]", this.$injectedArgs, this.$injectedArgs.describe().asJSON());
             if (this._self$inject) {
                 this.$log.debug(this._objInfo.ClassName, "$inject[" + this._self$inject.length + "]", this._self$inject);
-                if (this._args.length != this._self$inject.length) {
-                    this.$log.error(this._objInfo.ClassName, "Incongruenza dipendenze", "Richieste: ", this._self$inject.length, "Passate: ", this._args.length);
+                if (this.$injectedArgs.length != this._self$inject.length) {
+                    this.$log.error(this._objInfo.ClassName, "Incongruenza dipendenze", "Richieste: ", this._self$inject.length, "Passate: ", this.$injectedArgs.length);
                 }
-                this._self$inject.filter(function (x, index) { return !_this._args[index]; }).forEach(function (x, index) {
-                    _this.$log.error(_this._objInfo.ClassName, "La dipendenza", x, "non è stata soddisfatta", _this._args[index]);
+                this._self$inject.filter(function (x, index) { return !_this.$injectedArgs[index]; }).forEach(function (x, index) {
+                    _this.$log.error(_this._objInfo.ClassName, "La dipendenza", x, "non è stata soddisfatta", _this.$injectedArgs[index]);
                 });
             }
             else {
