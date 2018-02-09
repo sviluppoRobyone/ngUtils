@@ -184,117 +184,9 @@ define("ng-helpers/log", ["require", "exports", "angular", "js-helpers/debug-det
     }
     exports.GetLogger = GetLogger;
 });
-//https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
-define("polyfill/string-polyfill", ["require", "exports"], function (require, exports) {
+define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/log", "js-helpers/obj-helpers"], function (require, exports, log_1, obj_helpers_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    function run() {
-        polifyll_ENDSWITH();
-        capitalize();
-    }
-    exports.default = run;
-    function polifyll_ENDSWITH() {
-        if (!String.prototype.endsWith) {
-            String.prototype.endsWith = function (search, this_len) {
-                if (this_len === void 0) { this_len = undefined; }
-                if (this_len === undefined || this_len > this.length) {
-                    this_len = this.length;
-                }
-                return this.substring(this_len - search.length, this_len) === search;
-            };
-        }
-    }
-    function capitalize() {
-        if (!String.prototype.capitalize) {
-            String.prototype.capitalize = function () {
-                return this.charAt(0).toUpperCase() + this.slice(1);
-            };
-        }
-    }
-});
-define("polyfill/array-polyfill", ["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    function run() {
-        polyfill_FIND();
-        custom_ClearAndSet();
-        custom_Clear();
-        describe();
-        asJSON();
-    }
-    exports.default = run;
-    function asJSON() {
-        if (!Array.prototype.asJSON) {
-            Array.prototype.asJSON = function () {
-                return JSON.stringify(this);
-            };
-        }
-    }
-    function describe() {
-        if (!Array.prototype.describe) {
-            Array.prototype.describe = function () {
-                return this.map(function (x) {
-                    return (typeof x === typeof {} ? x.constructor.name : typeof x) + "";
-                });
-            };
-        }
-    }
-    function custom_ClearAndSet() {
-        if (!Array.prototype.clearAndSet) {
-            Array.prototype.clearAndSet = function (newData) {
-                if (!(newData instanceof Array)) {
-                    throw new TypeError("newData must be an array");
-                }
-                var arr = this;
-                arr.clear();
-                arr.push.apply(arr, newData);
-                return arr;
-            };
-        }
-    }
-    function custom_Clear() {
-        if (!Array.prototype.clear) {
-            Array.prototype.clear = function () {
-                var list = this;
-                list.splice(0, list.length);
-                return list;
-            };
-        }
-    }
-    function polyfill_FIND() {
-        if (!Array.prototype.find) {
-            Array.prototype.find = function (predicate) {
-                if (typeof predicate !== "function") {
-                    throw new TypeError("predicate must be a function");
-                }
-                var list = Object(this);
-                var length = list.length >>> 0;
-                var thisArg = arguments[1];
-                var value;
-                for (var i = 0; i < length; i++) {
-                    value = list[i];
-                    if (predicate.call(thisArg, value, i, list)) {
-                        return value;
-                    }
-                }
-                return undefined;
-            };
-        }
-    }
-});
-define("polyfill/index", ["require", "exports", "polyfill/string-polyfill", "polyfill/array-polyfill"], function (require, exports, string_polyfill_1, array_polyfill_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    function run() {
-        string_polyfill_1.default();
-        array_polyfill_1.default();
-    }
-    exports.default = run;
-});
-define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/log", "js-helpers/obj-helpers", "polyfill/index"], function (require, exports, log_1, obj_helpers_1, index_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    index_1.default();
     var BaseInjectable = /** @class */ (function (_super) {
         __extends(BaseInjectable, _super);
         function BaseInjectable() {
@@ -570,11 +462,118 @@ define("ng-helpers/file-viewer", ["require", "exports", "ng-helpers/utils/base-i
         return ModalCtrl;
     }(base_injectable_1.default));
 });
-define("ng-helpers/utils/name-generator", ["require", "exports", "polyfill/index", "ng-helpers/log"], function (require, exports, index_2, log_3) {
+//https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
+define("polyfill/string-polyfill", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function run() {
+        polifyll_ENDSWITH();
+        capitalize();
+    }
+    exports.default = run;
+    function polifyll_ENDSWITH() {
+        if (!String.prototype.endsWith) {
+            String.prototype.endsWith = function (search, this_len) {
+                if (this_len === void 0) { this_len = undefined; }
+                if (this_len === undefined || this_len > this.length) {
+                    this_len = this.length;
+                }
+                return this.substring(this_len - search.length, this_len) === search;
+            };
+        }
+    }
+    function capitalize() {
+        if (!String.prototype.capitalize) {
+            String.prototype.capitalize = function () {
+                return this.charAt(0).toUpperCase() + this.slice(1);
+            };
+        }
+    }
+});
+define("polyfill/array-polyfill", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function run() {
+        polyfill_FIND();
+        custom_ClearAndSet();
+        custom_Clear();
+        describe();
+        asJSON();
+    }
+    exports.default = run;
+    function asJSON() {
+        if (!Array.prototype.asJSON) {
+            Array.prototype.asJSON = function () {
+                return JSON.stringify(this);
+            };
+        }
+    }
+    function describe() {
+        if (!Array.prototype.describe) {
+            Array.prototype.describe = function () {
+                return this.map(function (x) {
+                    return (typeof x === typeof {} ? x.constructor.name : typeof x) + "";
+                });
+            };
+        }
+    }
+    function custom_ClearAndSet() {
+        if (!Array.prototype.clearAndSet) {
+            Array.prototype.clearAndSet = function (newData) {
+                if (!(newData instanceof Array)) {
+                    throw new TypeError("newData must be an array");
+                }
+                var arr = this;
+                arr.clear();
+                arr.push.apply(arr, newData);
+                return arr;
+            };
+        }
+    }
+    function custom_Clear() {
+        if (!Array.prototype.clear) {
+            Array.prototype.clear = function () {
+                var list = this;
+                list.splice(0, list.length);
+                return list;
+            };
+        }
+    }
+    function polyfill_FIND() {
+        if (!Array.prototype.find) {
+            Array.prototype.find = function (predicate) {
+                if (typeof predicate !== "function") {
+                    throw new TypeError("predicate must be a function");
+                }
+                var list = Object(this);
+                var length = list.length >>> 0;
+                var thisArg = arguments[1];
+                var value;
+                for (var i = 0; i < length; i++) {
+                    value = list[i];
+                    if (predicate.call(thisArg, value, i, list)) {
+                        return value;
+                    }
+                }
+                return undefined;
+            };
+        }
+    }
+});
+define("polyfill/index", ["require", "exports", "polyfill/string-polyfill", "polyfill/array-polyfill"], function (require, exports, string_polyfill_1, array_polyfill_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function run() {
+        string_polyfill_1.default();
+        array_polyfill_1.default();
+    }
+    exports.default = run;
+});
+define("ng-helpers/utils/name-generator", ["require", "exports", "polyfill/index", "ng-helpers/log"], function (require, exports, index_1, log_3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var prefix = "$ngu";
-    index_2.default();
+    index_1.default();
     var $log = log_3.GetLogger();
     function GetServiceName(name) {
         var n = prefix + (name.capitalize()) + "Service";
@@ -1739,27 +1738,27 @@ define("ng-helpers/show-property", ["require", "exports", "ng-helpers/utils/base
     }(base_ctrl_for_directive_4.default));
     exports.ShowPropertyCtrl = ShowPropertyCtrl;
 });
-define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/events", "ng-helpers/show-property", "ng-helpers/log"], function (require, exports, service_1, index_3, moduleExists, index_4, index_5, index_6, debug_1, file_viewer_1, index_7, async_loader_1, index_8, events, show_property_1, log_6) {
+define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/events", "ng-helpers/show-property", "ng-helpers/log"], function (require, exports, service_1, index_2, moduleExists, index_3, index_4, index_5, debug_1, file_viewer_1, index_6, async_loader_1, index_7, events, show_property_1, log_6) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function init(m) {
-        index_8.default();
+        index_7.default();
         log_6.default(m);
         debug_1.default(m);
         async_loader_1.default(m);
         events.register(m);
         service_1.default(m);
         show_property_1.default(m);
+        index_2.default(m);
         index_3.default(m);
-        index_4.default(m);
         moduleExists.configureModuleIfExists(m, ["formly"], function () {
-            index_7.default(m);
+            index_6.default(m);
         });
         moduleExists.configureModuleIfExists(m, ["angularPromiseButtons"], function () {
-            index_5.default(m);
+            index_4.default(m);
         });
         moduleExists.configureModuleIfExists(m, ["ui.bootstrap"], function () {
-            index_6.default(m);
+            index_5.default(m);
             file_viewer_1.default(m);
         });
     }

@@ -2,8 +2,6 @@ import * as angular from "angular";
 import { GetLogger } from "../log";
 import BaseObj from "../../js-helpers/obj-helpers";
 
-import poly from "../../polyfill/index";
-poly();
 export default abstract class BaseInjectable extends BaseObj{
     public static $inject :string[] = ["$injector"];
 

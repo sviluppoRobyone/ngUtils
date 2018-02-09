@@ -50,30 +50,6 @@ declare module "ng-helpers/log" {
     export default function configure(m: ng.IModule): void;
     export function GetLogger(): angular.ILogService;
 }
-declare module "polyfill/string-polyfill" {
-    export default function run(): void;
-    global  {
-        interface String {
-            endsWith(search: string, len?: number): boolean;
-            capitalize(): string;
-        }
-    }
-}
-declare module "polyfill/array-polyfill" {
-    export default function run(): void;
-    global  {
-        interface Array<T> {
-            find(predicate: (search: T) => boolean): T;
-            clearAndSet(arr: T[]): T[];
-            clear(): T[];
-            describe(): T[];
-            asJSON(): string;
-        }
-    }
-}
-declare module "polyfill/index" {
-    export default function run(): void;
-}
 declare module "ng-helpers/utils/base-injectable" {
     import * as angular from "angular";
     import BaseObj from "js-helpers/obj-helpers";
@@ -129,6 +105,30 @@ declare module "ng-helpers/file-viewer" {
     export class fileViewerService extends BaseInjectable {
         viewFile(config: fileViewerConfig): angular.ui.bootstrap.IModalInstanceService;
     }
+}
+declare module "polyfill/string-polyfill" {
+    export default function run(): void;
+    global  {
+        interface String {
+            endsWith(search: string, len?: number): boolean;
+            capitalize(): string;
+        }
+    }
+}
+declare module "polyfill/array-polyfill" {
+    export default function run(): void;
+    global  {
+        interface Array<T> {
+            find(predicate: (search: T) => boolean): T;
+            clearAndSet(arr: T[]): T[];
+            clear(): T[];
+            describe(): T[];
+            asJSON(): string;
+        }
+    }
+}
+declare module "polyfill/index" {
+    export default function run(): void;
 }
 declare module "ng-helpers/utils/name-generator" {
     export function GetServiceName(name: any): string;
