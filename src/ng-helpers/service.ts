@@ -20,14 +20,14 @@ export class NgUtilsService extends BaseInjectable {
  
     
     public get $events():events.EventsService{
-        return this.$injectedArgs[NgUtilsService.$inject.indexOf(events.serviceName)];
+        return this.GetInjected(events.serviceName);
     }   
   
     public get $fileViewer():fv.fileViewerService{        
-        return this.$injectedArgs[NgUtilsService.$inject.indexOf(fv.serviceName)];
+        return this.GetInjected(fv.serviceName);
     }
     public get $asyncLoader():AsyncLoader.AsyncLoaderService{
-        return this.$injectedArgs[NgUtilsService.$inject.indexOf(AsyncLoader.serviceName)];
+        return this.GetInjected(AsyncLoader.serviceName);
     }
 
     ///@deprecated

@@ -2,7 +2,7 @@ import * as angular from "angular";
 import { GetLogger } from "../log";
 import BaseObj from "../../js-helpers/obj-helpers";
 
-export default abstract class BaseInjectable extends BaseObj{
+export default abstract class BaseInjectable extends BaseObj {
     public static $inject :string[] = ["$injector"];
 
     protected get _self$inject():string[]{

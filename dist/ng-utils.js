@@ -634,21 +634,21 @@ define("ng-helpers/service", ["require", "exports", "ng-helpers/utils/base-injec
         }
         Object.defineProperty(NgUtilsService.prototype, "$events", {
             get: function () {
-                return this.$injectedArgs[NgUtilsService.$inject.indexOf(events.serviceName)];
+                return this.GetInjected(events.serviceName);
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(NgUtilsService.prototype, "$fileViewer", {
             get: function () {
-                return this.$injectedArgs[NgUtilsService.$inject.indexOf(fv.serviceName)];
+                return this.GetInjected(fv.serviceName);
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(NgUtilsService.prototype, "$asyncLoader", {
             get: function () {
-                return this.$injectedArgs[NgUtilsService.$inject.indexOf(AsyncLoader.serviceName)];
+                return this.GetInjected(AsyncLoader.serviceName);
             },
             enumerable: true,
             configurable: true
