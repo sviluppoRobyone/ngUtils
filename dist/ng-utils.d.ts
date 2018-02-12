@@ -156,7 +156,7 @@ declare module "ng-helpers/service" {
     import * as fv from "ng-helpers/file-viewer";
     import * as AsyncLoader from "ng-helpers/async-loader";
     import * as events from "ng-helpers/events";
-    export var serviceName: string;
+    export const serviceName: string;
     export default function register(m: ng.IModule): void;
     export class NgUtilsService extends BaseInjectable {
         static $inject: any[];
