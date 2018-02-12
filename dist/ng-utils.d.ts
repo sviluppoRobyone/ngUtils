@@ -132,8 +132,8 @@ declare module "polyfill/index" {
     export default function run(): void;
 }
 declare module "ng-helpers/utils/name-generator" {
-    export function GetServiceName(name: any): string;
-    export function GetDirectiveName(name: any): any;
+    export function GetServiceName(name: string): string;
+    export function GetDirectiveName(name: string): string;
 }
 declare module "ng-helpers/events" {
     import BaseInjectable from "ng-helpers/utils/base-injectable";
@@ -238,7 +238,7 @@ declare module "ng-helpers/fa-loading/ctrl" {
 }
 declare module "ng-helpers/fa-loading/directive" {
     import * as angular from "angular";
-    export var directiveName: any;
+    export var directiveName: string;
     export function directive(): angular.IDirective<angular.IScope>;
 }
 declare module "ng-helpers/fa-loading/index" {
@@ -273,11 +273,11 @@ declare module "ng-helpers/debug/debug-modal" {
 declare module "ng-helpers/debug/debug-components" {
     export default function register(m: ng.IModule): void;
     export module ifDebug {
-        var directiveName: any;
+        var directiveName: string;
         function register(m: ng.IModule): void;
     }
     export module ifNotDebug {
-        var directiveName: any;
+        var directiveName: string;
         function register(m: ng.IModule): void;
     }
 }
@@ -313,7 +313,7 @@ declare module "ng-helpers/formly/index" {
 declare module "ng-helpers/show-property" {
     import BaseCtrlForDirective from "ng-helpers/utils/base-ctrl-for-directive";
     import * as angular from "angular";
-    export var directiveName: any;
+    export var directiveName: string;
     export default function register(m: ng.IModule): void;
     export function directive(): angular.IDirective<angular.IScope>;
     export class ShowPropertyCtrl extends BaseCtrlForDirective {

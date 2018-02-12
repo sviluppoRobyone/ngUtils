@@ -562,14 +562,13 @@ define("polyfill/index", ["require", "exports", "polyfill/string-polyfill", "pol
     }
     exports.default = run;
 });
-define("ng-helpers/utils/name-generator", ["require", "exports", "polyfill/index", "ng-helpers/log"], function (require, exports, index_1, log_3) {
+define("ng-helpers/utils/name-generator", ["require", "exports", "ng-helpers/log", "js-helpers/string-helpers"], function (require, exports, log_3, string_helpers_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var prefix = "$ngu";
-    index_1.default();
     var $log = log_3.GetLogger();
     function GetServiceName(name) {
-        var n = prefix + (name.capitalize()) + "Service";
+        var n = prefix + (string_helpers_1.capitalize(name)) + "Service";
         $log.debug("Generating service name from", name, "to", n);
         return n;
     }
@@ -1731,27 +1730,27 @@ define("ng-helpers/show-property", ["require", "exports", "ng-helpers/utils/base
     }(base_ctrl_for_directive_4.default));
     exports.ShowPropertyCtrl = ShowPropertyCtrl;
 });
-define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/events", "ng-helpers/show-property", "ng-helpers/log"], function (require, exports, service_1, index_2, moduleExists, index_3, index_4, index_5, debug_1, file_viewer_1, index_6, async_loader_1, index_7, events, show_property_1, log_6) {
+define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/events", "ng-helpers/show-property", "ng-helpers/log"], function (require, exports, service_1, index_1, moduleExists, index_2, index_3, index_4, debug_1, file_viewer_1, index_5, async_loader_1, index_6, events, show_property_1, log_6) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function init(m) {
-        index_7.default();
+        index_6.default();
         log_6.default(m);
         debug_1.default(m);
         async_loader_1.default(m);
         events.register(m);
         service_1.default(m);
         show_property_1.default(m);
+        index_1.default(m);
         index_2.default(m);
-        index_3.default(m);
         moduleExists.configureModuleIfExists(m, ["formly"], function () {
-            index_6.default(m);
+            index_5.default(m);
         });
         moduleExists.configureModuleIfExists(m, ["angularPromiseButtons"], function () {
-            index_4.default(m);
+            index_3.default(m);
         });
         moduleExists.configureModuleIfExists(m, ["ui.bootstrap"], function () {
-            index_5.default(m);
+            index_4.default(m);
             file_viewer_1.default(m);
         });
     }
