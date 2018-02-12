@@ -32,7 +32,7 @@ export default abstract class BaseInjectable extends BaseObj{
     private checkInit(){
         
         this.$log.debug(this._objInfo.ClassName,"Init");
-        this.$log.debug(this._objInfo.ClassName,"Args["+this.$injectedArgs.length+"]",this.$injectedArgs,this.$injectedArgs.describe().asJSON());
+        this.$log.debug(this._objInfo.ClassName,"Args["+this.$injectedArgs.length+"]",this.$injectedArgs,JSON.stringify(this.$injectedArgs.describe()));
         if (this._self$inject)
         {
             this.$log.debug(this._objInfo.ClassName,"$inject["+this._self$inject.length+"]",this._self$inject);

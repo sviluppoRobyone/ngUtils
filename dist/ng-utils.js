@@ -224,7 +224,7 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/lo
         BaseInjectable.prototype.checkInit = function () {
             var _this = this;
             this.$log.debug(this._objInfo.ClassName, "Init");
-            this.$log.debug(this._objInfo.ClassName, "Args[" + this.$injectedArgs.length + "]", this.$injectedArgs, this.$injectedArgs.describe().asJSON());
+            this.$log.debug(this._objInfo.ClassName, "Args[" + this.$injectedArgs.length + "]", this.$injectedArgs, JSON.stringify(this.$injectedArgs.describe()));
             if (this._self$inject) {
                 this.$log.debug(this._objInfo.ClassName, "$inject[" + this._self$inject.length + "]", this._self$inject);
                 if (this.$injectedArgs.length != this._self$inject.length) {
@@ -499,16 +499,8 @@ define("polyfill/array-polyfill", ["require", "exports"], function (require, exp
         custom_ClearAndSet();
         custom_Clear();
         describe();
-        asJSON();
     }
     exports.default = run;
-    function asJSON() {
-        if (!Array.prototype.asJSON) {
-            Array.prototype.asJSON = function () {
-                return JSON.stringify(this);
-            };
-        }
-    }
     function describe() {
         if (!Array.prototype.describe) {
             Array.prototype.describe = function () {
@@ -524,7 +516,7 @@ define("polyfill/array-polyfill", ["require", "exports"], function (require, exp
                 if (!(newData instanceof Array)) {
                     throw new TypeError("newData must be an array");
                 }
-                var arr = this;
+                var arr = Object(this);
                 arr.clear();
                 arr.push.apply(arr, newData);
                 return arr;
@@ -534,7 +526,7 @@ define("polyfill/array-polyfill", ["require", "exports"], function (require, exp
     function custom_Clear() {
         if (!Array.prototype.clear) {
             Array.prototype.clear = function () {
-                var list = this;
+                var list = Object(this);
                 list.splice(0, list.length);
                 return list;
             };
@@ -1012,7 +1004,7 @@ define("ng-helpers/utils/module-exists", ["require", "exports", "ng-helpers/log"
         }
         else {
             $log.debug("NgUtils: module configuration " +
-                moduleNames.asJSON() +
+                JSON.stringify(moduleNames) +
                 " skipped");
         }
     }

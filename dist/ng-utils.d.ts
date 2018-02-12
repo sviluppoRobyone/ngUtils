@@ -123,7 +123,6 @@ declare module "polyfill/array-polyfill" {
             clearAndSet(arr: T[]): T[];
             clear(): T[];
             describe(): T[];
-            asJSON(): string;
         }
     }
 }

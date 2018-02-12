@@ -3,15 +3,9 @@ export default function run() {
   custom_ClearAndSet();
   custom_Clear();
   describe();
-  asJSON();
+  
 }
-function asJSON() {
-  if (!Array.prototype.asJSON) {
-    Array.prototype.asJSON = function() {
-      return JSON.stringify(this);
-    };
-  }
-}
+
 function describe() {
   if (!Array.prototype.describe) {
     Array.prototype.describe = function() {
@@ -27,7 +21,7 @@ function custom_ClearAndSet() {
       if (!(newData instanceof Array)) {
         throw new TypeError("newData must be an array");
       }
-      var arr = this as any[];
+      var arr = Object(this) as any[];
       arr.clear();
       arr.push(...newData);
 
@@ -38,7 +32,7 @@ function custom_ClearAndSet() {
 function custom_Clear() {
   if (!Array.prototype.clear) {
     Array.prototype.clear = function() {
-      var list = this as any[];
+      var list = Object(this) as any[];
       list.splice(0, list.length);
       return list;
     };
@@ -72,6 +66,5 @@ declare global {
     clearAndSet(arr: T[]): T[];
     clear(): T[];
     describe(): T[];
-    asJSON(): string;
   }
 }
