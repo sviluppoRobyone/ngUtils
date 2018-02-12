@@ -36,8 +36,11 @@ declare module "js-helpers/obj-helpers" {
         constructor();
     }
     export class ObjInfo {
-        private obj;
-        constructor(obj: any);
+        private GetFn;
+        private readonly Obj;
+        constructor(GetObj: {
+            (): any;
+        });
         readonly ObjConstructor: any;
         readonly ClassName: any;
     }

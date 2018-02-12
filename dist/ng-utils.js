@@ -118,28 +118,36 @@ define("js-helpers/obj-helpers", ["require", "exports"], function (require, expo
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseObj = /** @class */ (function () {
         function BaseObj() {
+            var _this = this;
             this._objInfo = null;
-            this._objInfo = new ObjInfo(this);
+            this._objInfo = new ObjInfo(function () { return _this; });
             Object.defineProperty(this, "_objInfo", { enumerable: false });
         }
         return BaseObj;
     }());
     exports.default = BaseObj;
     var ObjInfo = /** @class */ (function () {
-        function ObjInfo(obj) {
-            this.obj = null;
-            this.obj = obj;
+        function ObjInfo(GetObj) {
+            this.GetFn = null;
+            this.GetFn = GetObj;
         }
+        Object.defineProperty(ObjInfo.prototype, "Obj", {
+            get: function () {
+                return this.GetFn();
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(ObjInfo.prototype, "ObjConstructor", {
             get: function () {
-                return this.obj.constructor;
+                return this.Obj.constructor;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(ObjInfo.prototype, "ClassName", {
             get: function () {
-                return this.obj.constructor.name;
+                return this.Obj.constructor.name;
             },
             enumerable: true,
             configurable: true

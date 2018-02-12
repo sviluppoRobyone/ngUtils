@@ -2,21 +2,25 @@ export default abstract class BaseObj{
   
     public _objInfo:ObjInfo=null;
     public constructor(){
-        this._objInfo=new ObjInfo(this);
+        this._objInfo=new ObjInfo(()=>this);
         Object.defineProperty(this,"_objInfo",{enumerable:false});
     }
 }
 
 export class ObjInfo{
-    private obj:any=null;
+   
+    private GetFn:{():any}=null;
+    private get Obj(){
+        return this.GetFn();
+    }
 
-    constructor(obj:any){
-        this.obj=obj;
+    constructor(GetObj:{():any}){
+        this.GetFn=GetObj;
     }
     public get ObjConstructor(){
-        return this.obj.constructor;
+        return this.Obj.constructor;
     }
     public get ClassName(){
-        return this.obj.constructor.name;
+        return this.Obj.constructor.name;
     }
 }
