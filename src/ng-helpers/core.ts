@@ -19,10 +19,10 @@ function CheckInject(obj:BaseObj){
  
 
     if (getInject().some(x=>(typeof x != typeof ""))){
-        $log.warn(obj._objInfo.ClassName,"Injecting some wrong value",getInject());
+        $log.warn(obj,"Injecting some wrong value",getInject());
     }
     else{
-        $log.debug(obj._objInfo.ClassName,"Check inject passed");
+        $log.debug(obj,"Check inject passed");
     }
 }
 }
