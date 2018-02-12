@@ -3,7 +3,6 @@
 
 export default function run(){
 	polifyll_ENDSWITH();	
-	capitalize();
 }
 function polifyll_ENDSWITH(){
 	if (!String.prototype.endsWith) {
@@ -16,18 +15,9 @@ function polifyll_ENDSWITH(){
 	}
 }
 
-function capitalize(){
-	if (!String.prototype.capitalize) {
-		String.prototype.capitalize = function() {
-			return this.charAt(0).toUpperCase() + this.slice(1);
-			
-		};
-	}
-}
 declare global{
 	interface String {
 		endsWith(search : string, len?:number) : boolean;
-		capitalize():string
 	}
 }
 

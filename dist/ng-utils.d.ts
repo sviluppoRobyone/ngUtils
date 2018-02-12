@@ -45,6 +45,9 @@ declare module "js-helpers/obj-helpers" {
 declare module "js-helpers/random-string" {
     export function randomStringV1(length: number): string;
 }
+declare module "js-helpers/string-helpers" {
+    export function capitalize(s: string): string;
+}
 declare module "ng-helpers/log" {
     import * as angular from "angular";
     export default function configure(m: ng.IModule): void;
@@ -111,7 +114,6 @@ declare module "polyfill/string-polyfill" {
     global  {
         interface String {
             endsWith(search: string, len?: number): boolean;
-            capitalize(): string;
         }
     }
 }

@@ -165,6 +165,14 @@ define("js-helpers/random-string", ["require", "exports"], function (require, ex
         return s.length > length ? s.substring(0, length) : s;
     }
 });
+define("js-helpers/string-helpers", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function capitalize(s) {
+        return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+    exports.capitalize = capitalize;
+});
 define("ng-helpers/log", ["require", "exports", "angular", "js-helpers/debug-detectors"], function (require, exports, angular, debug_detectors_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -469,7 +477,6 @@ define("polyfill/string-polyfill", ["require", "exports"], function (require, ex
     Object.defineProperty(exports, "__esModule", { value: true });
     function run() {
         polifyll_ENDSWITH();
-        capitalize();
     }
     exports.default = run;
     function polifyll_ENDSWITH() {
@@ -480,13 +487,6 @@ define("polyfill/string-polyfill", ["require", "exports"], function (require, ex
                     this_len = this.length;
                 }
                 return this.substring(this_len - search.length, this_len) === search;
-            };
-        }
-    }
-    function capitalize() {
-        if (!String.prototype.capitalize) {
-            String.prototype.capitalize = function () {
-                return this.charAt(0).toUpperCase() + this.slice(1);
             };
         }
     }
