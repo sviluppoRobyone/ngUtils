@@ -5,7 +5,7 @@ import * as fv from "../file-viewer";
 import { GetLogger } from "../log";
 import { ConcatenaInject } from "../core";
 import { GetServiceName } from "./name-generator";
-GetLogger().debug("BASECTRL",ngUtils,ngUtils.serviceName,BaseInjectable.$inject);
+
 export default abstract class BaseCtrl extends BaseInjectable implements ng.IController {
 
     public static $inject: string[] = ConcatenaInject(BaseInjectable.$inject,"$scope", GetServiceName("ngUtils"));
@@ -18,4 +18,3 @@ export default abstract class BaseCtrl extends BaseInjectable implements ng.ICon
         return this.GetInjected(ngUtils.serviceName);
     }    
 }
-GetLogger().debug("BASECTRL 2",BaseCtrl);
