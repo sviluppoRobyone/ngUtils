@@ -382,6 +382,7 @@ define("ng-helpers/core", ["require", "exports", "ng-helpers/log"], function (re
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function CheckInject(obj) {
+        $log.debug(obj);
         if (obj["$inject"]) {
             var getInject = function () {
                 return (obj["$inject"] || []);

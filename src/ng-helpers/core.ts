@@ -9,6 +9,7 @@ export interface IDirectiveFn{
     ():ng.IDirective
 }
 function CheckInject(obj:BaseObj){
+    $log.debug(obj);
     if (obj["$inject"] )
     {
  
