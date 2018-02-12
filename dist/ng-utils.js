@@ -404,7 +404,7 @@ define("ng-helpers/core", ["require", "exports", "ng-helpers/log"], function (re
     function registerService(m, serviceName, service) {
         var s = service;
         CheckInject(s);
-        $log.debug("Registering service", s, "inside module", m.name, s, service["$inject"] || "No $inject found", s._objInfo.ClassName);
+        $log.debug("Registering service", s, "inside module", m.name, s, service["$inject"] || "No $inject found");
         m.service(serviceName, service);
     }
     exports.registerService = registerService;

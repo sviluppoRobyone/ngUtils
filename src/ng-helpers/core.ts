@@ -38,7 +38,7 @@ export function registerService<T extends BaseInjectable|BaseObj|any>(m:ng.IModu
   var s=(service as any) as BaseObj;
    CheckInject(s);
    
-    $log.debug("Registering service",s,"inside module",m.name,s,service["$inject"]||"No $inject found",s._objInfo.ClassName);
+    $log.debug("Registering service",s,"inside module",m.name,s,service["$inject"]||"No $inject found");
     m.service(serviceName,service as any);
 }
 
