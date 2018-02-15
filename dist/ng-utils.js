@@ -211,7 +211,6 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/lo
                 args[_i] = arguments[_i];
             }
             var _this = _super.call(this) || this;
-            _this._store = {};
             _this._args = [];
             _this._args = args;
             ["_store", "_args"].forEach(function (x) {
@@ -234,9 +233,7 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/lo
         BaseInjectable.prototype.getFromInjector = function (key) {
             if (typeof key !== typeof "" || !key)
                 log_1.GetLogger().error(this._objInfo.ClassName, "Error injecting not a string or null", key);
-            if (!this._store[key])
-                this._store[key] = this.$injector.get(key);
-            return this._store[key];
+            return this.$injector.get(key);
         };
         BaseInjectable.prototype.checkInit = function () {
             var _this = this;

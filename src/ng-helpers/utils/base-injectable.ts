@@ -14,7 +14,7 @@ export default abstract class BaseInjectable extends BaseObj {
         return this.$injectedArgs[this._self$inject.indexOf(name)];
     }
    
-    private _store : any = {};
+   
   
     private _args : any[]=[];
 
@@ -23,10 +23,7 @@ export default abstract class BaseInjectable extends BaseObj {
         if (typeof key !==typeof "" || !key)
             GetLogger().error(this._objInfo.ClassName,"Error injecting not a string or null",key);
             
-        if (!this._store[key])
-            this._store[key] = this.$injector.get<T>(key);
-
-        return this._store[key] as T;
+        return this.$injector.get<T>(key);
 
     }
 

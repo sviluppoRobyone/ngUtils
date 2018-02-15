@@ -63,7 +63,6 @@ declare module "ng-helpers/utils/base-injectable" {
         static $inject: string[];
         protected readonly _self$inject: string[];
         protected GetInjected<T>(name: string): any;
-        private _store;
         private _args;
         protected getFromInjector<T>(key: string): T;
         private checkInit();
