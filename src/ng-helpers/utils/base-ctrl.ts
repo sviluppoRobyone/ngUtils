@@ -16,5 +16,12 @@ export default abstract class BaseCtrl extends BaseInjectable implements ng.ICon
   
     protected get $ngUtils(): ngUtils.NgUtilsService {
         return this.GetInjected(ngUtils.serviceName);
-    }    
+    }
+    
+    public $onInit(){
+        this.$log.debug(this._objInfo.ClassName,"$onInit");
+    }
+    public $onDestroy(){
+        this.$log.debug(this._objInfo.ClassName,"$onDestroy");
+    }
 }

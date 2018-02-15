@@ -1,14 +1,15 @@
 import * as angular from "angular";
 import  BaseCtrl  from "./base-ctrl";
+import { ConcatenaInject } from "../core";
 export default abstract class BaseCtrlForDirective extends BaseCtrl {
     
-    public static $inject: string[] = BaseCtrl.$inject.concat("$attrs","$element");    
+    public static $inject: string[] = ConcatenaInject(BaseCtrl.$inject,"$attrs","$element");    
     
     protected get $attrs():ng.IAttributes{
-        return this.$injectedArgs[BaseCtrlForDirective.$inject.indexOf("$attrs")];
+        return this.GetInjected("$attrs");
     }
     
     protected get $element():JQuery{
-        return this.$injectedArgs[BaseCtrlForDirective.$inject.indexOf("$element")];
+        return this.GetInjected("$element");
     }
 }

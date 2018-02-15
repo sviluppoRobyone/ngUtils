@@ -720,12 +720,18 @@ define("ng-helpers/utils/base-ctrl", ["require", "exports", "ng-helpers/service"
             enumerable: true,
             configurable: true
         });
+        BaseCtrl.prototype.$onInit = function () {
+            this.$log.debug(this._objInfo.ClassName, "$onInit");
+        };
+        BaseCtrl.prototype.$onDestroy = function () {
+            this.$log.debug(this._objInfo.ClassName, "$onDestroy");
+        };
         BaseCtrl.$inject = core_3.ConcatenaInject(base_injectable_4.default.$inject, "$scope", name_generator_2.GetServiceName("ngUtils"));
         return BaseCtrl;
     }(base_injectable_4.default));
     exports.default = BaseCtrl;
 });
-define("ng-helpers/utils/base-ctrl-for-directive", ["require", "exports", "ng-helpers/utils/base-ctrl"], function (require, exports, base_ctrl_1) {
+define("ng-helpers/utils/base-ctrl-for-directive", ["require", "exports", "ng-helpers/utils/base-ctrl", "ng-helpers/core"], function (require, exports, base_ctrl_1, core_4) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseCtrlForDirective = /** @class */ (function (_super) {
@@ -735,29 +741,29 @@ define("ng-helpers/utils/base-ctrl-for-directive", ["require", "exports", "ng-he
         }
         Object.defineProperty(BaseCtrlForDirective.prototype, "$attrs", {
             get: function () {
-                return this.$injectedArgs[BaseCtrlForDirective.$inject.indexOf("$attrs")];
+                return this.GetInjected("$attrs");
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(BaseCtrlForDirective.prototype, "$element", {
             get: function () {
-                return this.$injectedArgs[BaseCtrlForDirective.$inject.indexOf("$element")];
+                return this.GetInjected("$element");
             },
             enumerable: true,
             configurable: true
         });
-        BaseCtrlForDirective.$inject = base_ctrl_1.default.$inject.concat("$attrs", "$element");
+        BaseCtrlForDirective.$inject = core_4.ConcatenaInject(base_ctrl_1.default.$inject, "$attrs", "$element");
         return BaseCtrlForDirective;
     }(base_ctrl_1.default));
     exports.default = BaseCtrlForDirective;
 });
-define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-generator", "ng-helpers/utils/base-injectable", "ng-helpers/core", "ng-helpers/utils/base-ctrl-for-directive"], function (require, exports, nameGenerator, base_injectable_5, core_4, base_ctrl_for_directive_1) {
+define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-generator", "ng-helpers/utils/base-injectable", "ng-helpers/core", "ng-helpers/utils/base-ctrl-for-directive"], function (require, exports, nameGenerator, base_injectable_5, core_5, base_ctrl_for_directive_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.serviceName = nameGenerator.GetServiceName("AsyncLoader");
     function register(m) {
-        core_4.registerService(m, exports.serviceName, AsyncLoaderService);
+        core_5.registerService(m, exports.serviceName, AsyncLoaderService);
         directive.register(m);
     }
     exports.default = register;
@@ -886,7 +892,7 @@ define("ng-helpers/async-loader", ["require", "exports", "ng-helpers/utils/name-
     (function (directive_1) {
         directive_1.directiveName = nameGenerator.GetDirectiveName("asyncLoader");
         function register(m) {
-            core_4.registerDirective(m, directive_1.directiveName, directive);
+            core_5.registerDirective(m, directive_1.directiveName, directive);
         }
         directive_1.register = register;
         var scopeLoadersKey = "loaders";
@@ -1074,11 +1080,11 @@ define("ng-helpers/fa-loading/directive", ["require", "exports", "ng-helpers/fa-
     }
     exports.directive = directive;
 });
-define("ng-helpers/fa-loading/index", ["require", "exports", "ng-helpers/fa-loading/directive", "jquery", "ng-helpers/fa-loading/themes", "ng-helpers/core"], function (require, exports, directive, $, themes_1, core_5) {
+define("ng-helpers/fa-loading/index", ["require", "exports", "ng-helpers/fa-loading/directive", "jquery", "ng-helpers/fa-loading/themes", "ng-helpers/core"], function (require, exports, directive, $, themes_1, core_6) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
-        core_5.registerDirective(m, directive.directiveName, directive.directive);
+        core_6.registerDirective(m, directive.directiveName, directive.directive);
         var spinners = ["circle-o-notch", "cog", "gear", "refresh", "spinner"];
         var sizes = [null, "lg", "2x", "3x", "4x", "5x"];
         var baseTmpl = $("<div/>");
@@ -1095,7 +1101,7 @@ define("ng-helpers/fa-loading/index", ["require", "exports", "ng-helpers/fa-load
                     i.addClass("fa-" + size);
                 var html = $("<div/>").append(div).html();
                 var dirName = directive.directiveName + (size || "") + "T" + (spinnerIndex + 1);
-                core_5.registerDirective(m, dirName, themes_1.baseTheme.DirectiveBuilder(html));
+                core_6.registerDirective(m, dirName, themes_1.baseTheme.DirectiveBuilder(html));
             });
         });
     }
@@ -1204,14 +1210,14 @@ define("ng-helpers/http-error-to-modal/index", ["require", "exports", "ng-helper
     }
     exports.default = register;
 });
-define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/name-generator", "ng-helpers/core", "ng-helpers/utils/module-exists", "ng-helpers/utils/base-ctrl-for-directive", "ng-helpers/utils/base-ctrl"], function (require, exports, nameGenerator, core_6, module_exists_1, base_ctrl_for_directive_2, base_ctrl_4) {
+define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/name-generator", "ng-helpers/core", "ng-helpers/utils/module-exists", "ng-helpers/utils/base-ctrl-for-directive", "ng-helpers/utils/base-ctrl"], function (require, exports, nameGenerator, core_7, module_exists_1, base_ctrl_for_directive_2, base_ctrl_4) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var directiveName = nameGenerator.GetDirectiveName("debugModal");
     var dataKey = directiveName + "debugData";
     function register(m) {
         module_exists_1.configureModuleIfExists(m, ["ui.bootstrap"], function () {
-            core_6.registerDirective(m, directiveName, directive);
+            core_7.registerDirective(m, directiveName, directive);
         });
     }
     exports.default = register;
@@ -1276,7 +1282,7 @@ define("ng-helpers/debug/debug-modal", ["require", "exports", "ng-helpers/utils/
         return DebugModalContentCtrl;
     }(base_ctrl_4.default));
 });
-define("ng-helpers/debug/debug-components", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core", "ng-helpers/utils/name-generator", "js-helpers/debug-detectors"], function (require, exports, base_injectable_7, core_7, name_generator_3, debug_detectors_2) {
+define("ng-helpers/debug/debug-components", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core", "ng-helpers/utils/name-generator", "js-helpers/debug-detectors"], function (require, exports, base_injectable_7, core_8, name_generator_3, debug_detectors_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
@@ -1287,7 +1293,7 @@ define("ng-helpers/debug/debug-components", ["require", "exports", "ng-helpers/u
     (function (ifDebug) {
         ifDebug.directiveName = name_generator_3.GetDirectiveName("ifDebug");
         function register(m) {
-            core_7.registerDirective(m, ifDebug.directiveName, Directive);
+            core_8.registerDirective(m, ifDebug.directiveName, Directive);
         }
         ifDebug.register = register;
         function Directive() {
@@ -1319,7 +1325,7 @@ define("ng-helpers/debug/debug-components", ["require", "exports", "ng-helpers/u
     (function (ifNotDebug) {
         ifNotDebug.directiveName = name_generator_3.GetDirectiveName("ifNotDebug");
         function register(m) {
-            core_7.registerDirective(m, ifNotDebug.directiveName, Directive);
+            core_8.registerDirective(m, ifNotDebug.directiveName, Directive);
         }
         ifNotDebug.register = register;
         function Directive() {
@@ -1435,11 +1441,11 @@ define("ng-helpers/formly/datepicker", ["require", "exports", "ng-helpers/utils/
     }
     exports.Configure = Configure;
 });
-define("ng-helpers/formly/form-builder", ["require", "exports", "ng-helpers/utils/base-ctrl-for-directive", "ng-helpers/core"], function (require, exports, base_ctrl_for_directive_3, core_8) {
+define("ng-helpers/formly/form-builder", ["require", "exports", "ng-helpers/utils/base-ctrl-for-directive", "ng-helpers/core"], function (require, exports, base_ctrl_for_directive_3, core_9) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function register(m) {
-        core_8.registerDirective(m, "formBuilder", directive);
+        core_9.registerDirective(m, "formBuilder", directive);
     }
     exports.default = register;
     function directive() {
@@ -1509,12 +1515,12 @@ define("ng-helpers/formly/form-builder", ["require", "exports", "ng-helpers/util
         return Ctrl;
     }(base_ctrl_for_directive_3.default));
 });
-define("ng-helpers/formly/nullable-field-directive", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, base_injectable_8, core_9) {
+define("ng-helpers/formly/nullable-field-directive", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/core"], function (require, exports, base_injectable_8, core_10) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var directiveName = "nullableField";
     function register(m) {
-        core_9.registerDirective(m, directiveName, directive);
+        core_10.registerDirective(m, directiveName, directive);
     }
     exports.default = register;
     function directive() {
@@ -1660,12 +1666,12 @@ define("ng-helpers/formly/index", ["require", "exports", "ng-helpers/formly/date
     }
     exports.default = Configure;
 });
-define("ng-helpers/show-property", ["require", "exports", "ng-helpers/utils/base-ctrl-for-directive", "ng-helpers/utils/name-generator", "ng-helpers/core"], function (require, exports, base_ctrl_for_directive_4, name_generator_4, core_10) {
+define("ng-helpers/show-property", ["require", "exports", "ng-helpers/utils/base-ctrl-for-directive", "ng-helpers/utils/name-generator", "ng-helpers/core"], function (require, exports, base_ctrl_for_directive_4, name_generator_4, core_11) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.directiveName = name_generator_4.GetDirectiveName("showProperty");
     function register(m) {
-        core_10.registerDirective(m, exports.directiveName, directive);
+        core_11.registerDirective(m, exports.directiveName, directive);
     }
     exports.default = register;
     function directive() {
@@ -1763,7 +1769,7 @@ define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpe
     }
     exports.default = init;
 });
-define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/service", "ng-helpers/core"], function (require, exports, base_injectable_9, ngUtilsService, core_11) {
+define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils/base-injectable", "ng-helpers/service", "ng-helpers/core"], function (require, exports, base_injectable_9, ngUtilsService, core_12) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseService = /** @class */ (function (_super) {
@@ -1778,7 +1784,7 @@ define("ng-helpers/utils/base-service", ["require", "exports", "ng-helpers/utils
             enumerable: true,
             configurable: true
         });
-        BaseService.$inject = core_11.ConcatenaInject(base_injectable_9.default.$inject, ngUtilsService.serviceName);
+        BaseService.$inject = core_12.ConcatenaInject(base_injectable_9.default.$inject, ngUtilsService.serviceName);
         return BaseService;
     }(base_injectable_9.default));
     exports.default = BaseService;

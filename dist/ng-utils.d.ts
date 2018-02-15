@@ -175,6 +175,8 @@ declare module "ng-helpers/utils/base-ctrl" {
         static $inject: string[];
         protected readonly $scope: angular.IScope;
         protected readonly $ngUtils: ngUtils.NgUtilsService;
+        $onInit(): void;
+        $onDestroy(): void;
     }
 }
 declare module "ng-helpers/utils/base-ctrl-for-directive" {
