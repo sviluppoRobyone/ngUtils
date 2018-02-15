@@ -1,7 +1,7 @@
 import * as angular from "angular";
 import  BaseInjectable  from "./utils/base-injectable";
 import { GetLogger } from "./log";
-import BaseObj from "../js-helpers/obj-helpers";
+import { BaseObj} from "../js-helpers/obj-helpers";
 
 
 

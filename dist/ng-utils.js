@@ -125,7 +125,7 @@ define("js-helpers/obj-helpers", ["require", "exports"], function (require, expo
         }
         return BaseObj;
     }());
-    exports.default = BaseObj;
+    exports.BaseObj = BaseObj;
     var ObjInfo = /** @class */ (function () {
         function ObjInfo(GetObj) {
             this.GetFn = null;
@@ -373,7 +373,7 @@ define("ng-helpers/utils/base-injectable", ["require", "exports", "ng-helpers/lo
         });
         BaseInjectable.$inject = ["$injector"];
         return BaseInjectable;
-    }(obj_helpers_1.default));
+    }(obj_helpers_1.BaseObj));
     exports.default = BaseInjectable;
     log_1.GetLogger().debug("BaseInjectable has been required");
 });

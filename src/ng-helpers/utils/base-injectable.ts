@@ -1,6 +1,6 @@
 import * as angular from "angular";
 import { GetLogger } from "../log";
-import BaseObj from "../../js-helpers/obj-helpers";
+import {BaseObj} from "../../js-helpers/obj-helpers";
 
 export default abstract class BaseInjectable extends BaseObj {
     

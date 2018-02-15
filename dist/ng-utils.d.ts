@@ -31,7 +31,7 @@ declare module "js-helpers/json-helpers" {
     }
 }
 declare module "js-helpers/obj-helpers" {
-    export default abstract class BaseObj {
+    export abstract class BaseObj {
         _objInfo: ObjInfo;
         constructor();
     }
@@ -58,7 +58,7 @@ declare module "ng-helpers/log" {
 }
 declare module "ng-helpers/utils/base-injectable" {
     import * as angular from "angular";
-    import BaseObj from "js-helpers/obj-helpers";
+    import { BaseObj } from "js-helpers/obj-helpers";
     export default abstract class BaseInjectable extends BaseObj {
         static $inject: string[];
         protected readonly _self$inject: string[];
@@ -88,7 +88,7 @@ declare module "ng-helpers/utils/base-injectable" {
 }
 declare module "ng-helpers/core" {
     import BaseInjectable from "ng-helpers/utils/base-injectable";
-    import BaseObj from "js-helpers/obj-helpers";
+    import { BaseObj } from "js-helpers/obj-helpers";
     export interface IDirectiveFn {
         (): ng.IDirective;
     }
