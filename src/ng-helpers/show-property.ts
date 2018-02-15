@@ -57,7 +57,7 @@ export function directive() {
     } as ng.IDirective;
 }
 
-export class ShowPropertyCtrl extends BaseCtrlForDirective {
+class ShowPropertyCtrl extends BaseCtrlForDirective {
     
     private get Object() {
         return this.$scope["object"];

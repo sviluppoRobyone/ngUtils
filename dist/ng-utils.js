@@ -1136,12 +1136,12 @@ define("ng-helpers/http-error-to-modal/modal-ctrl", ["require", "exports", "ng-h
         }
         Object.defineProperty(Ctrl.prototype, "Errors", {
             get: function () {
-                return this.$injectedArgs[Ctrl.$inject.indexOf(exports.ErrorKey)];
+                return this.GetInjected(exports.ErrorKey);
             },
             enumerable: true,
             configurable: true
         });
-        Ctrl.$inject = base_ctrl_3.default.$inject.concat([exports.ErrorKey]);
+        Ctrl.$inject = base_ctrl_3.default.$inject.concat(exports.ErrorKey);
         return Ctrl;
     }(base_ctrl_3.default));
     exports.Ctrl = Ctrl;
@@ -1741,7 +1741,6 @@ define("ng-helpers/show-property", ["require", "exports", "ng-helpers/utils/base
         });
         return ShowPropertyCtrl;
     }(base_ctrl_for_directive_4.default));
-    exports.ShowPropertyCtrl = ShowPropertyCtrl;
 });
 define("ng-helpers/init", ["require", "exports", "ng-helpers/service", "ng-helpers/filters/index", "ng-helpers/utils/module-exists", "ng-helpers/fa-loading/index", "ng-helpers/promise-buttons/index", "ng-helpers/http-error-to-modal/index", "ng-helpers/debug/debug", "ng-helpers/file-viewer", "ng-helpers/formly/index", "ng-helpers/async-loader", "polyfill/index", "ng-helpers/events", "ng-helpers/show-property", "ng-helpers/log"], function (require, exports, service_1, index_1, moduleExists, index_2, index_3, index_4, debug_1, file_viewer_1, index_5, async_loader_1, index_6, events, show_property_1, log_5) {
     "use strict";
