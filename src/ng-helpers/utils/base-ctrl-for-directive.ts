@@ -1,6 +1,7 @@
 import * as angular from "angular";
 import  BaseCtrl  from "./base-ctrl";
 import { ConcatenaInject } from "../core";
+import { GetLogger } from "../log";
 export default abstract class BaseCtrlForDirective extends BaseCtrl {
     
     public static $inject: string[] = ConcatenaInject(BaseCtrl.$inject,"$attrs","$element");    
@@ -13,3 +14,4 @@ export default abstract class BaseCtrlForDirective extends BaseCtrl {
         return this.GetInjected("$element");
     }
 }
+GetLogger().debug("BaseCtrlForDirective has been required");

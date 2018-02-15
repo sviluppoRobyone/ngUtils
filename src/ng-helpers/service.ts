@@ -11,7 +11,7 @@ export default function register(m:ng.IModule){
     registerService(m,serviceName,NgUtilsService);
 }
 export class NgUtilsService extends BaseInjectable {
-    public static $inject= ConcatenaInject(
+    public static $inject = ConcatenaInject(
         BaseInjectable.$inject,
         AsyncLoader.serviceName,
         fv.serviceName,

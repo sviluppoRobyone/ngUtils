@@ -61,6 +61,7 @@ export default abstract class BaseInjectable extends BaseObj {
         });
 
         this.checkInit();
+        this.$log.info(this._objInfo.ClassName,"instanced");
     }
 
   
@@ -119,3 +120,4 @@ export default abstract class BaseInjectable extends BaseObj {
         return this.getFromInjector<ng.ui.bootstrap.IModalService>("$uibModal");
     }
 }
+GetLogger().debug("BaseInjectable has been required");

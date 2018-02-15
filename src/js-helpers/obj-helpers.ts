@@ -3,7 +3,7 @@ export default abstract class BaseObj{
     public _objInfo:ObjInfo=null;
     public constructor(){
         this._objInfo=new ObjInfo(()=>this);
-        Object.defineProperty(this,"_objInfo",{enumerable:false});
+        Object.defineProperty(this,"_objInfo",{enumerable:false});        
     }
 }
 
