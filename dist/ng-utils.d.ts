@@ -145,7 +145,7 @@ declare module "ng-helpers/events" {
         (event: ng.IAngularEvent, ...args: any[]): void;
     }
     export class EventsService extends BaseInjectable {
-        emit(e: string): void;
+        emit(e: string, ...args: any[]): void;
         on(e: string, f: IEventFunction): void;
     }
 }

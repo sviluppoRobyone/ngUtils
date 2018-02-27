@@ -13,9 +13,9 @@ export interface IEventFunction {
 export class EventsService extends BaseInjectable
 {
 
-    public emit(e: string) {
+    public emit(e: string,...args:any[]) {
         this.$log.debug("Emit event", e);
-        this.$rootScope.$broadcast(e + "");
+        this.$rootScope.$broadcast(e + "",...args);
     }
 
     public on(e: string, f: IEventFunction) {

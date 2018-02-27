@@ -600,8 +600,13 @@ define("ng-helpers/events", ["require", "exports", "ng-helpers/utils/base-inject
             return _super !== null && _super.apply(this, arguments) || this;
         }
         EventsService.prototype.emit = function (e) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
             this.$log.debug("Emit event", e);
-            this.$rootScope.$broadcast(e + "");
+            (_a = this.$rootScope).$broadcast.apply(_a, [e + ""].concat(args));
+            var _a;
         };
         EventsService.prototype.on = function (e, f) {
             var _this = this;
