@@ -23,6 +23,7 @@ declare module "js-helpers/file-helpers" {
     export function blobToBase64(blob: Blob, cb: {
         (base64String: string): void;
     }): void;
+    export function toDatauri(mimeType: string, base64String: string): string;
     export function download(fileName: string, blob: Blob): void;
 }
 declare module "js-helpers/json-helpers" {
