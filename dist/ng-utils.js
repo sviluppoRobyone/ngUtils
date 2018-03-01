@@ -82,14 +82,14 @@ define("js-helpers/file-helpers", ["require", "exports"], function (require, exp
         reader.readAsDataURL(blob);
     }
     exports.blobToBase64 = blobToBase64;
-    function toDatauri(mimeType, base64String) {
+    function toDataUri(mimeType, base64String) {
         return 'data:' + mimeType + ';base64,' + encodeURIComponent(base64String);
     }
-    exports.toDatauri = toDatauri;
+    exports.toDataUri = toDataUri;
     function download(fileName, blob) {
         blobToBase64(blob, function (base64String) {
             var element = document.createElement('a');
-            element.setAttribute('href', toDatauri(blob.type, base64String));
+            element.setAttribute('href', toDataUri(blob.type, base64String));
             element.setAttribute('download', fileName);
             element.style.display = 'none';
             document.body.appendChild(element);

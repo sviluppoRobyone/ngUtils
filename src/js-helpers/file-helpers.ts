@@ -33,7 +33,7 @@
         }
         reader.readAsDataURL(blob); 
     }
-    export function toDatauri(mimeType:string,base64String:string){
+    export function toDataUri(mimeType:string,base64String:string){
         return 'data:'+mimeType+';base64,' + encodeURIComponent(base64String);
     }
 
@@ -42,7 +42,7 @@
         blobToBase64(blob,base64String=>{
     
             var element = document.createElement('a');
-            element.setAttribute('href', toDatauri(blob.type,base64String));
+            element.setAttribute('href', toDataUri(blob.type,base64String));
             
             element.setAttribute('download', fileName);
         
